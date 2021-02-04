@@ -1,13 +1,13 @@
 #include "DoubleLinkedList.h"
 #include <iostream>
 
-DoubleLinkedList::DoubleLinkedList (const DoubleLinkedList & src)
+DoubleLinkedList::DoubleLinkedList(const DoubleLinkedList& src)
 {
     head_ = nullptr;
     tail_ = nullptr;
     count_ = 0;
     Node* temp = src.head_;
-    while(temp != nullptr)
+    while (temp != nullptr)
     {
         insertTail(temp->item_);
         temp = temp->next_;
@@ -17,10 +17,10 @@ DoubleLinkedList::DoubleLinkedList (const DoubleLinkedList & src)
 void DoubleLinkedList::insertTail(Node* x)
 {
     x->prev_ = tail_;
-    if(head_ == nullptr)
+    if (head_ == nullptr)
     {
         insertHead(x);
-        count_ = count_-1;
+        count_ = count_ - 1;
     }
     tail_->next_ = x;
     x->next_ = nullptr;
@@ -55,7 +55,7 @@ void DoubleLinkedList::deleteNode(Node* x)
         head_ = x->next_;
     }
     if (x->next_ != nullptr) {
-        (x->next_)->prev_ = x->prev_    ;
+        (x->next_)->prev_ = x->prev_;
     }
     else {
         tail_ = x->prev_;
@@ -82,7 +82,7 @@ DoubleLinkedList::Node* DoubleLinkedList::replaceNode(DoubleLinkedList::Node* x,
 }
 
 
-int DoubleLinkedList::count()const{ return count_; }
+int DoubleLinkedList::count()const { return count_; }
 
 
 int DoubleLinkedList::headItem() const
@@ -153,7 +153,7 @@ bool DoubleLinkedList::deleteItem(const int item)
     while (x != nullptr && x->item_ != item) {
         x = x->next_;
     }
-    if(x->item_ == item)
+    if (x->item_ == item)
     {
         deleteNode(x);
     }
@@ -173,13 +173,13 @@ bool DoubleLinkedList::replaceItem(int itemOld, int itemNew)
     while (x != nullptr && x->item_ != itemOld) {
         x = x->next_;
     }
-    if(x->item_ != itemOld)
+    if (x->item_ != itemOld)
     {
         return 0;
     }
-    if(x->item_ == itemOld)
+    if (x->item_ == itemOld)
     {
-        replaceNode(x,itemNew);
+        replaceNode(x, itemNew);
     }
     return 1;
 }
@@ -204,19 +204,19 @@ DoubleLinkedList::~DoubleLinkedList()
     while (next != nullptr)
     {
         current = next;
-        if(current->item_ < 0)
+        if (current->item_ < 0)
         {
             break;
         }
         next = next->next_;
-        if(current->item_ >= 0)
-        delete current;
+        if (current->item_ >= 0)
+            delete current;
     }
 }
 
-bool DoubleLinkedList::operator==(DoubleLinkedList &src)
+bool DoubleLinkedList::operator==(DoubleLinkedList& src)
 {
-    if(count_ != src.count_)
+    if (count_ != src.count_)
     {
         return 0;
     }
@@ -224,9 +224,9 @@ bool DoubleLinkedList::operator==(DoubleLinkedList &src)
     {
         Node* rightSideNode = src.head_;
         Node* leftSideNode = head_;
-        for(int i = 0;i<count_;i++)
+        for (int i = 0;i < count_;i++)
         {
-            if(leftSideNode->item_ != rightSideNode->item_)
+            if (leftSideNode->item_ != rightSideNode->item_)
             {
                 return 0;
             }
@@ -236,10 +236,10 @@ bool DoubleLinkedList::operator==(DoubleLinkedList &src)
 
 }
 
-void DoubleLinkedList::merge(DoubleLinkedList &src)
+void DoubleLinkedList::merge(DoubleLinkedList& src)
 {
     Node* h = src.head_;
-    while(h != nullptr)
+    while (h != nullptr)
     {
         insertTail(h->item_);
         h = h->next_;
@@ -247,7 +247,7 @@ void DoubleLinkedList::merge(DoubleLinkedList &src)
     return;
 }
 
-DoubleLinkedList &DoubleLinkedList::operator=(const DoubleLinkedList &src)
+DoubleLinkedList& DoubleLinkedList::operator=(const DoubleLinkedList& src)
 {
     DoubleLinkedList temp(src);
     this->swap(temp);
@@ -255,7 +255,7 @@ DoubleLinkedList &DoubleLinkedList::operator=(const DoubleLinkedList &src)
 }
 
 
-void DoubleLinkedList::swap(DoubleLinkedList &src)
+void DoubleLinkedList::swap(DoubleLinkedList& src)
 {
     DoubleLinkedList temp(src);
     src.head_ = this->head_;
@@ -270,7 +270,7 @@ void DoubleLinkedList::swap(DoubleLinkedList &src)
     return;
 }
 
-DoubleLinkedList &DoubleLinkedList::operator=(DoubleLinkedList &&src) noexcept
+DoubleLinkedList& DoubleLinkedList::operator=(DoubleLinkedList&& src) noexcept
 {
     if (this != &src)
     {
@@ -290,7 +290,7 @@ DoubleLinkedList &DoubleLinkedList::operator=(DoubleLinkedList &&src) noexcept
     return *this;
 }
 
-DoubleLinkedList::DoubleLinkedList(DoubleLinkedList &&src) noexcept
+DoubleLinkedList::DoubleLinkedList(DoubleLinkedList&& src) noexcept
 {
     if (this != &src)
     {

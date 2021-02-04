@@ -36,14 +36,14 @@ private:
 
 public:
 
-    friend std::ostream& operator<< (std::ostream &out,  DoubleLinkedList &src);
-    friend DoubleLinkedList operator| (DoubleLinkedList &src1, DoubleLinkedList &src2);
-    friend DoubleLinkedList operator& (DoubleLinkedList &src1, DoubleLinkedList &src2);
+    friend std::ostream& operator<< (std::ostream& out, DoubleLinkedList& src);
+    friend DoubleLinkedList operator| (DoubleLinkedList& src1, DoubleLinkedList& src2);
+    friend DoubleLinkedList operator& (DoubleLinkedList& src1, DoubleLinkedList& src2);
 
-    bool operator==(DoubleLinkedList &src);
+    bool operator==(DoubleLinkedList& src);
 
-    DoubleLinkedList& operator=(const DoubleLinkedList &src);
-    DoubleLinkedList& operator=(DoubleLinkedList &&src) noexcept;
+    DoubleLinkedList& operator=(const DoubleLinkedList& src);
+    DoubleLinkedList& operator=(DoubleLinkedList&& src) noexcept;
 
     DoubleLinkedList() : count_(0), head_(nullptr), tail_(nullptr) {  }
 
@@ -75,9 +75,9 @@ public:
 
     void outAll();
 
-    void merge(DoubleLinkedList &src);
+    void merge(DoubleLinkedList& src);
 
-    void swap(DoubleLinkedList &src);
+    void swap(DoubleLinkedList& src);
 
     virtual ~DoubleLinkedList();
 };
