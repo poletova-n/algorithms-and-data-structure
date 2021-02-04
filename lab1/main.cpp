@@ -1,0 +1,84 @@
+#include "DoublyLinkedList.h"
+#include "SinglyLinkedList.h"
+#include <ctime>
+#include <iostream>
+
+int main() {
+  clock_t start, end;
+  start = clock();
+  DoublyLinkedList list1;
+  list1.push_back(4);
+  list1.push_back(55);
+  std::cout << list1.size() << '\n';
+  DoublyLinkedList linkedList1(list1);
+  linkedList1 += 43;
+  linkedList1.pop_back();
+  std::cout << linkedList1;
+  linkedList1.push_back(55);
+  std::cout << linkedList1;
+  linkedList1.remove(55);
+  linkedList1 += 4323;
+  linkedList1.push_back(94);
+  linkedList1.push_back(4);
+  std::cout << linkedList1;
+  std::cout << (linkedList1 == list1) << '\n';
+  linkedList1.push_front(584958);
+  linkedList1.push_back(0);
+  std::cout << linkedList1;
+  list1.push_back(392);
+  linkedList1.merge(list1);
+  std::cout << linkedList1;
+  list1.push_back(32);
+  list1 += 999;
+  std::cout << list1;
+  list1.push_back(392);
+  DoublyLinkedList singlyLinkedList1 = list1 & linkedList1;
+  std::cout << singlyLinkedList1;
+  singlyLinkedList1.clear();
+  singlyLinkedList1 = linkedList1 | list1;
+  std::cout << singlyLinkedList1;
+  linkedList1.merge(list1);
+  std::cout << linkedList1;
+  std::cout << linkedList1;
+  list1 = singlyLinkedList1;
+  std::cout << list1;
+  SinglyLinkedList list;
+  list.push_back(4);
+  list.push_back(55);
+  std::cout << list.size() << '\n';
+  SinglyLinkedList linkedList(list);
+  linkedList += 43;
+  linkedList.pop_back();
+  std::cout << linkedList;
+  linkedList.push_back(55);
+  std::cout << linkedList;
+  linkedList.remove(55);
+  linkedList += 4323;
+  linkedList.push_back(94);
+  linkedList.push_back(4);
+  std::cout << linkedList;
+  std::cout << (linkedList == list) << '\n';
+  linkedList.push_front(584958);
+  linkedList.push_back(0);
+  std::cout << linkedList;
+  list.push_back(392);
+  linkedList.merge(list);
+  std::cout << linkedList;
+  list.push_back(32);
+  list += 999;
+  std::cout << list;
+  list.push_back(392);
+  SinglyLinkedList singlyLinkedList = list & linkedList;
+  std::cout << singlyLinkedList;
+  singlyLinkedList.clear();
+  singlyLinkedList = linkedList | list;
+  std::cout << singlyLinkedList;
+  linkedList.merge(list);
+  std::cout << linkedList;
+  std::cout << linkedList;
+  list = singlyLinkedList;
+  std::cout << list;
+  end = clock();
+  std::cout << (end - start) / ((double) CLOCKS_PER_SEC);
+  return 0;
+}
