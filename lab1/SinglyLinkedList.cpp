@@ -61,7 +61,6 @@ void SinglyLinkedList::insertTail(Node* x) {
   size_++;
 }
 
-// Вставить сформированный узел в начало списка
 void SinglyLinkedList::insertHead(Node* elem) {
   if (head_ == nullptr) {
     elem->next_ = nullptr;
@@ -73,9 +72,6 @@ void SinglyLinkedList::insertHead(Node* elem) {
 }
 
 void SinglyLinkedList::deleteNode(Node* x) {
-  //  if (x == nullptr) {
-  //    throw("SinglyLinkedList::deleteNode  - неверно задан адрес удаляемого узла");
-  //  }
   if (head_ == x) {
     head_ = head_->next_;
     delete x;
@@ -88,7 +84,7 @@ void SinglyLinkedList::deleteNode(Node* x) {
   }
   delete x;
   temp->next_ = nullptr;
-  size_--;// число элементов списка уменьшилось
+  size_--;
 }
 
 SinglyLinkedList::Node* SinglyLinkedList::searchNode(int item) {
@@ -99,7 +95,6 @@ SinglyLinkedList::Node* SinglyLinkedList::searchNode(int item) {
   return x;
 }
 
-// Вставить элемент в голову списка
 void SinglyLinkedList::push_front(int item) {
   if (!has(item)) {
     insertHead(new Node(item));
@@ -107,15 +102,13 @@ void SinglyLinkedList::push_front(int item) {
   this->sort();
 }
 
-// Вставить элемент в хвост списка
-void SinglyLinkedList::push_back(int item) {// создаем новый элемент списка и добавляем в хвост
+void SinglyLinkedList::push_back(int item) {
   if (!has(item)) {
     insertTail(new Node(item));
   }
   this->sort();
 }
 
-// Удалить элемент с головы списка
 void SinglyLinkedList::pop_front() {
   if (head_ == nullptr) {
     return;
@@ -123,7 +116,6 @@ void SinglyLinkedList::pop_front() {
   deleteNode(head_);
 }
 
-// Удалить элемент из хвоста списка
 void SinglyLinkedList::pop_back() {
   if (head_ == nullptr) {
     return;
@@ -135,7 +127,6 @@ void SinglyLinkedList::pop_back() {
   deleteNode(temp);
 }
 
-// Удаление узла с заданным значением
 void SinglyLinkedList::remove(const int item) {
   deleteNode(searchNode(item));
   this->sort();
@@ -148,12 +139,10 @@ void SinglyLinkedList::clear() {
   this->size_ = 0;
 }
 
-// Поиск записи с заданным значением
 bool SinglyLinkedList::has(int item) {
   return (searchNode(item) != nullptr);
 }
 
-// Замена информации узла на новое
 void SinglyLinkedList::replace(int itemOld, int itemNew) {
   Node* newNode = searchNode(itemNew);
   Node* oldNode = searchNode(itemOld);
@@ -264,18 +253,16 @@ SinglyLinkedList& SinglyLinkedList::operator+=(int item) {
   return *this;
 }
 
-// Вывод элементов списка в текстовом виде в стандартный выходной поток
 std::ostream& operator<<(std::ostream& os, const SinglyLinkedList& singlyLinkedList) {
-  SinglyLinkedList::Node* current = singlyLinkedList.head_;// Указатель на элемент
+  SinglyLinkedList::Node* current = singlyLinkedList.head_;
   while (current != nullptr) {
     os << current->item_ << ' ';
-    current = current->next_;// Переход к следующему элементу
+    current = current->next_;
   }
   os << '\n';
   return os;
 }
 
-// Деструктор списка
 SinglyLinkedList::~SinglyLinkedList() {
   Node* next = head_;
   while (next != nullptr) {
@@ -284,33 +271,3 @@ SinglyLinkedList::~SinglyLinkedList() {
     head_ = next;
   }
 }
-
-// Доступ к информации головного узла списка
-//int SinglyLinkedList::headItem() const {
-//  if (head_ != nullptr) {
-//    return head_->item_;
-//  }
-//  throw("headItem - список пуст!");
-//}
-//
-//int& SinglyLinkedList::headItem() {
-//  if (head_ != nullptr) {
-//    return head_->item_;
-//  }
-//  throw("headItem - список пуст!");
-//}
-
-// Доступ к информации хвостового узла списка
-//int SinglyLinkedList::tailItem() const {
-//  if (tail_ != nullptr) {
-//    return tail_->item_;
-//  }
-//  throw("tailItem - список пуст!");
-//}
-//
-//int& SinglyLinkedList::tailItem() {
-//  if (tail_ != nullptr) {
-//    return tail_->item_;
-//  }
-//  throw("tailItem - список пуст!");
-//}

@@ -77,17 +77,13 @@ void DoublyLinkedList::insertHead(DoublyLinkedList::Node* elem) {
 
 void DoublyLinkedList::deleteNode(DoublyLinkedList::Node* x) {
   if (x->prev_ != nullptr) {
-    // удаляется НЕ голова списка
     (x->prev_)->next_ = x->next_;
   } else {
-    // удаляется голова списка,  второй элемент становится первым
     head_ = x->next_;
   }
   if (x->next_ != nullptr) {
-    // удаляется НЕ хвост
     (x->next_)->prev_ = x->prev_;
   } else {
-    // удаляется хвост
     tail_ = x->prev_;
   }
   delete x;
@@ -259,10 +255,10 @@ DoublyLinkedList& DoublyLinkedList::operator+=(int item) {
 }
 
 std::ostream& operator<<(std::ostream& os, const DoublyLinkedList& singlyLinkedList) {
-  DoublyLinkedList::Node* current = singlyLinkedList.head_;// Указатель на элемент
+  DoublyLinkedList::Node* current = singlyLinkedList.head_;
   while (current != nullptr) {
     os << current->item_ << ' ';
-    current = current->next_;// Переход к следующему элементу
+    current = current->next_;
   }
   os << '\n';
   return os;
@@ -276,36 +272,3 @@ DoublyLinkedList::~DoublyLinkedList() {
     head_ = next;
   }
 }
-
-// Доступ к информации головного узла списка
-//int DoubleLinkedList::headItem() const
-//{
-//  if (head_ != nullptr) {
-//    return head_->item_;
-//  }
-//  throw ("headItem - список пуст!");
-//}
-//
-//int& DoubleLinkedList::headItem()
-//{
-//  if (head_ != nullptr) {
-//    return head_->item_;
-//  }
-//  throw ("headItem - список пуст!");
-//}
-
-// Доступ к информации хвостового узла списка
-//int DoubleLinkedList::tailItem() const
-//{
-//  if (tail_ != nullptr) {
-//    return tail_->item_;
-//  }
-//  throw ("tailItem - список пуст!");
-//}
-//int& DoubleLinkedList::tailItem()
-//{
-//  if (tail_ != nullptr) {
-//    return tail_->item_;
-//  }
-//  throw ("tailItem - список пуст!");
-//}
