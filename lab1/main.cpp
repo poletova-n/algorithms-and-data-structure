@@ -57,7 +57,7 @@ int main() {
 
 DoubleLinkedList operator| (DoubleLinkedList &src1, DoubleLinkedList &src2)
 {
-    DoubleLinkedList list3;
+    DoubleLinkedList list3 = new DoubleLinkedList;
     int count1 = src1.count_;
     DoubleLinkedList::Node* head1 = src1.head_;
     for(int i = 0; i<count1; i++)
@@ -80,7 +80,7 @@ DoubleLinkedList operator| (DoubleLinkedList &src1, DoubleLinkedList &src2)
 
 DoubleLinkedList operator& (DoubleLinkedList &src1, DoubleLinkedList &src2)
 {
-    DoubleLinkedList list3;
+    DoubleLinkedList list3 = new DoubleLinkedList;
     int count1 = src1.count_;
     DoubleLinkedList::Node* head1 = src1.head_;
     for(int i = 0; i<count1; i++)
