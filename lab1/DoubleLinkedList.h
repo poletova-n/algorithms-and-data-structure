@@ -44,6 +44,7 @@ public:
 
     DoubleLinkedList& operator=(const DoubleLinkedList& src);
     DoubleLinkedList& operator=(DoubleLinkedList&& src) noexcept;
+    DoubleLinkedList& operator=(DoubleLinkedList* src);
 
     DoubleLinkedList() : count_(0), head_(nullptr), tail_(nullptr) {  }
 

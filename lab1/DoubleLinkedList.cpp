@@ -290,6 +290,14 @@ DoubleLinkedList& DoubleLinkedList::operator=(DoubleLinkedList&& src) noexcept
     return *this;
 }
 
+DoubleLinkedList& DoubleLinkedList::operator=(DoubleLinkedList* src)
+{
+    this->count_ = src->count_;
+    this->head_ = src->head_;
+    this->tail_ = src->tail_;
+    return *this;
+}
+
 DoubleLinkedList::DoubleLinkedList(DoubleLinkedList&& src) noexcept
 {
     if (this != &src)

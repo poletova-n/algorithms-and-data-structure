@@ -58,41 +58,41 @@ int main() {
 
 DoubleLinkedList operator| (DoubleLinkedList& src1, DoubleLinkedList& src2)
 {
-    DoubleLinkedList* list3 = new DoubleLinkedList;
-    int count1 = src1.count_;
+    DoubleLinkedList list3;
+    int count1 = src1.count_;   
     DoubleLinkedList::Node* head1 = src1.head_;
     for (int i = 0; i < count1; i++)
     {
-        list3->insertTail(head1->item_);
+        list3.insertTail(head1->item_);
         head1 = head1->next_;
     }
     int count2 = src2.count_;
     DoubleLinkedList::Node* head2 = src2.head_;
     for (int i = 0; i < count2; i++)
     {
-        if (!list3->searchItem(head2->item_))
+        if (!list3.searchItem(head2->item_))
         {
-            list3->insertTail(head2->item_);
+            list3.insertTail(head2->item_);
         }
         head2 = head2->next_;
     }
-    return *list3;
+    return list3;
 }
 
 DoubleLinkedList operator& (DoubleLinkedList& src1, DoubleLinkedList& src2)
 {
-    DoubleLinkedList* list3 = new DoubleLinkedList;
-    int count1 = src1.count_;
+    DoubleLinkedList list3;
+    int count1 = src1.count();
     DoubleLinkedList::Node* head1 = src1.head_;
     for (int i = 0; i < count1; i++)
     {
         if (src2.searchItem(head1->item_))
         {
-            list3->insertTail(head1->item_);
+            list3.insertTail(head1->item_);
         }
         head1 = head1->next_;
     }
-    return *list3;
+    return list3;
 }
 
 
