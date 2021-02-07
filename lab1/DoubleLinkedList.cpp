@@ -199,19 +199,13 @@ void DoubleLinkedList::outAll()
 
 DoubleLinkedList::~DoubleLinkedList()
 {
-    Node* current = nullptr;
-    Node* next = head_;
-    while (next != nullptr)
-    {
-        current = next;
-        if (current->item_ < 0)
-        {
-            break;
-        }
-        next = next->next_;
-        if (current->item_ >= 0)
-            delete current;
-    }
+  Node *next = head_;
+  while (next != nullptr)
+  {
+    next = head_->next_;
+    delete head_;
+    head_ = next;
+  }
 }
 
 bool DoubleLinkedList::operator==(DoubleLinkedList& src)
