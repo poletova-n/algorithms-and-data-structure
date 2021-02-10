@@ -98,7 +98,7 @@ public:
 
     void swap(DoubleLinkedList& src);
 
-     	
+    int count()const;
     virtual ~DoubleLinkedList();
 };
 #endif

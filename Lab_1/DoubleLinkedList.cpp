@@ -1,11 +1,6 @@
 #include "DoubleLinkedList.h"
 #include <iostream>
 
-DoubleLinkedList::DoubleLinkedList()
-{
-	this->head_ = nullptr;
-	this->count_ = 0;
-}
 
 DoubleLinkedList::DoubleLinkedList(int item) {
 	this->count_ = 1;
@@ -57,7 +52,7 @@ void DoubleLinkedList::insertHead(Node* x)
 void DoubleLinkedList::deleteNode(Node* x)
 {
 	if (x == nullptr) {
-		throw ("DoubleLinkedList::deleteNode  -     ");
+		throw ("DoubleLinkedList::deleteNode  - invalid address of the node being deleted    ");
 	}
 	if (x->prev_ != nullptr) {   
 		(x->prev_)->next_ = x->next_;
@@ -75,18 +70,19 @@ void DoubleLinkedList::deleteNode(Node* x)
 	count_--;   
 }
     
-DoubleLinkedList::Node* DoubleLinkedList::searchNode(int item)
+DoubleLinkedList::Node* DoubleLinkedList::searchNode(int item) 
 {
-	Node* x = head_;
-	while (x != nullptr && x->item_ != item) {
-		x = x->next_;
-	}
-	return x;
+		Node* x = head_;
+		while (x != nullptr && x->item_ != item) {
+			x = x->next_;
+		}
+		return x;
 }
 
       
 DoubleLinkedList::Node* DoubleLinkedList::replaceNode(DoubleLinkedList::Node* x, int item)
 {
+	x->item_ = item;
 	return x;
 }
 
@@ -96,7 +92,7 @@ int DoubleLinkedList::headItem() const
 	if (head_ != nullptr) {
 		return head_->item_;
 	}
-	throw ("headItem -  !");
+	throw ("headItem -  the list is empty!");
 }
 
 int& DoubleLinkedList::headItem()
@@ -104,7 +100,7 @@ int& DoubleLinkedList::headItem()
 	if (head_ != nullptr) {
 		return head_->item_;
 	}
-	throw ("headItem -  !");
+	throw ("headItem -  the list is empty!");
 }
 
       
@@ -113,14 +109,14 @@ int DoubleLinkedList::tailItem() const
 	if (tail_ != nullptr) {
 		return tail_->item_;
 	}
-	throw ("tailItem -  !");
+	throw ("tailItem -  the list is empty!");
 }
 int& DoubleLinkedList::tailItem()
 {
 	if (tail_ != nullptr) {
 		return tail_->item_;
 	}
-	throw ("tailItem -  !");
+	throw ("tailItem -  the list is empty!");
 }
 
     
@@ -149,14 +145,24 @@ bool DoubleLinkedList::deleteHead()
      
 bool DoubleLinkedList::deleteTail()
 {
-
-	return 0; 
+	if (tail_ == nullptr) {
+		return 0;
+	}
+	deleteNode(tail_);
+	return 1;
 }
 
        
 bool DoubleLinkedList::deleteItem(const int item)
 {
-
+	Node* x = head_;
+	while (x != nullptr) {
+		x = x->next_;
+		if (x->item_ == item) {
+			deleteNode(x);
+			return 1;
+		}
+	}
 	return 0;
 }
 
@@ -170,7 +176,14 @@ bool DoubleLinkedList::searchItem(int item)
      
 bool DoubleLinkedList::replaceItem(int itemOld, int itemNew)
 {
-
+	Node* x = head_;
+	while (x != nullptr) {
+		x = x->next_;
+		if (x->item_ == itemOld) {
+			replaceNode(x, itemNew);
+			return 1;
+		}
+	}
 	return 0;
 }
 
@@ -185,14 +198,36 @@ void DoubleLinkedList::outAll()
 	std::cout << std::endl;
 }
 
-  	
-DoubleLinkedList::~DoubleLinkedList()
-{
+int DoubleLinkedList::count()const {
+	return count_; 
+}
+
+DoubleLinkedList::~DoubleLinkedList(){
 	Node* current = nullptr;    
 	Node* next = head_;           
 	while (next != nullptr) {        
 		current = next;
-		next = next->next_;        
-		delete current;         
+		if (current->item_ < 0){
+			break;
+		}
+		next = next->next_;
+		if (current->item_ >= 0)
+			delete current;
 	}
+}
+
+bool DoubleLinkedList::operator==(DoubleLinkedList& src){
+	if (count_ != src.count_) {
+		return 0;
+	}
+	else {
+		Node* left = head_;
+		Node* right = src.head_;
+		for (int i = 0; i < count_; i++) {
+			if (right->item_ != left->item_) {
+				return 0;
+			}
+		}
+	}
+	return 1;
 }
