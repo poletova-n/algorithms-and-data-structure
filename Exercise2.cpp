@@ -315,7 +315,7 @@ void operator<< (ostream& out, const DoubleLinkedList& list)
 	}
 	else
 	{
-		cout << "Danh sach trong." << endl;
+		cout << "The list is empty." << endl;
 	}
 }
 
