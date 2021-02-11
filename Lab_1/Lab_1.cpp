@@ -1,85 +1,97 @@
-﻿#ifndef LINKEDLIST_DOUBLELINKEDLIST_H
-#define LINKEDLIST_DOUBLELINKEDLIST_H
-
+﻿#include "DoubleLinkedList.h"
 #include <iostream>
 
-class DoubleLinkedList
+
+std::ostream& operator<< (std::ostream& out, DoubleLinkedList& src)
 {
-private:
+    src.outAll();
+    return out;
+}
 
-    struct Node
+int main() {
+    //testing
+    DoubleLinkedList list;
+    list.insertHead(1);
+    list.insertHead(2);
+    list.insertHead(3);
+    std::cout << "First list:" << std::endl;
+    list.outAll();
+
+    std::cout << ((list.searchItem(1)) ? "1 find" : "1 not find") << std::endl;
+    std::cout << ((list.searchItem(8)) ? "8 find" : "8 not find") << std::endl;
+
+    DoubleLinkedList  list1(list);
+    list1.insertHead(4);
+    list1.insertHead(5);
+    list1.deleteHead();
+    std::cout << "Second list, copied from first:" << std::endl;
+    list1.outAll();
+    list1.insertTail(6);
+    list1.deleteTail();
+    list1.deleteItem(3);
+    std::cout << "Second list, after deleting:" << std::endl;
+    list1.outAll();
+    std::cout << "Checking overloaded operator <<:" << std::endl;
+    std::cout << list;
+    std::cout << "Checking overloaded operator &" << std::endl;
+    DoubleLinkedList list2;
+    list2 = list & list1;
+    list2.outAll();
+    std::cout << "Checking list comparing:" << std::endl;
+    bool temp = list == list1;
+    std::cout << temp << std::endl;
+    list1.insertHead(5);
+    list = list1;
+    std::cout << "Checking copy-and-swap idiom:" << std::endl;
+    list.outAll();
+    list1.outAll();
+
+    list.merge(list1);
+    std::cout << "Merged lists:" << std::endl;
+    list.outAll();
+
+
+
+    return 0;
+}
+
+DoubleLinkedList operator| (DoubleLinkedList& src1, DoubleLinkedList& src2)
+{
+    DoubleLinkedList list3;
+    int count1 = src1.count_;
+    DoubleLinkedList::Node* head1 = src1.head_;
+    for (int i = 0; i < count1; i++)
     {
-        int item_;
-        Node* next_;
-        Node* prev_;
+        list3.insertTail(head1->item_);
+        head1 = head1->next_;
+    }
+    int count2 = src2.count_;
+    DoubleLinkedList::Node* head2 = src2.head_;
+    for (int i = 0; i < count2; i++)
+    {
+        if (!list3.searchItem(head2->item_))
+        {
+            list3.insertTail(head2->item_);
+        }
+        head2 = head2->next_;
+    }
+    return list3;
+}
 
-        Node(int item, Node* next = nullptr, Node* prev = nullptr) : item_(item), next_(next), prev_(prev) { }
-    };
+DoubleLinkedList operator& (DoubleLinkedList& src1, DoubleLinkedList& src2)
+{
+    DoubleLinkedList list3;
+    int count1 = src1.count_;
+    DoubleLinkedList::Node* head1 = src1.head_;
+    for (int i = 0; i < count1; i++)
+    {
+        if (src2.searchItem(head1->item_))
+        {
+            list3.insertTail(head1->item_);
+        }
+        head1 = head1->next_;
+    }
+    return list3;
+}
 
-    int count_;
-    Node* head_;
-    Node* tail_;
 
-    Node* head() const { return head_; }
-
-    Node* tail() const { return tail_; }
-
-    void insertTail(Node* x);
-
-    void insertHead(Node* x);
-
-    void deleteNode(Node* x);
-
-    Node* searchNode(int item);
-
-    Node* replaceNode(Node* x, int item);
-
-public:
-
-    friend std::ostream& operator<< (std::ostream& out, DoubleLinkedList& src);
-    friend DoubleLinkedList operator| (DoubleLinkedList& src1, DoubleLinkedList& src2);
-    friend DoubleLinkedList operator& (DoubleLinkedList& src1, DoubleLinkedList& src2);
-
-    bool operator==(DoubleLinkedList& src);
-
-    DoubleLinkedList& operator=(const DoubleLinkedList& src);
-    DoubleLinkedList& operator=(DoubleLinkedList&& src) noexcept;
-
-    DoubleLinkedList() : count_(0), head_(nullptr), tail_(nullptr) {  }
-
-    DoubleLinkedList(const DoubleLinkedList& src);
-
-    DoubleLinkedList(DoubleLinkedList&& src) noexcept;
-
-    int count()const;
-
-    int headItem() const;
-    int& headItem();
-
-    int tailItem() const;
-    int& tailItem();
-
-    void insertHead(int item);
-
-    void insertTail(int item);
-
-    bool deleteHead();
-
-    bool deleteTail();
-
-    bool deleteItem(const int item);
-
-    bool searchItem(int item);
-
-    bool replaceItem(int itemOld, int itemNew);
-
-    void outAll();
-
-    void merge(DoubleLinkedList& src);
-
-    void swap(DoubleLinkedList& src);
-
-    virtual ~DoubleLinkedList();
-};
-
-#endif

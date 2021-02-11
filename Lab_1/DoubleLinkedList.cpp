@@ -198,21 +198,13 @@ void DoubleLinkedList::outAll()
 	std::cout << std::endl;
 }
 
-int DoubleLinkedList::count()const {
-	return count_; 
-}
 
-DoubleLinkedList::~DoubleLinkedList(){
-	Node* current = nullptr;    
+DoubleLinkedList::~DoubleLinkedList(){   
 	Node* next = head_;           
 	while (next != nullptr) {        
-		current = next;
-		if (current->item_ < 0){
-			break;
-		}
-		next = next->next_;
-		if (current->item_ >= 0)
-			delete current;
+		next = head_->next_;
+		delete head_;
+		head_ = next;
 	}
 }
 
@@ -230,4 +222,65 @@ bool DoubleLinkedList::operator==(DoubleLinkedList& src){
 		}
 	}
 	return 1;
+}
+
+void DoubleLinkedList::merge(DoubleLinkedList& src) {
+	Node* x = src.head_;
+	while (x != nullptr) {
+		insertTail(x->item_);
+		x = x->next_;
+	}
+	return;
+}
+
+DoubleLinkedList& DoubleLinkedList::operator=(const DoubleLinkedList& src) {
+	DoubleLinkedList temp(src);
+	this->swap(temp);
+	return *this;
+}
+
+void DoubleLinkedList::swap(DoubleLinkedList& src) {
+	DoubleLinkedList temp(src);
+	src.head_ = this->head_;
+	src.tail_ = this->tail_;
+	src.count_ = this->count_;
+	this->head_ = temp.head_;
+	this->tail_ = temp.tail_;
+	this->count_ = temp.count_;
+	temp.tail_ = nullptr;
+	temp.head_ = nullptr;
+	temp.count_ = NULL;
+	return;	
+}
+DoubleLinkedList& DoubleLinkedList::operator=(DoubleLinkedList&& src) noexcept {
+	if (this != &src) {
+		DoubleLinkedList temp(src);
+		delete[] head_;
+		delete[] tail_;
+		count_ = -1;
+		head_ = temp.head_;
+		tail_ = temp.tail_;
+		count_ = temp.count_;
+		src.~DoubleLinkedList();
+		temp.tail_ = nullptr;
+		temp.head_ = nullptr;
+		temp.count_ = NULL;
+	}
+	return *this;
+}
+
+DoubleLinkedList::DoubleLinkedList(DoubleLinkedList&& src) noexcept
+{
+	if (this != &src)
+	{
+		DoubleLinkedList temp(src);
+		head_ = temp.head_;
+		tail_ = temp.tail_;
+		count_ = temp.count_;
+		src.~DoubleLinkedList();
+		temp.head_ = nullptr;
+		temp.tail_ = nullptr;
+		temp.count_ = NULL;
+
+	}
 }

@@ -1,7 +1,7 @@
 #ifndef __DOUBLE_LINKED_LIST
 #define __DOUBLE_LINKED_LIST
 
-     
+#include <iostream>
 
 class DoubleLinkedList
 {
@@ -45,25 +45,28 @@ private:
 public:
 
 
-
     friend std::ostream& operator<< (std::ostream& out, DoubleLinkedList& src);
     friend DoubleLinkedList operator| (DoubleLinkedList& src1, DoubleLinkedList& src2);
     friend DoubleLinkedList operator& (DoubleLinkedList& src1, DoubleLinkedList& src2);
-    
+
     bool operator==(DoubleLinkedList& src);
 
     DoubleLinkedList& operator=(const DoubleLinkedList& src);
     DoubleLinkedList& operator=(DoubleLinkedList&& src) noexcept;
-
-    DoubleLinkedList(int item);
+    DoubleLinkedList& operator=(DoubleLinkedList* src);
 
     DoubleLinkedList() : count_(0), head_(nullptr), tail_(nullptr) {  }
 
-    
     DoubleLinkedList(const DoubleLinkedList& src);
 
+    DoubleLinkedList(DoubleLinkedList&& src) noexcept;
+
+    DoubleLinkedList(int item);
+
+
+
  
-    int ount()const { return count_; }
+    int count()const { return count_; }
 
      
     int headItem() const;
@@ -98,7 +101,6 @@ public:
 
     void swap(DoubleLinkedList& src);
 
-    int count()const;
     virtual ~DoubleLinkedList();
 };
 #endif
