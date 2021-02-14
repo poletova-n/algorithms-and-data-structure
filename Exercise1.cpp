@@ -1,7 +1,7 @@
 ﻿#include<iostream>
 using namespace std;
 
-//=================================NODE==================================================//
+					//=================================NODE==================================================//
 
 class Node
 {
@@ -90,7 +90,7 @@ bool operator > (const Node& node1, const Node& node2)
 	return (node1.data_ > node2.data_);
 }
 
-//====================================Double Linked List===========================================//
+			//====================================Double Linked List===========================================//
 
 class List
 {
@@ -121,7 +121,7 @@ public:
 	Node* getHead() const;
 	Node* getTail() const;
 
-
+	
 	List& insertHead(Node*);
 	List& insertTail(Node*);
 	List& insert_advance(Node*, Node*);
@@ -351,7 +351,7 @@ List operator& (const List& list1, const List& list2)
 		if (count == 0)
 		{
 			int condition = 1;
-			for (Node* j = list2.getHead(); (j != nullptr && condition == 1); j = j->getNext())
+			for (Node* j = list2.getHead(); (j != nullptr && condition==1); j = j->getNext())
 			{
 				++count;
 				if (i->getData() == j->getData())
@@ -375,7 +375,7 @@ List operator& (const List& list1, const List& list2)
 				temp = temp->getNext();
 			}
 			int condition = 1;
-			for (Node* j = temp; (j != nullptr && condition == 1); j = j->getNext())
+			for (Node* j = temp; ( j != nullptr && condition == 1); j = j->getNext())
 			{
 				++count;
 				if (i->getData() == j->getData())
@@ -391,7 +391,7 @@ List operator& (const List& list1, const List& list2)
 				}
 			}
 		}
-
+		
 	}
 	return list3;
 }
@@ -468,7 +468,7 @@ List& List::merge(List& list)
 
 int main()
 {
-
+	
 	List list1;
 	int a;
 	cout << "Number of elements: "; cin >> a;
@@ -483,7 +483,7 @@ int main()
 	cout << "List 1: " << list1;
 	cout << "\n\n";
 
-
+	
 
 	List list2;
 	int b;
@@ -502,6 +502,6 @@ int main()
 
 	cout << "List 2: " << list2;
 	cout << "\n\n";
-
+	
 	return 0;
 }
