@@ -1,6 +1,5 @@
 ﻿#include<iostream>
 using namespace std;
-//hehe
 						//=================================NODE==================================================//
 class Node
 {
