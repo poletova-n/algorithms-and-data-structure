@@ -50,7 +50,7 @@ int main()
 	}
 	catch (const char* exception)
 	{
-		std::cout << "Возникло исключение" << std::endl
+		std::cout << "Caught an exception" << std::endl
 			<< exception << std::endl;
 	}
 	try		//double linked list
