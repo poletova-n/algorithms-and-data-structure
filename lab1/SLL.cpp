@@ -23,6 +23,7 @@ SinglyLinkedList::SinglyLinkedList(const SinglyLinkedList& src)
 
 SinglyLinkedList::~SinglyLinkedList()
 {
+	clear();
 }
 
 bool SinglyLinkedList::operator==(const SinglyLinkedList& other)
@@ -229,5 +230,13 @@ void SinglyLinkedList::pop_front()
 	head = head->next;
 	delete temp;
 	size--;
+}
+
+void SinglyLinkedList::clear()
+{
+	while (size)
+	{	
+	pop_front();
+	}
 }
 
