@@ -16,6 +16,8 @@ public:
 
   T pop() override;
 
+  T getTop();
+
   bool isEmpty() override;
 
 private:
@@ -80,6 +82,12 @@ bool StackList<T>::isEmpty()
 {
   if (size == 0) return true;
   else return false;
+}
+
+template<class T>
+T StackList<T>::getTop()
+{
+  return top->value;
 }
 
 #endif

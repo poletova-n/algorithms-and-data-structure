@@ -16,6 +16,8 @@ public:
 
   T pop() override;
 
+  T getTop();
+
   bool isEmpty() override;
 
 private:
@@ -78,6 +80,12 @@ template<class T>
 void StackArray<T>::swap(StackArray<T> &src)
 {
 
+}
+
+template<class T>
+T StackArray<T>::getTop()
+{
+  return array[top];
 }
 
 #endif
