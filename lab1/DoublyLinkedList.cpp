@@ -205,3 +205,23 @@ void DoublyLinkedList::merge(DoublyLinkedList &newList)
         newList.head_ = temp;
     }
 }
+
+void DoublyLinkedList::deleteValue(DoublyLinkedList &list, int valueOne, int valueTwo)
+{
+    Node* tempList = list.head_;
+
+    while(tempList != nullptr)
+    {
+        if (valueOne <= tempList->item_ && tempList->item_ <= valueTwo)
+        {
+            tempList = list.head_->next_;
+            delete list.head_;
+            list.size_--;
+            list.head_ = tempList;
+        }
+        else
+        {
+            break;
+        }
+    }
+}

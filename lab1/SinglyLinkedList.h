@@ -30,7 +30,6 @@ private:
     bool checkForRepeatedElements(Node* value);
 
 public:
-    
     SinglyLinkedList();
     
     SinglyLinkedList(const SinglyLinkedList &copyValue);
@@ -43,10 +42,6 @@ public:
 
     int getSize() const;
 
-    void insert(Node* value);
-
-    void merge(SinglyLinkedList& newList);
-
     void operator+= (int value);
 
     bool operator== (SinglyLinkedList& list);
@@ -56,7 +51,10 @@ public:
     friend SinglyLinkedList operator& (const SinglyLinkedList& listFirst, const SinglyLinkedList& listSecond);
 
     friend SinglyLinkedList operator| (const SinglyLinkedList& listFirst, const SinglyLinkedList& listSecond);
-    
+
+    void insert(Node* value);
+
+    void merge(SinglyLinkedList& newList);
 };
 
 #endif

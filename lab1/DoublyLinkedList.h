@@ -34,7 +34,6 @@ private:
     bool checkForRepeatedElements(Node* value);
 
 public:
-
     DoublyLinkedList();
 
     DoublyLinkedList(const DoublyLinkedList &copyValue);
@@ -44,6 +43,8 @@ public:
     ~DoublyLinkedList();
 
     int getSize() const;
+
+    void deleteValue(DoublyLinkedList &list, int valueOne, int valueTwo);
 
     void insert(Node *value);
 
@@ -58,7 +59,6 @@ public:
     friend DoublyLinkedList operator& (const DoublyLinkedList& listFirst, const DoublyLinkedList& listSecond);
 
     friend DoublyLinkedList operator| (const DoublyLinkedList& listFirst, const DoublyLinkedList& listSecond);
-
 };
 
 #endif

@@ -78,8 +78,10 @@ int main()
         std::cout << ListOverloadSecond;
         std::cout << "Output of the merge method"<< '\n';
         listOne.merge(listTwo);
+        std::cout << listOne << '\n';
+
+        listOne.deleteValue(listOne, 1, 25);
         std::cout << listOne;
     }
-
     return 0;
 }

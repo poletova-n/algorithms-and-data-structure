@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.17)
-project(Lab_1)
+project(lab1)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(Lab_1 main.cpp DoublyLinkedList.h DoublyLinkedList.cpp SinglyLinkedList.cpp SinglyLinkedList.h)
+add_executable(lab1 main.cpp DoublyLinkedList.h DoublyLinkedList.cpp SinglyLinkedList.cpp SinglyLinkedList.h)
