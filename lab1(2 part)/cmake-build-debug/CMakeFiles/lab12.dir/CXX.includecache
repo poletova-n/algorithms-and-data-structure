@@ -1,0 +1,18 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/Nikita/CLionProjects/lab12/doublelist.cpp
+iostream
+-
+doublelist.h
+C:/Users/Nikita/CLionProjects/lab12/doublelist.h
+
+C:/Users/Nikita/CLionProjects/lab12/doublelist.h
+iostream
+-
+
