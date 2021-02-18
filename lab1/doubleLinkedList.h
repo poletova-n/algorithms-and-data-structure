@@ -28,6 +28,8 @@ public:
 
     DLList merge(DLList& list);
 
+    friend DLList operator ||(DLList& list, DLList& list1);
+
 private:
 
     class Node

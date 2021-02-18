@@ -57,7 +57,7 @@ void DLList::operator +=(int data)
         {
             if (temp->data_ == data)
             {
-                throw "������� � ����� ��������� ��� ��� � ������";
+                throw "Element with this value is already here";
             }
             temp = temp->pNext_;
         }
@@ -114,12 +114,12 @@ bool DLList::operator==(DLList& list)
     {
         if (current->data_ != list[i])
         {
-            std::cout << "������ �� �������� �����������" << std::endl;
+            std::cout << "These lists are not the equal" << std::endl;
             return false;
         }
         current = current->pNext_;
     }
-    std::cout << "������ �������� �����������" << std::endl;
+    std::cout << "These lists are equal" << std::endl;
     return true;
 }
 
@@ -158,7 +158,7 @@ DLList operator&(DLList& list, DLList& list1)
             }
         }
     }
-    std::cout << "������, �������������� �� ���������, ��������� � ����� �������: " << newlist << std::endl;
+    std::cout << "List formed from elements of both current lists: " << newlist << std::endl;
     return newlist;
 }
 
@@ -181,7 +181,7 @@ DLList operator|(DLList& list, DLList& list1)
             newlist += list1[i];
         }
     }
-    std::cout << "������, �������������� �� ��������� ���� �������: " << newlist << std::endl;
+    std::cout << "List formed from both current lists: " << newlist << std::endl;
     return newlist;
 }
 
@@ -194,12 +194,51 @@ std::ostream& operator<<(std::ostream& stream, DLList& list)
     return stream;
 }
 
+DLList operator||(DLList& list, DLList& list1)
+{
+    DLList newlist;
+    for (int i = 0; i < list1.size_; i++)
+    {
+        int counter = 0;
+        for (int j = 0; j < list.size_; j++)
+        {
+            if (list1[i] == list[j])
+            {
+                counter++;
+            }
+            
+        }
+        if (counter == 0)
+        {
+            newlist += list1[i];
+        }
+    }
+    for (int i = 0; i < list.size_; i++)
+    {
+        int counter = 0;
+        for (int j = 0; j < list1.size_; j++)
+        {
+            if (list[i] == list1[j])
+            {
+                counter++;
+            }
+
+        }
+        if (counter == 0)
+        {
+            newlist += list[i];
+        }
+    }
+    std::cout << "List formed from both current lists: " << newlist << std::endl;
+    return newlist;
+}
+
 DLList DLList::merge(DLList& list)
 {
 
     if (list.head_ == nullptr)
     {
-        throw "���������� �������� � ��������� ������ ������ ������";
+        throw "Adding an empty list is impossible";
         return *this;
     }
     for (int i = 0; i < list.size_; i++)
