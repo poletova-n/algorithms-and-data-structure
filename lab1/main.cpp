@@ -38,7 +38,7 @@ int main()
 	sum2 = sll | secondsll;
 	std::cout << sum2;
 	std::cout << "Testing Merge() :\n";
-	sll.Merge(secondsll);
+	sll.merge(secondsll);
 	std::cout << sll;
 
 
@@ -67,7 +67,7 @@ int main()
 	dllSum2 = dll | seconddll;
 	std::cout << dllSum2;
 	std::cout << "Testing Merge() :\n";
-	dll.Merge(seconddll);
+	dll.merge(seconddll);
 	std::cout << dll << "\n" << seconddll;
 	return 0;
 }
