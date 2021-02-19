@@ -52,7 +52,7 @@ bool SinglyLinkedList::operator==(const SinglyLinkedList& other)
 	}
 }
 
-void SinglyLinkedList::Merge(SinglyLinkedList& src)
+void SinglyLinkedList::merge(SinglyLinkedList& src)
 {
 	while (src.head != nullptr)
 	{
@@ -70,7 +70,8 @@ void SinglyLinkedList::Merge(SinglyLinkedList& src)
 SinglyLinkedList::Node* SinglyLinkedList::searchNode(int data)
 {
 	SinglyLinkedList::Node* x = head;
-	while (x != nullptr && x->data != data) {
+	while (x != nullptr && x->data != data) 
+	{
 		x = x->next;
 	}
 	return x;
@@ -113,7 +114,7 @@ void SinglyLinkedList::operator+=(int data)
 }
 
 
-int SinglyLinkedList::operator[](const int idx)
+int & SinglyLinkedList::operator[](const int idx)
 {
 	int counter = 0;
 	Node* cur = this->head;
@@ -152,7 +153,7 @@ void SinglyLinkedList::push_front(int data)
 {
 	head = new Node(data, head);
 	size++;
-	Sort();
+	sort();
 }
 
 SinglyLinkedList operator&(SinglyLinkedList& firstList, SinglyLinkedList& secondList)
@@ -194,7 +195,7 @@ SinglyLinkedList operator|(SinglyLinkedList& firstList, SinglyLinkedList& second
 }
 
 
-void SinglyLinkedList::PrintList()
+void SinglyLinkedList::printList()
 {
 	Node* cur = head;
 	while (cur != nullptr)
@@ -205,7 +206,7 @@ void SinglyLinkedList::PrintList()
 	std::cout << "\n";
 }
 
-void SinglyLinkedList::Sort()
+void SinglyLinkedList::sort()
 {
 	for (int i = 0; i < this->size; i++)
 	{
