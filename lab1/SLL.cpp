@@ -232,12 +232,3 @@ void SinglyLinkedList::pop_front()
 	delete temp;
 	size--;
 }
-
-void SinglyLinkedList::clear()
-{
-	while (size)
-	{	
-	pop_front();
-	}
-}
-
