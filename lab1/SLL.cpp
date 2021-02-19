@@ -146,7 +146,7 @@ void SinglyLinkedList::push_back(int data)
 		cur->next = new Node(data);
 	}
 	size++;
-	Sort();
+	sort();
 }
 
 void SinglyLinkedList::push_front(int data)
