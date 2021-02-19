@@ -4,7 +4,7 @@
 
 std::ostream& operator<<(std::ostream& os, SinglyLinkedList& sllst)
 {
-	sllst.PrintList();
+	sllst.printList();
 	return os;
 }
 
@@ -17,7 +17,7 @@ int main()
 	sll.push_back(6);
 	sll.push_front(3);
 	sll += 44;
-	sll.PrintList();
+	sll.printList();
 	SinglyLinkedList secondsll;
 	secondsll.push_back(6);
 	secondsll.push_back(28);
