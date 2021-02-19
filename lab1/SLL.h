@@ -9,18 +9,18 @@ public:
 	SinglyLinkedList(SinglyLinkedList& src);
 	SinglyLinkedList(const SinglyLinkedList& src);
 	void operator+=(int data);
-	int operator[](const int idx);
+	int & operator[](const int idx);
 	void push_back(int data);
 	void push_front(int data);
-	void PrintList();
-	void Sort();
+	void printList();
+	void sort();
 	void pop_front();
 	bool operator ==(const SinglyLinkedList& other);
-	int GetSize()
+	int getSize()
 	{
 		return size;
 	}
-	void Merge(SinglyLinkedList& src);
+	void merge(SinglyLinkedList& src);
 
 	void pop_back();
 	void clear();
