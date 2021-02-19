@@ -67,7 +67,7 @@ int main()
 	dllSum2 = dll | seconddll;
 	std::cout << dllSum2;
 	std::cout << "Testing Merge() :\n";
-	dll.merge(seconddll);
+	dll.Merge(seconddll);
 	std::cout << dll << "\n" << seconddll;
 	return 0;
 }
