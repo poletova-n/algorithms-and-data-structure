@@ -23,7 +23,7 @@ SinglyLinkedList::SinglyLinkedList(const SinglyLinkedList& src)
 
 SinglyLinkedList::~SinglyLinkedList()
 {
-	clear();
+
 }
 
 bool SinglyLinkedList::operator==(const SinglyLinkedList& other)
