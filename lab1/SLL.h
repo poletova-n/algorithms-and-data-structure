@@ -23,7 +23,6 @@ public:
 	void merge(SinglyLinkedList& src);
 
 	void pop_back();
-	void clear();
 	void  removeAt(int idx);;
 
 	friend std::ostream& operator<< (std::ostream& os, const SinglyLinkedList& sllst);
