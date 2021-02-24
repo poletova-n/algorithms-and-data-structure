@@ -29,8 +29,7 @@ bool isBalancedBrackets(std::string originStr, bool isArrayWay)
   if (isArrayWay)
   {
     return balanceByArray(originStr);
-  }
-  else
+  } else
   {
     return balanceByList(originStr);
   }
@@ -76,9 +75,6 @@ bool balanceByList(std::string originStr)
     {
       if
         (
-          // юзаю ^ (или XOR) чтобы, если одно из условий выполнялось тогда return false,
-          // например если у нас в стеке лежит открывающая скобка а следующий символ НЕ закрывающая, тогда условие выполнилось
-          // и делаем return false
         stack.isEmpty() || ((originStr[i] == ')') ^ (stack.getTop() == '(')) ||
         ((originStr[i] == '}') ^ (stack.getTop() == '{')) || ((originStr[i] == ']') ^ (stack.getTop() == '['))
         )
