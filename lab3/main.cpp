@@ -14,6 +14,16 @@ int evaluatePostfix(const std::string& infix, size_t stackSize = 30);
 int main()
 {
   setlocale(LC_ALL, "ru");
+  std::cout << "Class StackArray test" << "\n";
+  StackArray <int> test;
+  std::cout << "Let's add 3 elements to our stack: 4, 5, 6. Then we will display them." << "\n";
+  test.push(4);
+  test.push(5);
+  test.push(6);
+  std::cout<< "Elements output: "<< test.pop() << " " << test.pop() << " " << test.pop() << "\n";
+  std::cout << "Now let's check if the stack is empty. If it is empty, then everything works correctly." << "\n";
+  std::cout << (test.isEmpty() ? "Stack is empty" : "Stack is not empty") << "\n";
+  std::cout << "-------------------------------------" << "\n";
   std::cout << "Check balance brackets: \n";
   std::string str = "()";
   std::cout << str << ": " << (checkBalanceBrackets(str) ? "right" : "wrong") << "\n";
@@ -42,16 +52,50 @@ catch (const StackOverflow& error)
 {
   std::cout << str << ": " << error.what() << "\n";
 }
-
-
+  std::cout << "-------------------------------------" << "\n";
+  std::cout << "getPostfixFromInfix:" << "\n";
   std::string a = "(2*4*(5+3/6)+9)*7";
   std::string b;
   getPostfixFromInfix(a, b, 30);
-  std::cout << a << "\n";
-  std::cout << b << "\n" << "\n";
-  a = "24/";
-  std::cout << a << "\n" << evaluatePostfix(a, 30);
-
+  std::cout<< "infix: " << a << "\n";
+  std::cout <<"postfix: "<< b << "\n" << "\n";
+  a = "1+4*6";
+  getPostfixFromInfix(a, b, 30);
+  std::cout << "infix: " << a << "\n";
+  std::cout << "postfix: " << b << "\n" << "\n";
+  a = "1*7+(3/4+1)";
+  getPostfixFromInfix(a, b, 30);
+  std::cout << "infix: " << a << "\n";
+  std::cout << "postfix: " << b << "\n" << "\n";
+  a = "5+8*10+(10-7)*10";
+  getPostfixFromInfix(a, b, 30);
+  std::cout << "infix: " << a << "\n";
+  std::cout << "postfix: " << b << "\n" << "\n";
+  a = "(1-7*5)*(5*(3-4))";
+  getPostfixFromInfix(a, b, 30);
+  std::cout << "infix: " << a << "\n";
+  std::cout << "postfix: " << b << "\n";
+  std::cout << "-------------------------------------" << "\n";
+  std::cout << "evaluatePostfix:" << "\n";
+  a = "24+";
+  std::cout <<"Expression: " <<a << "\n";
+  std::cout << "Decision: "<<evaluatePostfix(a, 30) << "\n" << "\n";
+  a = "456-*";
+  std::cout << "Expression: " <<  a << "\n";
+  std::cout << "Decision: " << evaluatePostfix(a, 30) << "\n" << "\n";
+  a = "89-12+*";
+  std::cout << "Expression: " << a << "\n";
+  std::cout << "Decision: " << evaluatePostfix(a, 30) << "\n" << "\n";
+  a = "657-*23-+23+*";
+  std::cout << "Expression: " << a << "\n";
+  std::cout << "Decision: " << evaluatePostfix(a, 30) << "\n" << "\n";
+  a = "25+98*-67+";
+  std::cout << "Expression: " << a << "\n";
+  std::cout << "Decision: " << evaluatePostfix(a, 30) << "\n" << "\n";
+  a = "22/33/+";
+  std::cout << "Expression: " << a << "\n";
+  std::cout << "Decision: " << evaluatePostfix(a, 30) << "\n" << "\n";
+  return 0;
 }
 
 bool checkBalanceBrackets(const std::string& text, int maxDeep)
@@ -107,6 +151,7 @@ bool checkBalanceBrackets(const std::string& text, int maxDeep)
 
 bool getPostfixFromInfix(const std::string& infix, std::string& postfix, size_t stackSize)
 {
+  postfix = "";
   StackArray<char> test(stackSize);
   checkBalanceBrackets(infix);
   for (size_t i = 0; i < infix.size(); i++)
