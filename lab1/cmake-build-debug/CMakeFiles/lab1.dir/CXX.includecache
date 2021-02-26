@@ -1,0 +1,18 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Dmitry/learn/Algo/Clion/labs/lab1/DoubleLinkedList.cpp
+DoubleLinkedList.h
+C:/Dmitry/learn/Algo/Clion/labs/lab1/DoubleLinkedList.h
+iostream
+-
+
+C:/Dmitry/learn/Algo/Clion/labs/lab1/DoubleLinkedList.h
+ostream
+-
+
