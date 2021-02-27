@@ -2,6 +2,7 @@
 #define LAB2_STACKARRAY_HPP
 
 #include "Stack.hpp"
+#include "exception.hpp"
 
 template <class T>
 class StackArray : public Stack<T>
