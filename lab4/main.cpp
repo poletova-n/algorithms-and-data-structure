@@ -3,7 +3,7 @@
 int main()
 {
   std::cout << "Create first tree\n";
-  BinarySearchTree<int> firstTree; 
+  BinarySearchTree<int> firstTree;
   std::cout << "Fill in first tree\n";
   firstTree.insert(45);
   firstTree.insert(-98);
@@ -26,7 +26,7 @@ int main()
   firstTree.print(std::cout);
   std::cout << "Let's delete the key with the value 45(it is not in the tree)\n";
   firstTree.deleteKey(45);
-  std::cout <<"Number of keys in the tree: " << firstTree.getCount() << "\n";
+  std::cout << "Number of keys in the tree: " << firstTree.getCount() << "\n";
   std::cout << "Tree height: " << firstTree.getHeight() << "\n";
   std::cout << "Infix tree traversal: " << "\n";
   firstTree.iterativeInorderWalk();
@@ -35,10 +35,7 @@ int main()
   std::cout << "Create second tree\n";
   BinarySearchTree<int> secondTree;
   std::cout << "We will not fill it in and compare it with the first tree: \n";
-  if (secondTree == firstTree)
-    std::cout << "Trees are equal\n";
-  else
-    std::cout << "Trees are not equal\n";
+  std::cout << (!(secondTree == firstTree) ? "Trees are not equal\n" : "Trees are equal\n");
   std::cout << "Let's create a third tree and fill the second and third trees equally and check if they are equal\n";
   BinarySearchTree<int> thirdTree;
   thirdTree.insert(5);
@@ -51,9 +48,6 @@ int main()
   secondTree.insert(10);
   secondTree.insert(4);
   secondTree.insert(2);
-  if (secondTree == thirdTree)
-    std::cout << "Trees are equal\n";
-  else
-    std::cout << "Trees are not equal\n";
+  std::cout << (secondTree == thirdTree ? "Trees are equal\n" : "Trees are not equal\n");
   return 0;
 }
