@@ -3,10 +3,10 @@
 Operand::Operand(char op):
 operation(op)
 {
-  if(op == '*') priority = 3;
-  if(op == '^') priority = 3;
-  if(op == '/') priority = 3;
-  if(op == '+') priority = 2;
+  if(op == '^') priority = 6;
+  if(op == '*') priority = 5;
+  if(op == '/') priority = 4;
+  if(op == '+') priority = 3;
   if(op == '-') priority = 2;
   if(op == '(') priority = 1;
   if(op == ')') priority = 1;
