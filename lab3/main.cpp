@@ -7,22 +7,37 @@ std::string infixToPostfix(const std::string &originStr);
 
 std::string eraseAllBrackets(const std::string &originStr);
 
-int calculateTwoOperands(int operand1, int operand2);
+int calculateTwoOperands(int operand1, int operand2, char operation);
 
 int calculatePostfix(const std::string &originStr);
 
 int main()
 {
-  std::string str1 = "5 * 6 + ( 2 - 9 )";
-  std::cout << "Original string: " << str1 << " | Postfix-form string: " << infixToPostfix(str1) << std::endl;
-  std::string str2 = "5 + 7 + ( 2 * 6 )";
-  std::cout << "Original string: " << str2 << " | Postfix-form string: " << infixToPostfix(str2) << std::endl;
-  std::string str3 = "( 4 - 2 ) / 7 + 1";
-  std::cout << "Original string: " << str3 << " | Postfix-form string: " << infixToPostfix(str3) << std::endl;
-  std::cout << "Calculated strings in postfix-form:" << std::endl;
-  std::cout << "String 1: " << calculatePostfix(infixToPostfix(str1)) << std::endl;
-  std::cout << "String 2: " << calculatePostfix(infixToPostfix(str2)) << std::endl;
-  std::cout << "String 3: " << calculatePostfix(infixToPostfix(str3)) << std::endl;
+  try
+  {
+    std::string str1 = "5 * 6 + ( 2 - 9 )";
+    std::cout << "Original string: " << str1 << " | Postfix-form string: " << infixToPostfix(str1) << std::endl;
+    std::string str2 = "5 + 7 + ( 2 * 6 )";
+    std::cout << "Original string: " << str2 << " | Postfix-form string: " << infixToPostfix(str2) << std::endl;
+    std::string str3 = "( 4 - 2 ) / 7 + 1";
+    std::cout << "Original string: " << str3 << " | Postfix-form string: " << infixToPostfix(str3) << std::endl;
+    std::string str4 = "( 4 ^ 2 - 2 ^ 2 ) / 3";
+    std::cout << "Original string: " << str4 << " | Postfix-form string: " << infixToPostfix(str4) << std::endl;
+    std::string str5 = "( 1 + 1 ) / ( 1 - 1 )";
+    std::cout << "Original string: " << str5 << " | Postfix-form string: " << infixToPostfix(str5) << std::endl;
+
+    std::cout << "Calculated strings in postfix-form:" << std::endl;
+    std::cout << "String 1: " << calculatePostfix(infixToPostfix(str1)) << std::endl;
+    std::cout << "String 2: " << calculatePostfix(infixToPostfix(str2)) << std::endl;
+    std::cout << "String 3: " << calculatePostfix(infixToPostfix(str3)) << std::endl;
+    std::cout << "String 4: " << calculatePostfix(infixToPostfix(str4)) << std::endl;
+    std::cout << "String 5: " << calculatePostfix(infixToPostfix(str5)) << std::endl;
+  }
+  catch (const std::invalid_argument &e)
+  {
+    std::cerr << std::endl << e.what() << std::endl;
+    return 1;
+  }
   return 0;
 }
 
@@ -37,6 +52,10 @@ int calculateTwoOperands(int operand1, int operand2, char operation)
     case '*':
       return operand1 * operand2;
     case '/':
+      if (operand2 == 0)
+      {
+        throw std::invalid_argument("Dividing by zero detected");
+      }
       return operand1 / operand2;
     case '^':
       return pow(operand1, operand2);
@@ -54,8 +73,7 @@ int calculatePostfix(const std::string &originStr)
     if ((int) originStr[i] >= ASCII_CODE_FOR_ZERO && (int) originStr[i] <= ASCII_CODE_FOR_NINE)
     {
       stack.push((int) originStr[i] - ASCII_CODE_FOR_ZERO);
-    }
-    else if (originStr[i] == '+' || originStr[i] == '-' || originStr[i] == '*' || originStr[i] == '/' ||
+    } else if (originStr[i] == '+' || originStr[i] == '-' || originStr[i] == '*' || originStr[i] == '/' ||
                originStr[i] == '^')
     {
       int operand1 = stack.pop();
@@ -93,8 +111,7 @@ std::string infixToPostfix(const std::string &originStr)
     {
       result.push_back(originStr[i]);
       result.push_back(' ');
-    }
-    else if (originStr[i] == '+' || originStr[i] == '-' || originStr[i] == '*' || originStr[i] == '/' ||
+    } else if (originStr[i] == '+' || originStr[i] == '-' || originStr[i] == '*' || originStr[i] == '/' ||
                originStr[i] == '^')
     {
       Operand temp(originStr[i]);
@@ -102,12 +119,10 @@ std::string infixToPostfix(const std::string &originStr)
       if (stack.isEmpty() || stack.getTop() == '(')
       {
         stack.push(originStr[i]);
-      }
-      else if (temp.getPriority() > topOperand.getPriority())
+      } else if (temp.getPriority() > topOperand.getPriority())
       {
         stack.push(originStr[i]);
-      }
-      else if (temp.getPriority() <= topOperand.getPriority())
+      } else if (temp.getPriority() <= topOperand.getPriority())
       {
         char counter = stack.getTop();
         while ((counter != '(' || Operand(counter).getPriority() > Operand(stack.getTop()).getPriority()) &&
@@ -119,12 +134,10 @@ std::string infixToPostfix(const std::string &originStr)
         }
         stack.push(originStr[i]);
       }
-    }
-    else if (originStr[i] == '(')
+    } else if (originStr[i] == '(')
     {
       stack.push(originStr[i]);
-    }
-    else if (originStr[i] == ')')
+    } else if (originStr[i] == ')')
     {
       char counter = stack.getTop();
       while (counter != '(' && !stack.isEmpty())
