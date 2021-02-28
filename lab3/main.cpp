@@ -77,24 +77,43 @@ catch (const StackOverflow& error)
   std::cout << "postfix: " << b << "\n";
   std::cout << "-------------------------------------" << "\n";
   std::cout << "evaluatePostfix:" << "\n";
-  a = "24+";
-  std::cout <<"Expression: " <<a << "\n";
-  std::cout << "Decision: "<<evaluatePostfix(a, 30) << "\n" << "\n";
-  a = "456-*";
-  std::cout << "Expression: " <<  a << "\n";
-  std::cout << "Decision: " << evaluatePostfix(a, 30) << "\n" << "\n";
-  a = "89-12+*";
-  std::cout << "Expression: " << a << "\n";
-  std::cout << "Decision: " << evaluatePostfix(a, 30) << "\n" << "\n";
-  a = "657-*23-+23+*";
-  std::cout << "Expression: " << a << "\n";
-  std::cout << "Decision: " << evaluatePostfix(a, 30) << "\n" << "\n";
-  a = "25+98*-67+";
-  std::cout << "Expression: " << a << "\n";
-  std::cout << "Decision: " << evaluatePostfix(a, 30) << "\n" << "\n";
-  a = "22/33/+";
-  std::cout << "Expression: " << a << "\n";
-  std::cout << "Decision: " << evaluatePostfix(a, 30) << "\n" << "\n";
+  try
+  {
+    a = "20/";
+    std::cout << "Expression: " << a << "\n";
+    std::cout << "Decision: " << evaluatePostfix(a, 30) << "\n" << "\n";
+    a = "456-*";
+    std::cout << "Expression: " << a << "\n";
+    std::cout << "Decision: " << evaluatePostfix(a, 30) << "\n" << "\n";
+    a = "89-12+*";
+    std::cout << "Expression: " << a << "\n";
+    std::cout << "Decision: " << evaluatePostfix(a, 30) << "\n" << "\n";
+    a = "657-*23-+23+*";
+    std::cout << "Expression: " << a << "\n";
+    std::cout << "Decision: " << evaluatePostfix(a, 30) << "\n" << "\n";
+    a = "25+98*-67+";
+    std::cout << "Expression: " << a << "\n";
+    std::cout << "Decision: " << evaluatePostfix(a, 30) << "\n" << "\n";
+    a = "22/33/+";
+    std::cout << "Expression: " << a << "\n";
+    std::cout << "Decision: " << evaluatePostfix(a, 30) << "\n" << "\n";
+  }
+  catch (const StackOverflow& error)
+  {
+    std::cout << str << ": " << error.what() << "\n";
+  }
+  catch (const StackUnderflow& error)
+  {
+    std::cout << str << ": " << error.what() << "\n";
+  }
+  catch (const WrongStackSize& error)
+{
+  std::cout << str << ": " << error.what() << "\n";
+}
+  catch (...)
+  {
+    std::cout << "Cannot be divided by 0";
+  }
   return 0;
 }
 
@@ -239,6 +258,10 @@ int evaluatePostfix(const std::string& infix, size_t stackSize)
     {
       tempTwo = test.pop();
       tempOne = test.pop();
+      if (tempTwo == 0)
+      {
+        throw "Cannot be divided by 0";
+      }
       result = tempOne / tempTwo;
       test.push(result);
     }
