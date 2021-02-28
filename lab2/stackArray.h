@@ -22,6 +22,10 @@ private:
 template<class T>
 StackArray<T>::StackArray(size_t size)
 {
+	if (size <= 0)
+	{
+		throw StackWrongSize();
+	}
 	size_ = size;
 	array_ = new T[size + 1];
 	top_ = 0;
