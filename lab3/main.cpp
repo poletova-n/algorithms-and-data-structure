@@ -79,7 +79,7 @@ catch (const StackOverflow& error)
   std::cout << "evaluatePostfix:" << "\n";
   try
   {
-    a = "20/";
+    a = "24+";
     std::cout << "Expression: " << a << "\n";
     std::cout << "Decision: " << evaluatePostfix(a, 30) << "\n" << "\n";
     a = "456-*";
@@ -94,7 +94,7 @@ catch (const StackOverflow& error)
     a = "25+98*-67+";
     std::cout << "Expression: " << a << "\n";
     std::cout << "Decision: " << evaluatePostfix(a, 30) << "\n" << "\n";
-    a = "22/33/+";
+    a = "20/";
     std::cout << "Expression: " << a << "\n";
     std::cout << "Decision: " << evaluatePostfix(a, 30) << "\n" << "\n";
   }
