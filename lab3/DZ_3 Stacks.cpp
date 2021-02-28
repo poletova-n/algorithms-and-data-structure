@@ -168,6 +168,9 @@ bool isCorrect(const std::string& infix)
 
     if ((current == ')' && isDigit(next)) || (next == '(' && isDigit(current)))
       throw "Default symbols near";
+
+    if (current == '/' && next == '0')
+      throw "Uncorrect divising by zero";
   }
   return true;
 }
@@ -307,6 +310,18 @@ int evaluatePostfix(const std::string& postfix, std::size_t stackSize)
 
 void test()
 {
+  std::cout << "---------------------------------------------\n";
+  std::string infix0, postfix0;
+  infix0 = "1+7*6-2/0";
+  std::cout << "Infix: " << infix0 << std::endl;
+  if (getPostfixFromInfix(infix0, postfix0)) {
+    std::cout << "Postfix: " << postfix0 << " = " << evaluatePostfix(postfix0) << std::endl;
+  }
+  else {
+    std::cout << "Not converted :c\n";
+  }
+  std::cout << "---------------------------------------------\n";
+
   std::cout << "---------------------------------------------\n";
   std::string infix, postfix;
   infix = "1+2+3+4+5+6+7+8";
