@@ -2,7 +2,7 @@
 #include "stackarray.hpp"
 #include "stacklist.hpp"
 
-bool testByArray = 1;
+bool testByArray = 0;
 
 bool testBalanceBracketsByArray(const char* text, int maxDeep = 30)
 {

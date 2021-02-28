@@ -27,7 +27,12 @@ private:
 
 template <class T>
 StackList<T>::StackList(){
-  size = 0;
+  try{
+    size = 0;
+  }
+  catch (...) {
+    throw WrongStackSize();
+  }
   top = nullptr;
 }
 
