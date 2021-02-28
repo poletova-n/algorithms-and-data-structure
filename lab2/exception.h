@@ -8,7 +8,7 @@ public:
     StackOverflow() : reason("Stack Overflow")
     {
     }
-    const char* what() const
+    const char* what() const noexcept override
     {
         return reason;
     }
@@ -21,7 +21,7 @@ public:
     StackUnderflow() : reason("Stack Underflow")
     {
     }
-    const char* what() const
+    const char* what() const noexcept override
     {
         return reason;
     }
@@ -35,7 +35,7 @@ public:
     WrongStackSize() : reason("Wrong Stack Size")
     {
     }
-    const char* what() const
+    const char* what() const noexcept override
     {
         return reason;
     }
