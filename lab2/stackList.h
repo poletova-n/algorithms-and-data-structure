@@ -1,5 +1,5 @@
-#ifndef STACK_STACKLIST_H
-#define STACK_STACKLIST_H
+#ifndef STACK_LIST
+#define STACK_LIST
 
 #include "stack.h"
 #include "exception.h"
@@ -10,11 +10,11 @@ template <class T>
 class StackList: public Stack<T>
 {
 public:
-    StackList();
-    ~StackList() override;
-    void push(const T& element) override;
-    const T& pop() override;
-    bool isEmpty() override;
+	StackList();
+	~StackList() override;
+	void push(const T& element) override;
+	const T& pop() override;
+	bool isEmpty() override;
 
 private:
     class Node
@@ -27,7 +27,7 @@ private:
             data_ = data;
             pPrev_ = pPrev;
         }
-
+       
     };
 
     int size_;
@@ -44,12 +44,9 @@ StackList<T>::StackList()
 template<class T>
 StackList<T>::~StackList()
 {
-    Node* temp = top_;
-    while (temp->pPrev_ != nullptr)
+    while (size_ != 0)
     {
-        temp = temp->pPrev_;
-        delete top_;
-        top_ = temp;
+        pop();
     }
 }
 
@@ -76,7 +73,7 @@ const T& StackList<T>::pop()
     {
         throw StackUnderflow();
     }
-    else
+    else 
     {
         T current = top_->data_;
         top_ = top_->pPrev_;
@@ -88,7 +85,8 @@ const T& StackList<T>::pop()
 template<class T>
 bool StackList<T>::isEmpty()
 {
-    return size_ == 0;
+	return size_ == 0;
 }
 
-#endif //STACK_STACKLIST_H
+#endif 
+
