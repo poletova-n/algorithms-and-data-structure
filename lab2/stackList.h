@@ -29,7 +29,7 @@ public:
     const T& peek();
 private:    
 
-    Node<T>* top; // вершина стека, элемент занесенный в стек последним
+    Node<T>* top;
     int size; 
 };
 
