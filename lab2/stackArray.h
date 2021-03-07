@@ -10,7 +10,7 @@ class StackArray : public Stack<T>
 public:
 	StackArray (int size = 100);
 	StackArray (const StackArray<T>& src);
-	virtual ~StackArray() 
+	~StackArray () override 
 	{ 
 		delete[] array; 
 	}
