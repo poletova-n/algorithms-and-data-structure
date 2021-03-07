@@ -7,9 +7,8 @@ class Stack
 public:
   virtual ~Stack() {};
   virtual void push(const T& element) = 0;
-  virtual const T& pop() = 0;// Удаление и возвращение верхнего элемента.
-	 // Если элементов нет, может возникнуть StackUnderflow 
-  virtual bool isEmpty() = 0; // Проверка стека на пустоту
+  virtual const T& pop() = 0;
+  virtual bool isEmpty() = 0; 
   virtual const T& peek() = 0;
 };
 
