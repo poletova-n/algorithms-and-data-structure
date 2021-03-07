@@ -19,7 +19,13 @@ class StackList : public Stack<T>
 public:
     StackList();
     StackList(const StackList<T>& src);
-    virtual ~StackList() {};
+    ~StackList() override
+    {
+      while(!isEmpty())
+      {
+        pop();
+      }
+    };
     void push(const T& element);
     const T& pop();
     bool isEmpty()
