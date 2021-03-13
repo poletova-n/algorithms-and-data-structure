@@ -18,7 +18,12 @@ int main() {
   {
     std::cout << translateToPostfix(firstExpression, 30);
   }
-  catch (std::invalid_argument& e)
+  catch (const std::invalid_argument& e)
+  {
+    std::cout << e.what();
+    return 1;
+  }
+  catch (const std::logic_error& e)
   {
     std::cout << e.what();
     return 1;
@@ -30,7 +35,7 @@ int main() {
   {
     std::cout << '\n' << translateToPostfix(secondExpression, 30);
   }
-  catch (std::invalid_argument& e)
+  catch (const std::invalid_argument& e)
   {
     std::cout << e.what();
     return 1;
