@@ -6,6 +6,8 @@
 #include "operator.h"
 #include "stackarray.h"
 
+bool areArrayParenthesisesValid(const std::string& string);
+
 std::string translateToPostfix(const std::string& expression, int maxDepth);
 
 std::string evaluateFromPostfix(const std::string& evexpr, int maxDepth);
@@ -41,6 +43,10 @@ std::string translateToPostfix(const std::string& expression, int maxDepth)
 {
   StackArray<Operator> arr(maxDepth);
   std::string newExpression = "";
+  if (!areArrayParenthesisesValid(expression))
+  {
+    throw std::logic_error("Parenthesises failure");
+  }
   for (size_t i = 0; i < expression.size(); i++)
   {
     if (expression[i] - '0' < 0 
@@ -136,6 +142,10 @@ std::string evaluateFromPostfix(const std::string& evexpr, int maxDepth)
           result = firstOperand * secondOperand;
           break;
         case '/':
+          if (secondOperand == 0)
+          {
+            throw std::invalid_argument("Division by zero");
+          }
           result = firstOperand / secondOperand;
           break;
         case '^':
@@ -148,4 +158,41 @@ std::string evaluateFromPostfix(const std::string& evexpr, int maxDepth)
     }
   }
   return stack.pop();
+}
+
+bool areArrayParenthesisesValid(const std::string& string)
+{
+  int roundCount = 0;
+  StackArray<char> temp(string.size());
+  for (size_t i = 0; i < string.size(); i++)
+  {
+    if (string[i] == '(')
+    {
+      roundCount++;
+      temp.push(string[i]);
+    }
+    else if (string[i] == ')')
+    {
+      if (temp.top() != '(')
+      {
+        return false;
+      }
+      else if (roundCount <= 0)
+      {
+        return false;
+      }
+      else
+      {
+        temp.pop();
+        roundCount--;
+      }
+    }
+  }
+
+  if (roundCount != 0)
+  {
+    return false;
+  }
+
+  return true;
 }
