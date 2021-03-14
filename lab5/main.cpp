@@ -24,7 +24,7 @@ int main()
 
   testEmptyQueue();
 
-  Queue<int>* queue1;
+  Queue<int>* queue1(nullptr);
   testQueue(queue1);
 
   return 0;
