@@ -1,12 +1,12 @@
 #include "binarySearchTree.h"
 
 int main()
-{																						//											  4
-	BinarySearchTree<int> nhan;								//								 0								 10
-	nhan.insertIterative(4);									//					        	 3				8			    12
-	nhan.insertIterative(10);									//							     1			 5     9          14
-	nhan.insertIterative(0);									//																			   13     16
-	nhan.insertIterative(3);									//																					          17
+{
+	BinarySearchTree<int> nhan;
+	nhan.insertIterative(4);
+	nhan.insertIterative(10);
+	nhan.insertIterative(0);
+	nhan.insertIterative(3);
 	nhan.insertIterative(1);
 	nhan.insertIterative(8);
 	nhan.insertIterative(9);

@@ -44,9 +44,6 @@ public:
 	int getCount() const;
 	int getHeight() const;
 	void printNode(const T&, std::ostream&) const;
-	
-
-
 };
 
 template<class T>
@@ -452,13 +449,5 @@ void BinarySearchTree<T>::printNode(const T& key, std::ostream& out) const
 		}
 	}
 }
-
-
-
-
-
-
-
-
 
 #endif
