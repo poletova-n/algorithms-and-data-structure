@@ -13,7 +13,7 @@ int main()
 	std::cout << text00 << ": " << testBalanceBracketsList(text00) << std::endl;
 	std::string text01 = "( )";
 	std::cout << text01 << ": " << testBalanceBracketsArray(text01) << std::endl;
-	std::string text02 = "( ( [] ) )";
+	std::string text02 = "( ( [ )";
 	std::cout << text02 << ": " << testBalanceBracketsList(text02) << std::endl;
 	std::string text03 = "( ( [ { } [ ] ( [ ] ) ] ) )";
 	std::cout << text03 << ": " << testBalanceBracketsArray(text03) << std::endl;
@@ -40,12 +40,13 @@ bool testBalanceBracketsArray(std::string str, int maxDeep)
 			case '(': case '[': case '{':
 				stack->push(cText); 
 				break;
-			case ')': 
-					if (stack->pop() != '(') 
-					{
-						isBalanceBrackets = false;
-					}
-				break;
+			case ')': {
+                char r = stack->pop();
+                if (r != '(') {
+                    isBalanceBrackets = false;
+                }
+                break;
+            }
 			case ']':
 				if (stack->pop() != '[') 
 				{

@@ -14,7 +14,7 @@ public:
 	StackArray(const StackArray<T>& src);
 	~StackArray() override;
 	void push(const T& e) override;
-	const T& pop() override;
+	T pop() override;
 	bool isEmpty() override;
 
 private:
@@ -72,7 +72,7 @@ void StackArray<T>::push(const T& element)
 }
 
 template <class T>
-const T& StackArray<T>::pop()
+T StackArray<T>::pop()
 {
 	if (top_ == 0)
 		throw StackUnderflow();

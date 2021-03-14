@@ -13,7 +13,7 @@ public:
 	StackList();
 	~StackList() override;
 	void push(const T& element) override;
-	const T& pop() override;
+	T pop() override;
 	bool isEmpty() override;
 
 private:
@@ -67,7 +67,7 @@ void StackList<T>::push(const T& element)
 }
 
 template<class T>
-const T& StackList<T>::pop()
+T StackList<T>::pop()
 {
     if (size_ <= 0)
     {
@@ -76,7 +76,9 @@ const T& StackList<T>::pop()
     else 
     {
         T current = top_->data_;
+        Node* temp = top_;
         top_ = top_->pPrev_;
+        delete temp;
         size_--;
         return current;
     }
