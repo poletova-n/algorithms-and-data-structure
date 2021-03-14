@@ -32,16 +32,19 @@ private:
   struct Node
   {
     T key_;
+    int number_;
     Node *left_;
     Node *right_;
     Node *p_;
 
-    explicit Node(T value, Node *left = nullptr, Node *right = nullptr, Node *p = nullptr) :
-      key_(value), left_(left), right_(right), p_(p)
+    explicit Node(T value, int num = 0, Node *left = nullptr, Node *right = nullptr, Node *p = nullptr) :
+      key_(value), left_(left), right_(right), p_(p), number_(num)
     {}
   };
 
   Node *root_;
+
+  int currentNumber;
 
   void insertRecursive(Node *&node, T key);
 
@@ -56,13 +59,14 @@ private:
 
 template<class T>
 BinarySearchTree<T>::BinarySearchTree():
-  root_(nullptr)
+  root_(nullptr), currentNumber(0)
 {}
 
 template<class T>
 void BinarySearchTree<T>::addIterative(T obj)
 {
-  Node *tempNode = new Node(obj);
+  currentNumber++;
+  Node *tempNode = new Node(obj, currentNumber);
   Node *head = root_;
   if (head == nullptr)
   {
@@ -109,7 +113,8 @@ void BinarySearchTree<T>::insertRecursive(BinarySearchTree::Node *&node, T key)
 {
   if (node == nullptr)
   {
-    node = new Node(key);
+    currentNumber++;
+    node = new Node(key, currentNumber);
   }
   else
   {
@@ -180,7 +185,6 @@ void BinarySearchTree<T>::removeElement(const T &obj)
       else
       {
         parent->left_ = current->left_;
-
       }
       lowestLeft = parent->left_;
       while (lowestLeft != nullptr)
@@ -297,7 +301,7 @@ void BinarySearchTree<T>::printNode(Node *&node, int key)
   if (node != nullptr)
   {
     size++;
-    if (size == key)
+    if (key == node->number_)
     {
       std::cout << "Value of node with number " << key << " is " << node->key_ << "\n";
       size = 0;
