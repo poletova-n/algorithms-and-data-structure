@@ -36,6 +36,20 @@ bool testCheckBalanceBrackets()
   return true;
 }
 
+bool testInfixPostfixEvaluation(std::string infix)
+{
+  std::string postfix;
+  std::cout << "Infix form: " << infix << '\n';
+  if (getPostfixFromInfix(infix, postfix))
+  {
+    std::cout << "Postfix form: "
+      << postfix << '\n' << "Result: "
+      << evaluatePostfix(postfix) << '\n';
+    return true;
+  }
+  return false;
+}
+
 int main()
 {
   std::cout << "Test of Check Balance Brackets function\n";
@@ -43,7 +57,15 @@ int main()
   createBorder();
 
   std::cout << "Test of stack functionality\n";
-  StackArray <int> stack_test(100);
+  try
+  {
+    StackArray <int> stack_test(-5);
+  }
+  catch (std::exception& ex)
+  {
+    std::cout << ex.what() << '\n';
+  }
+  StackArray <int> stack_test(5);
   stack_test.push(5);
   std::cout << "Push " << stack_test.top() << '\n';
   stack_test.push(-2);
@@ -54,33 +76,53 @@ int main()
   std::cout << "Push " << stack_test.top() << '\n';
   stack_test.push(9);
   std::cout << "Push " << stack_test.top() << '\n';
-  stack_test.pop();
-  std::cout << "Pop 9\n";
+  try
+  {
+    stack_test.push(10);
+    std::cout << "Push " << stack_test.top() << '\n';
+  }
+  catch (std::exception& ex)
+  {
+    std::cout << ex.what() << '\n';
+  }
   std::cout << "Copy: \n";
   StackArray<int> stack_test2(stack_test);
-  std::cout << "Pop " << stack_test2.top() << '\n';
-  stack_test2.pop();
-  std::cout << "Pop " << stack_test2.top() << '\n';
-  stack_test2.pop();
-  std::cout << "Pop " << stack_test2.top() << '\n';
-  stack_test2.pop();
-  std::cout << "Pop " << stack_test2.top() << '\n';
-  stack_test2.pop();
+  try
+  {
+    while (true)
+    {
+      std::cout << "Pop " << stack_test2.pop() << '\n';
+    }
+  }
+  catch (std::exception& ex)
+  {
+    std::cout << ex.what() << '\n';
+  }
   createBorder();
 
   std::cout << "Test of postfix notation\n";
   std::string infix1 = "((1+2)*(3+4))-5";
-  std::string postfix1;
-  getPostfixFromInfix(infix1, postfix1);
-  std::cout << "Infix form: " << infix1 << '\n' << "Postfix form: "
-            << postfix1 << '\n' << "Result: "
-            << evaluatePostfix(postfix1) << '\n';
+  testInfixPostfixEvaluation(infix1);
+
   std::string infix2 = "(7+2)/3+2-(7*(1-8)+5)";
-  std::string postfix2;
-  getPostfixFromInfix(infix2, postfix2);
-  std::cout << "Infix form: " << infix2 << '\n' << "Postfix form: "
-            << postfix2 << '\n' << "Result: "
-            << evaluatePostfix(postfix2) << '\n';
+  testInfixPostfixEvaluation(infix2);
+
+  std::string infix3 = "(3+5)(";
+  testInfixPostfixEvaluation(infix3);
+
+  std::string infix4 = "(a+b-c)*2";
+  testInfixPostfixEvaluation(infix4);
+
+  try
+  {
+    std::string infix5 = "(3+9)*1/0";
+    testInfixPostfixEvaluation(infix5);
+  }
+  catch (const char* error)
+  {
+    std::cout << error << '\n';
+  }
+
   return 0;
 }
 
@@ -154,11 +196,15 @@ bool checkBalanceBrackets(const std::string& text, size_t maxDeep)
 bool getPostfixFromInfix(const std::string& infix, std::string& postfix, size_t stackSize)
 {
   char symbol = '\0';
+  if (!checkBalanceBrackets(infix))
+  {
+    std::cout << "Invalid parameters\n";
+    return false;
+  }
   for (int i = 0; i < infix.size(); i++)
   {
     symbol = infix[i];
-    if (symbol != '(' && symbol != ')' && symbol != '+' && symbol != '/'
-      && symbol != '-' && symbol != '*' && (symbol < '0' || symbol > '9'))
+    if (symbol != '(' && symbol != ')' && !isOperator(symbol) && !isDigit(symbol))
     {
       std::cout << "Invalid parameters\n";
       return false;
@@ -216,7 +262,14 @@ bool getPostfixFromInfix(const std::string& infix, std::string& postfix, size_t 
   {
     postfix += stack.pop();
   }
-  return true;
+  if (postfix == "")
+  {
+    return false;
+  }
+  else
+  {
+    return true;
+  }
 }
 
 int evaluatePostfix(const std::string& postfix, size_t stackSize)
@@ -248,6 +301,10 @@ int evaluatePostfix(const std::string& postfix, size_t stackSize)
         stack.push(num1 * num2);
         continue;
       case '/':
+        if (num2 == 0)
+        {
+          throw "Division by zero";
+        }
         stack.push(num1 / num2);
         continue;
       }

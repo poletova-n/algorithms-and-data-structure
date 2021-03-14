@@ -53,7 +53,7 @@ StackArray<T>::StackArray(const StackArray<T>& src) :
   {
     throw WrongStackSize();
   }
-  for (size_t i = 1; i < src.size_; i++)
+  for (size_t i = 1; i <= src.size_; i++)
   {
     array_[i] = src.array_[i];
   }
