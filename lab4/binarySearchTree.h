@@ -7,23 +7,6 @@
 template<class T>
 class BinarySearchTree
 {
-private:
-	struct Node
-	{
-		T key_;
-		Node* left_;
-		Node* right_;
-		Node* p_;
-		 Node(T key, Node* left = nullptr, Node* right = nullptr, Node* p = nullptr):
-			key_(key), left_(left), right_(right), p_(p)
-		{}
-	};
-	Node* root_;
-protected:
-	int count(Node*) const;
-	void addCursive(const T&, Node**);
-	void freesMemoryTree(Node*) const;
-	int heightTree(Node*) const;
 public:
 	BinarySearchTree() : root_(nullptr) {}
 	BinarySearchTree(T key) : root_(new Node(key)) {}
@@ -45,8 +28,23 @@ public:
 	int getHeight() const;
 	void printNode(const T&, std::ostream&) const;
 	
-
-
+protected:
+	int count(Node*) const;
+	void addCursive(const T&, Node**);
+	void freesMemoryTree(Node*) const;
+	int heightTree(Node*) const;
+private:
+	struct Node
+	{
+		T key_;
+		Node* left_;
+		Node* right_;
+		Node* p_;
+		Node(T key, Node* left = nullptr, Node* right = nullptr, Node* p = nullptr) :
+			key_(key), left_(left), right_(right), p_(p)
+		{}
+	};
+	Node* root_;
 };
 
 template<class T>
@@ -452,13 +450,5 @@ void BinarySearchTree<T>::printNode(const T& key, std::ostream& out) const
 		}
 	}
 }
-
-
-
-
-
-
-
-
 
 #endif
