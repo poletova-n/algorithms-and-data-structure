@@ -100,13 +100,24 @@ void QueueArray<T>::swap(QueueArray<T>& right)
 template <typename T>
 QueueArray<T>::QueueArray(QueueArray<T>&& src)
 {
-  swap(src);
+  array_ = std::move(src.array_);
+  head_ = src.head_;
+  tail_ = src.tail_;
+  size_ = src.size_;
+  src.array_ = nullptr;
+  src.size_ = 0;
+  src.head_ = 0;
+  src.tail_ = 0;
 }
 
 template <typename T>
 QueueArray<T>& QueueArray<T>::operator=(QueueArray<T>&& src)
 {
   swap(src);
+  src.array_ = nullptr;
+  src.size_ = 0;
+  src.head_ = 0;
+  src.tail_ = 0;
   return *this;
 }
 
