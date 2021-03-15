@@ -1,8 +1,6 @@
 #ifndef LAB2_STACK_HPP
 #define LAB2_STACK_HPP
 
-#include "Stack.hpp"
-
 template<class T>
 class Stack
 {
