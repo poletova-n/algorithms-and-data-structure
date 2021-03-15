@@ -96,9 +96,9 @@ void testEmptyQueue()
   }
 
   queue->enQueue(1);
-  std::cout << "Attempt to put into full queue:\n";
+  std::cout << "Attempt to put object into full queue:\n";
   try {
-    queue->enQueue(2);
+    queue->enQueue(3);
   } catch (const QueueOverflow& e) {
     std::cout << e.what() << '\n';
   }

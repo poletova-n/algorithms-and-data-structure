@@ -76,7 +76,7 @@ private:
 
 template <typename T>
 QueueArray<T>::QueueArray(size_t size):
-  size_(size), head_ (1), tail_ (1)
+  size_(size + 1), head_ (1), tail_ (1)
 {
   if (size < 1) {
     throw WrongQueueSize();
@@ -124,7 +124,7 @@ QueueArray<T>& QueueArray<T>::operator=(QueueArray<T>&& src)
 template <typename T>
 void QueueArray<T>::enQueue(const T& e)
 {
-  if (head_ == tail_ + 1) {
+  if (head_ == (tail_ + 1) % size_) {
     throw QueueOverflow();
   }
   array_[tail_++] = e;
