@@ -12,44 +12,44 @@ int main()
 {
   std::ios::sync_with_stdio(false);
   try {
-    std::string expression = translateToPostfix("(3 + 2) * 4");
+    const std::string expression = translateToPostfix("(3 + 2) * 4");
     std::cout << "Postfix form:" << expression << '\n'
               << "Result:";
     std::cout << evaluatePostfix(expression) << '\n';
   } catch (const std::invalid_argument& ex) {
-    std::cerr << ex.what();
+    std::cout << ex.what();
   }
   try {
-    std::string expression2 = translateToPostfix("((3 + 2) * 4) / 2");
+    const std::string expression2 = translateToPostfix("((3 + 2) * 4) / 2");
     std::cout << "Postfix form:" << expression2 << '\n'
               << "Result:";
     std::cout << evaluatePostfix(expression2) << '\n';
   } catch (const std::invalid_argument& ex) {
-    std::cerr << ex.what();
+    std::cout << ex.what();
   }
   try {
-    std::string expression3 = translateToPostfix("(((3 + 2) * 4) / 2) - 1");
+    const std::string expression3 = translateToPostfix("(((3 + 2) * 4) / 2) - 1");
     std::cout << "Postfix form:" << expression3 << '\n'
               << "Result:";
     std::cout << evaluatePostfix(expression3) << '\n';
   } catch (const std::invalid_argument& ex) {
-    std::cerr << ex.what();
+    std::cout << ex.what();
   }
   try {
-    std::string expression4 = translateToPostfix("((((3 + 2) * 4) / 2) - 1) ^ 2");
+    const std::string expression4 = translateToPostfix("((((3 + 2) * 4) / 2) - 1) ^ 2");
     std::cout << "Postfix form:" << expression4 << '\n'
               << "Result:";
     std::cout << evaluatePostfix(expression4) << '\n';
   } catch (const std::invalid_argument& ex) {
-    std::cerr << ex.what();
+    std::cout << ex.what();
   }
   try {
-    std::string expression5 = translateToPostfix("(((((3 + 2) * 4) / 2) - 1) ^ 2) / 0");
+    const std::string expression5 = translateToPostfix("(((((3 + 2) * 4) / 2) - 1) ^ 2) / 0");
     std::cout << "Postfix form:" << expression5 << '\n'
               << "Result:";
     std::cout << evaluatePostfix(expression5) << '\n';
   } catch (const std::invalid_argument& ex) {
-    std::cerr << ex.what();
+    std::cout << ex.what();
   }
   return 0;
 }
