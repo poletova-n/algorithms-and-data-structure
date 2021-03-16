@@ -11,7 +11,7 @@ int main()
 {
   try {
     std::string str1 = "5 * 7 + 7 / 2";
-    std::string str2 = "4 * 5 * 7 + 7 / 2";
+    std::string str2 = "4 * 5 * 7 + (7)/ 2";
     std::string str3 = "8 / 2 * (9 + 1)";
     std::string str4 = "6 - 3 + 5 * 2";
     std::cout << "Expression in infix form: " << str1 << "\n" << "Expression in postfix form: " << infIntoPost(str1)
@@ -72,8 +72,10 @@ std::string infIntoPost(const std::string &src)
             str += stack.getElement(j);
             stack.pop();
           }
-          if (stack.getElement(j) == '(')
+          if (stack.getElement(j) == '(') {
             stack.pop();
+            break;
+          }
         }
         break;
     }
