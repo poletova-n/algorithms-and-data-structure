@@ -10,7 +10,7 @@ bool testBalanceBrackets(const std::string &str, int maxDeep);
 int main()
 {
   try {
-    std::string str1 = "5 * 7 + 7 / 2";
+    std::string str1 = "5 * 7 + 7 ^ 2";
     std::string str2 = "4 * 5 * 7 + (7)/ 2";
     std::string str3 = "8 / 2 * (9 + 1)";
     std::string str4 = "6 - 3 + 5 * 2";
@@ -182,6 +182,32 @@ int countPostfix(const std::string &src)
         if ((tempResult != 0)&&(tempResult1 != 0)) {
           tempResult /= tempResult1;
           tempResult1 = 0;
+        }
+        break;
+      case '^':
+        if ((tempResult == 0)&&(tempResult1 == 0)) {
+          int degree = stack.pop() - '0';
+          int base = stack.pop() - '0';
+          tempResult = 1;
+          for (int j = 0; j < degree; j++) {
+            tempResult *= base;
+          }
+          break;
+        }
+        if ((tempResult != 0)&&(tempResult1 == 0)) {
+          int degree = stack.pop() - '0';
+          int base = stack.pop() - '0';
+          tempResult1 = 1;
+          for (int j = 0; j < degree; j++) {
+            tempResult1 *= base;
+          }
+          break;
+        }
+        if ((tempResult != 0)&&(tempResult1 != 0)) {
+          int base = tempResult;
+          for (int j = 0; j < tempResult1; tempResult1--) {
+            tempResult *= base;
+          }
         }
         break;
     }
