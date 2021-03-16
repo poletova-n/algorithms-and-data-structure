@@ -24,7 +24,7 @@ public:
   size_t getCount() const;
   int getHeight() const;
   void iterativeInfixWalkByStack() const;
-  void iterativeWidthWalkByQueue() const;
+  T* iterativeWidthWalkByQueue() const;
   void inorderWalk() const;
   bool insert(const T& key);
   bool isSimilar(const BinarySearchTree<T>& other);
@@ -199,7 +199,7 @@ bool BinarySearchTree<T>::deleteKey(const T& key)
       {
         removable->par_->right_ = nullptr;
         std::cout << "Delete key-right successor with no successors: ";
-        delete removable; 
+        delete removable;
         return true;
       }
     }
@@ -243,12 +243,12 @@ bool BinarySearchTree<T>::deleteKey(const T& key)
         delete removable;
         return true;
       }
-      else if (removable->par_->right_ == removable) 
+      else if (removable->par_->right_ == removable)
       {
-        currtemp->par_->left_ = nullptr; 
+        currtemp->par_->left_ = nullptr;
         currtemp->par_ = nullptr;
 
-        removable->par_->right_ = currtemp; 
+        removable->par_->right_ = currtemp;
         currtemp->par_ = removable->par_;
         removable->par_ = nullptr;
 
@@ -263,13 +263,13 @@ bool BinarySearchTree<T>::deleteKey(const T& key)
           removable->right_ = nullptr;
         }
         std::cout << "Delete key-right successor with both successors: ";
-        delete removable; 
+        delete removable;
         return true;
       }
     }
 
 
-    if (removable->left_ != nullptr || removable->right_ != nullptr) 
+    if (removable->left_ != nullptr || removable->right_ != nullptr)
     {
       if (removable->left_ != nullptr)
       {
@@ -280,7 +280,7 @@ bool BinarySearchTree<T>::deleteKey(const T& key)
           delete removable;
           return true;
         }
-        else if (removable->par_->right_ == removable) 
+        else if (removable->par_->right_ == removable)
         {
           removable->par_->right_ = removable->left_;
           std::cout << "Delete key-right successor with one left successor: ";
@@ -365,10 +365,12 @@ void BinarySearchTree<T>::iterativeInfixWalkByStack() const
 }
 
 template<typename T>
-void BinarySearchTree<T>::iterativeWidthWalkByQueue() const
+T* BinarySearchTree<T>::iterativeWidthWalkByQueue() const
 {
+  int i = 0;
   Node<T>* x = root_;
   size_t tempSize = getCount();
+  T* array = new T[tempSize];
   QueueArray<Node<T>*> queue(tempSize);
   if (x != nullptr)
   {
@@ -380,14 +382,17 @@ void BinarySearchTree<T>::iterativeWidthWalkByQueue() const
     std::cout << " (" << temp->key_ << ") ";
     if (temp->left_)
     {
+      array[i++] = temp->left_->key_;
       queue.enQueue(temp->left_);
     }
     if (temp->right_)
     {
+      array[i++] = temp->right_->key_;
       queue.enQueue(temp->right_);
     }
   }
   std::cout << std::endl;
+  return array;
 }
 
 template<class T>
@@ -449,7 +454,17 @@ bool BinarySearchTree<T>::isSimilar(const BinarySearchTree<T>& other)
     std::cout << "Not equal quantity of nodes\n";
     return false;
   }
-  return BinarySearchTree<T>::equalNode(root_, other.root_);
+  T* first = iterativeWidthWalkByQueue();
+  T* second = iterativeWidthWalkByQueue();
+
+  for (int i = 0; i < getCount(); i++)
+  {
+    if (first[i] != second[i])
+    {
+      return false;
+    }
+  }
+  return true;
 }
 
 template<class T>

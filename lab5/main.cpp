@@ -31,7 +31,8 @@ void testQueue()
       std::cout << "Push 5\n"; queue.enQueue(5);
       std::cout << "Push -65\n"; queue.enQueue(-65);
       std::cout << "Push 9\n"; queue.enQueue(9);
-    } catch (QueueOverflow &exceptionOver)
+    }
+    catch (QueueOverflow& exceptionOver)
     {
       std::cerr << exceptionOver.getError() << std::endl;
     }
@@ -43,7 +44,7 @@ void testQueue()
       std::cout << "Get current front " << queue.deQueue() << std::endl;
       std::cout << "Get current front " << queue.deQueue() << std::endl;
     }
-    catch (QueueUnderflow &exceptionUnder) {
+    catch (QueueUnderflow& exceptionUnder) {
       std::cerr << exceptionUnder.getError() << std::endl;
     }
 
@@ -140,7 +141,7 @@ void testSimilarity()
   std::cout << std::endl;
   first.deleteKey(10);
   std::cout << std::endl;
-  second.deleteKey(73);
+  second.deleteKey(50);
   std::cout << std::endl;
   std::cout << "First tree now: "; first.iterativeInfixWalkByStack();
   std::cout << "Second tree now: "; second.iterativeInfixWalkByStack();
