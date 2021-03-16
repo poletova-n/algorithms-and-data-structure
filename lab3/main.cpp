@@ -2,7 +2,6 @@
 #include <stack>
 #include <string>
 #include <iostream>
-#include "operator.hpp"
 
 bool isRight(std::string& expression);
 
@@ -69,37 +68,63 @@ void toPostfix(std::string& expression)
     if (symbol == ' ') { continue; }
     translation += symbol;
   }
-  int countBrackets = 0;
-  bool flagBracket = false;
+  int countAfter = 0;
+  int countBefore = 0;
+  bool flagAfter = false;
+  size_t insertPlace = 0;
   for (size_t i = 0; i < translation.length(); ++i)
   {
-    if (isPrioritySign(translation[i + 2]))
+    if (translation[i] == '(' && translation[i + 1] >= '0' && translation[i + 1] <= '9' && translation[i + 2] == ')')
     {
-      translation.insert(i + 1, "(");
-      i += 1;
+      translation.erase(i, 1);
+      translation.erase(i + 1, 1);
+    }
+    if (translation[i] == '(' && countBefore == 0)
+    {
+      ++countBefore;
+      insertPlace = i;
+    }
+    else if (translation[i] == ')' && countBefore != 0 && isPrioritySign(translation[i + 1]))
+    {
+      --countBefore;
+      translation.insert(insertPlace, "(");
+      ++i;
+      translation.insert(i + 1, ")");
+      ++i;
+    }
+    else if (translation[i] == ')' && countBefore != 0 && !isPrioritySign(translation[i + 1]))
+    {
+      countBefore = 0;
+      insertPlace = 0;
+    }
+    else if (isPrioritySign(translation[i + 1]) && countBefore == 0)
+    {
+      translation.insert(i, "(");
+      ++i;
       continue;
     }
-    if (isPrioritySign(translation[i]) && (translation[i + 1] == '('))
+    else if (isPrioritySign(translation[i]) && (translation[i + 1] == '('))
     {
-      ++countBrackets;
-      flagBracket = true;
+      ++countAfter;
+      flagAfter = true;
     }
-    else if (isPrioritySign(translation[i]))
+    else if (isPrioritySign(translation[i]) && countBefore == 0)
     {
       translation.insert(i + 2, ")");
-      i += 2;
+      translation.insert(i - 1, "(");
+      i += 3;
       continue;
     }
-    if ((translation[i] == '(') && flagBracket)
+    else if ((translation[i] == '(') && flagAfter)
     {
-      ++countBrackets;
+      ++countAfter;
     }
-    else if (translation[i] == ')' && flagBracket)
+    else if (translation[i] == ')' && flagAfter)
     {
-      --countBrackets;
-      if (countBrackets == 0)
+      --countAfter;
+      if (countAfter == 0)
       {
-        flagBracket = false;
+        flagAfter = false;
         translation.insert(i, ")");
       }
     }
@@ -184,16 +209,11 @@ int getPostfixValue(std::string& expression)
         if (operand2 == 0)
         {
           std::cerr << "Not allowed dividing by zero.\n";
-          exit(2);
+          exit(0);
         }
         stack.push(operand1 / operand2);
         break;
       case '^':
-        if (operand1 == 0 && operand2 == 0)
-        {
-          std::cerr << "Uncertainty expression (0 raising to the power 0).\n";
-          exit(2);
-        }
         stack.push(std::pow(operand1, operand2));
       }
     }
