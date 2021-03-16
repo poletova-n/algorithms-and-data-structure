@@ -96,6 +96,11 @@ std::string translateToPostfix(const std::string& expression)
       if (stack.empty() || stack.top() == '(') {
         stack.push(expression[i]);
       } else {
+        if ((Operator(expression[i]).getOrder() == 1)
+            && ((Operator(stack.top()).getOrder() == 2) || (Operator(stack.top()).getOrder() == 3))) {
+          stack.push(expression[i]);
+          continue;
+        }
         if (stack.top() != '(' && stack.top() != ')') {
           result += stack.top();
         }
@@ -122,7 +127,7 @@ int evaluatePostfix(const std::string& expression)
       while (i < expression.length() && isDigit(expression[i])) {
         num = expression[i] - '0';
         stack.push(num);
-        i++;
+        ++i;
       }
     }
     if (Operator(expression[i]).getOrder() != -1) {
