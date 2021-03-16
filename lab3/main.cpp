@@ -1,5 +1,5 @@
 #include <iostream>
-//#include <string>
+#include <cmath>
 
 #include "stackArray.h"
 #include "operator.h"
@@ -18,6 +18,7 @@ int main()
     std::string text2 = "4 * 5 + 7 + 7 / 2";
     std::string text3 = "8 / 2 * (9 + 1)";
     std::string text4 = "6 - 3 + 5 * 2";
+    std::string text5 = "5 * 7 + 6 / 2^3";
     StackArray<char> stack(100);
     std::cout << "Infix expression: " << text1 << "\n";
     infixToPostfix(text1, &stack);
@@ -35,6 +36,10 @@ int main()
     infixToPostfix(text4, &stack);
     std::cout << "Postfix expression: " << text4 << "\n";
     std::cout << "Result: " << calculatePostfix(text4) << "\n\n";
+    std::cout << "Infix expression: " << text5 << "\n";
+    infixToPostfix(text5, &stack);
+    std::cout << "Postfix expression: " << text5 << "\n";
+    std::cout << "Result: " << calculatePostfix(text5) << "\n\n";
   }
   catch (std::invalid_argument &exception)
   {
@@ -275,7 +280,7 @@ int calculatePostfix(const std::string &text)
   for (int i = 0; text[i] != '\0'; i++)
   {
     stack.push(text[i]);
-    if ((text[i] == '*') || (text[i] == '/') || (text[i] == '+') || (text[i] == '-'))
+    if ((text[i] == '*') || (text[i] == '/') || (text[i] == '+') || (text[i] == '-') || (text[i] == '^'))
     {
       if (stack.getTop() == '*')
       {
@@ -307,6 +312,14 @@ int calculatePostfix(const std::string &text)
         int operand1 = stack.pop() - '0';
         int operand2 = stack.pop() - '0';
         int value = operand2 + operand1;
+        stack.push(value + '0');
+      }
+      if (stack.getTop() == '^')
+      {
+        stack.deleteTop();
+        int operand1 = stack.pop() - '0';
+        int operand2 = stack.pop() - '0';
+        int value = pow(operand2, operand1);
         stack.push(value + '0');
       }
     }
