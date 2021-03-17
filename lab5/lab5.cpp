@@ -4,9 +4,9 @@ int main()
 {
 	std::cout << "Test Queue\n";
 	testQueue();
-	std::cout << "\n Fisrt test to BinarySearchTree:\n";
+	std::cout << "\nFirst test to BinarySearchTree:\n";
 	testBinary();
-	std::cout << "\n Second test to BinarySearchTree:\n";
+	std::cout << "\nSecond test to BinarySearchTree:\n";
 	testBinary2();
 	return 0;
 }
