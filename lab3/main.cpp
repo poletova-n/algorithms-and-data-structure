@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <cmath>
 #include "exception.hpp"
 #include "Stack.hpp"
 #include "StackArray.hpp"
@@ -20,7 +21,7 @@ int main()
     std::cout << transformInfixExpressionToPostfix(text2) << " --> " << calculatePostfixForm(transformInfixExpressionToPostfix(text2)) << '\n';
     std::string text3 = "((5 + 5) * 4) / 1";
     std::cout << transformInfixExpressionToPostfix(text3) << " --> " << calculatePostfixForm(transformInfixExpressionToPostfix(text3)) << '\n';
-    std::string text4 = "((3 + 9) * 3) / (2 + 10)";
+    std::string text4 = "((3 + 9) * 4) / 2 ^ 2";
     std::cout << transformInfixExpressionToPostfix(text4) << " --> " << calculatePostfixForm(transformInfixExpressionToPostfix(text4)) << '\n';
     std::string text5 = "((3 + 2) * 4) * (2 - 1)";
     std::cout << transformInfixExpressionToPostfix(text5) << " --> " << calculatePostfixForm(transformInfixExpressionToPostfix(text5)) << '\n';
@@ -143,6 +144,9 @@ int calculatePostfixForm(const std::string& text)
           break;
         case '*':
           result = valueOne * valueTwo;
+          break;
+        case '^':
+          result = pow(valueOne, valueTwo);
           break;
 
         default:
