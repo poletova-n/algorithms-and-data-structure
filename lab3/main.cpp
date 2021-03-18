@@ -8,6 +8,7 @@ std::string erase_brackets(std::string str);
 int calculate(int left, int right, char oper);
 std::string inf_to_post(std::string& str);
 int calculate_post(const std::string& str);
+bool bracket_balance(std::string str);
 
 int main()
 {
@@ -19,6 +20,22 @@ int main()
     std::string str4 = "(6^2) / 6*6";
     std::string str5 = "( 1^2 ) / ( 5^0 - 1 )";
 
+    std::cout << "CHECKING BRACKETS: \n"
+              << "String1: " << str1 << "\n"
+              << "Bracket status: " << bracket_balance(str1) << "\n"
+              << "-----------------------------------" << "\n"
+              << "String2: " << str2 << "\n"
+              << "Bracket status: " << bracket_balance(str2) << "\n"
+              << "-----------------------------------" << "\n"
+              << "String3: " << str3 << "\n"
+              << "Bracket status: " << bracket_balance(str3) << "\n"
+              << "-----------------------------------" << "\n"
+              << "String4: " << str4 << "\n"
+              << "Bracket status: " << bracket_balance(str4) << "\n"
+              << "-----------------------------------" << "\n"
+              << "String5: " << str5 << "\n"
+              << "Bracket status: " << bracket_balance(str5) << "\n"
+              << "-----------------------------------" << "\n";
     std::cout << "WORK WITH STR_1: \n"
               << "Original: " << str1 << "\n"
               << "Postfix-form: " << inf_to_post(str1) << "\n"
@@ -169,4 +186,28 @@ std::string inf_to_post(std::string& str) {
   }
   postfix = erase_brackets(postfix);
   return postfix;
+}
+
+bool bracket_balance(std::string str)
+{
+  StackArray<char> array_stack(str.length());
+  for (int i = 0; i < (int)str.length(); ++i) {
+    if (str[i] == '{' || str[i] == '(' || str[i] == '[') {
+      array_stack.push(str[i]);
+    }
+    else if (str[i] == '}' || str[i] == ')' || str[i] == ']') {
+      if (array_stack.is_empty()) {
+        throw std::invalid_argument("Brackets disbalanced!");
+        return false;
+      }
+      if ((str[i] == ')' && array_stack.get_top() == '(') || (str[i] == '}' && array_stack.get_top() == '{') || (str[i] == ']' && array_stack.get_top() == '[')) {
+        array_stack.pop();
+      }
+      else {
+        throw std::invalid_argument("Brackets disbalanced!");
+        return false;
+      }
+    }
+  }
+  return array_stack.is_empty();
 }
