@@ -3,16 +3,18 @@
 #include "stackArray.hpp"
 #include <iostream>
 #include <string>
+#include <cmath>
 
 std::string transformInfixToPostfix(const std::string& txt);
 int considerPostfix(const std::string& txt);
 void checkString(const std::string& txt);
+bool isBracersMatch(const std::string &txt);
 
 int main()
 {
   try
     {
-      std::string txt1 = "((9-5)*8)/2"; // ans: 16
+      std::string txt1 = "((9-5)*8)/2^2"; // ans: 8
       std::cout << transformInfixToPostfix(txt1) << " ==> "
                 << considerPostfix(transformInfixToPostfix(txt1))
                 << '\n';
@@ -32,12 +34,12 @@ int main()
                 << considerPostfix(transformInfixToPostfix(txt4))
                 << '\n';
 
-      std::string txt5 = "(9*9*9)/(3*3)"; // ans: 81
+      std::string txt5 = "( ( 3 + 7 ) * 5 ) ^ 2"; // ans: 2500
       std::cout << transformInfixToPostfix(txt5) << " ==> "
                 << considerPostfix(transformInfixToPostfix(txt5))
                 << '\n';
 
-      std::string txt6 = "((3+7)*5)+((2+8)*(7-1))"; // ans: 110
+      std::string txt6 = "(((5+3)/2)^2)"; // ans: 16
       std::cout << transformInfixToPostfix(txt6) << " ==> "
                 << considerPostfix(transformInfixToPostfix(txt6))
                 << '\n';
@@ -55,46 +57,140 @@ int main()
 
 std::string transformInfixToPostfix(const std::string& txt)
 {
-  StackArray<char> stack(txt.size());
-  std::string newExpression;
-  checkString(txt);
+    StackArray<char> stack(txt.size());
+    std::string newExpression;
+    checkString(txt);
+    if(!(isBracersMatch(txt)))
+    {
+        std::cout << txt << '\n';
+        throw std::logic_error("Check the brackets!");
+    }
 
-  for (char i : txt)
+    for (char i : txt)
     {
-      if (i == ' ')
+        if (i == ' ')
         {
-          continue;
+            continue;
         }
-      if (i >= '0' && i <= '9')
+        if (i >= '0' && i <= '9')
         {
-          newExpression += i;
-          continue;
+            newExpression += i;
+            continue;
         }
-      else
+        else if (i == '+' || i == '-' || i == '*' || i == '/' || i == '^')
         {
-          if (i == ')')
+            Operator currentOperand(i);
+            Operator topOperand(stack.top());
+
+            if ((stack.isEmpty()) || (stack.top() == '('))
             {
-              while (stack.top() != '(')
-                {
-                  newExpression += stack.pop();
-                }
-              if (stack.top() == '(')
-                {
-                  stack.pop();
-                }
-              continue;
+                stack.push(i);
             }
-          else if (Operator(i).getPriority() != -1)
+            else if (currentOperand.getPriority() > topOperand.getPriority())
             {
-              stack.push(i);
+                stack.push(i);
             }
+            else if (currentOperand.getPriority() <= topOperand.getPriority())
+            {
+                char temp = stack.top();
+                while ((temp != '(' || Operator(temp).getPriority() > Operator(stack.top()).getPriority()) && !(stack.isEmpty()))
+                {
+                    temp = stack.top();
+                    stack.push(stack.pop());
+                    newExpression += temp;
+                }
+                stack.push(i);
+            }
+        }
+        else if (i == '(')
+        {
+            stack.push(i);
+            continue;
+        }
+        else if (i == ')')
+        {
+            while (stack.top() != '(' && !(stack.isEmpty()))
+            {
+                newExpression += stack.pop();
+            }
+            if (stack.top() == '(')
+            {
+                stack.pop();
+            }
+            continue;
         }
     }
-  while (!(stack.isEmpty()))
+    while (!(stack.isEmpty()))
     {
-      newExpression += stack.pop();
+        newExpression += stack.pop();
     }
-  return newExpression;
+    return newExpression;
+}
+
+bool isBracersMatch(const std::string &txt)
+{
+    StackArray<char> stack(txt.size());
+    try
+    {
+        for (char i : txt)
+        {
+            if ((i == '(') || (i == '[') || (i == '{'))
+            {
+                stack.push(i);
+                continue;
+            }
+            else if ((i == ')') || (i == ']') || (i == '}'))
+            {
+                if (i == ')')
+                {
+                    if ((!stack.isEmpty()) && stack.top() == '(')
+                    {
+                        stack.pop();
+                        continue;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                if (i == ']')
+                {
+                    if (stack.top() == '[' && (!stack.isEmpty()))
+                    {
+                        stack.pop();
+                        continue;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                if (stack.top() == '{' && (!stack.isEmpty()))
+                {
+                    stack.pop();
+                    continue;
+                } else {
+                    return false;
+                }
+            }
+        }
+        if (stack.isEmpty())
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    catch (StackUnderflow)
+    {
+        return false;
+    }
+    catch (StackOverflow)
+    {
+        return false;
+    }
 }
 
 void checkString(const std::string& txt)
@@ -141,6 +237,9 @@ int considerPostfix(const std::string& txt)
                 break;
               case '*':
                 res = val1 * val2;
+                break;
+              case '^':
+                res = std::pow(val1, val2);
                 break;
 
               default:

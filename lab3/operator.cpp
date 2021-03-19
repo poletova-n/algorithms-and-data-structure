@@ -16,21 +16,26 @@ Operator::Operator(char operand) : operand_(operand),
       case ')':
         priority_ = 1;
         break;
+      case '^':
+        priority_ = 4;
+        break;
+      case '/':
+        priority_ = 3;
+        break;
+      case '*':
+        priority_ = 3;
+        break;
       case '-':
         priority_ = 2;
         break;
       case '+':
-        priority_ = 3;
+        priority_ = 2;
         break;
-      case '/':
-        priority_ = 4;
-        break;
-      case '*':
-        priority_ = 5;
-        break;
-      case '^':
-        priority_ = 6;
-        break;
+
+
+
+
+
 
       default:
         break;
