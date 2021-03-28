@@ -3,4 +3,4 @@ project(sorts)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(sorts main.cpp sort-algorithms.hpp)
+add_executable(sorts main.cpp sort-algorithms.hpp sort-algorithms.cpp)
