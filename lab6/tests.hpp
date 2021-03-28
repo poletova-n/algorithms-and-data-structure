@@ -2,6 +2,7 @@
 #define TESTS_HPP
 
 #include "sorts.hpp"
+#include<iostream>
 
 void printArray(int* array, int size);
 bool isTestedCorrect(int* array, int size);
