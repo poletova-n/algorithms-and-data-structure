@@ -3,6 +3,15 @@
 
 bool checkBalanceBrackets(const std::string& text, int maxDeep = 30)
 {
+  try {
+    if (text.size() >= 30 ){
+      throw "The number of brackets is greater than the maximum allowed(30)! ";
+    }
+  }
+  catch (const char * err) {
+    std::cerr << err << std::endl;
+    return false;
+  }
   StackArray <char> stack(maxDeep) ;
   char n1, n2;
   for (int i = 0; text[i] != '\0'; i++) {
@@ -131,6 +140,14 @@ bool getPostfixFromInfix(const std::string& infix, std::string& postfix, size_t 
         }
         stack.push(infix[i]);
       }
+      try {
+        if (infix[i] == '/' && infix[i+1] == '0')
+          throw "Division by zero is not possible!";
+      }
+      catch (const char * err) {
+        std::cerr << err << std::endl;
+        return false;
+      }
     }
     while (!stack.isEmpty())
     {
@@ -144,17 +161,17 @@ bool testCheckBalanceBrackets()
 {
   const char* text00 = " ";
   std::cout << text00 << ": " << (checkBalanceBrackets(text00) ? "right" : "wrong") <<'\n';
-  const char* text01 = "( ) ";
+  const char* text01 = "()";
   std::cout << text01 << ": " << (checkBalanceBrackets(text01) ? "right" : "wrong") << '\n';
-  const char* text02 = "( ( [] ) ) ";
+  const char* text02 = "(([]))";
   std::cout << text02 << ": " << (checkBalanceBrackets(text02) ? "right" : "wrong") << '\n';
-  const char* text03 = "( ( [ { } [ ] ( [ ] ) ] ) ) ";
+  const char* text03 = "(([{}[]([])]))";
   std::cout << text03 << ": " << (checkBalanceBrackets(text03) ? "right" : "wrong") << '\n';
-  const char* text04 = "( ( [ { } [ ] ( [ ] ) ] ) ) ) ";
+  const char* text04 = "(([{}[]([])])))";
   std::cout << text04 << ": " << (checkBalanceBrackets(text04) ? "right" : "wrong") << '\n';
-  const char* text05 = "( ( [{ }[ ]([ ])] ) ";
+  const char* text05 = "(([{}[]([])]) ";
   std::cout << text05 << ": " << (checkBalanceBrackets(text05) ? "right" : "wrong") << '\n';
-  const char* text06 = "( ( [{ ][ ]([ ])]) ) ";
+  const char* text06 = "(([{][]([])])) ";
   std::cout << text06 << ": " << (checkBalanceBrackets(text06) ? "right" : "wrong") << '\n';
   const char* text07 = "()()()()()()()()()()()()()()()( ";
   std::cout << text07 << ": " << (checkBalanceBrackets(text06) ? "right" : "wrong") << '\n';
@@ -163,7 +180,7 @@ bool testCheckBalanceBrackets()
 bool testGetPostfix() {
   std::string text00 = "1+2";
   std::string postfix00;
-  if (getPostfixFromInfix(text00, postfix00))
+  if (getPostfixFromInfix(text00, postfix00) )
     std::cout << "Infix form: " << text00 << " Postfix form: " << postfix00 <<" = " <<evaluatePostfix(postfix00) << '\n';
   std::string text01 = "(1+2)*(4-1)";
   std::string postfix01;
@@ -177,7 +194,7 @@ bool testGetPostfix() {
   std::string postfix03;
   if (getPostfixFromInfix(text03, postfix03))
     std::cout << "Infix form: " << text03 << " Postfix form:  " << postfix03 << " = " << evaluatePostfix(postfix03) << '\n';
-  std::string text04 = "(2-4*3)/2";
+  std::string text04 = "(2-4*3)/0";
   std::string postfix04;
   if (getPostfixFromInfix(text04, postfix04))
     std::cout << "Infix form: " << text04 << " Postfix form: " << postfix04 << " = " << evaluatePostfix(postfix04) << '\n';
