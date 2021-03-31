@@ -18,7 +18,9 @@ int main()
     std::string text2 = "4 * 5 + 7 + 7 / 2";
     std::string text3 = "8 / 2 * (9 + 1)";
     std::string text4 = "6 - 3 + 5 * 2";
-    std::string text5 = "5 * 7 + 6 / 2^3";
+    std::string text5 = "5 * (7 + 6 / 2)^3";
+    std::string text6 = "2^7";
+    std::string text7 = "(1+2)*(3+4)*(5+6)*(7+8)";
     StackArray<char> stack(100);
     std::cout << "Infix expression: " << text1 << "\n";
     infixToPostfix(text1, &stack);
@@ -40,8 +42,16 @@ int main()
     infixToPostfix(text5, &stack);
     std::cout << "Postfix expression: " << text5 << "\n";
     std::cout << "Result: " << calculatePostfix(text5) << "\n\n";
+    std::cout << "Infix expression: " << text6 << "\n";
+    infixToPostfix(text6, &stack);
+    std::cout << "Postfix expression: " << text6 << "\n";
+    std::cout << "Result: " << calculatePostfix(text6) << "\n\n";
+    std::cout << "Infix expression: " << text7 << "\n";
+    infixToPostfix(text7, &stack);
+    std::cout << "Postfix expression: " << text7 << "\n";
+    std::cout << "Result: " << calculatePostfix(text7) << "\n\n";
   }
-  catch (std::invalid_argument &exception)
+  catch (std::exception &exception)
   {
     std::cerr << exception.what();
   }
@@ -137,7 +147,8 @@ bool checkInvalidExpression(const std::string &text)
         if (((tempText[i + 1] <= '9') && (tempText[i + 1] >= '0')) && ((tempText[i - 1] == '+') ||
                                                                        (tempText[i - 1] == '-') ||
                                                                        (tempText[i - 1] == '*') ||
-                                                                       (tempText[i - 1] == '/')))
+                                                                       (tempText[i - 1] == '/') ||
+                                                                       (tempText[i - 1] == '^')))
         {
         }
         else
@@ -161,7 +172,7 @@ bool checkInvalidExpression(const std::string &text)
       {
         if (((tempText[i - 1] <= '9') && (tempText[i - 1] >= '0')) &&
             ((tempText[i + 1] == '+') || (tempText[i + 1] == '-') || (tempText[i + 1] == '*') ||
-             (tempText[i + 1] == '/')))
+             (tempText[i + 1] == '/') || (tempText[i + 1] == '^')))
         {}
         else
         {
@@ -170,7 +181,7 @@ bool checkInvalidExpression(const std::string &text)
       }
     }
     if ((tempText[i] == '*') || (tempText[i] == '/') || (tempText[i] == '+') ||
-        (tempText[i] == '-'))  //check the situation with the mathematical sign
+        (tempText[i] == '-') || (tempText[i] == '^'))  //check the situation with the mathematical sign
     {
       if ((tempText[i - 1] >= '0') && (tempText[i - 1] <= '9') && (tempText[i + 1] >= '0') &&
           (tempText[i + 1] <= '9'))  //situation when the number is on the left, the number on the right
@@ -276,53 +287,51 @@ void infixToPostfix(std::string &text, Stack<char> *stack)
 
 int calculatePostfix(const std::string &text)
 {
-  StackArray<char> stack;
+  StackArray<int> stack;
   for (int i = 0; text[i] != '\0'; i++)
   {
-    stack.push(text[i]);
     if ((text[i] == '*') || (text[i] == '/') || (text[i] == '+') || (text[i] == '-') || (text[i] == '^'))
     {
-      if (stack.getTop() == '*')
+      if (text[i] == '*')
       {
-        stack.deleteTop();
-        int operand1 = stack.pop() - '0';
-        int operand2 = stack.pop() - '0';
-        int value = operand2 * operand1;
-        stack.push(value + '0');
+        int operand1 = stack.pop();
+        int operand2 = stack.pop();
+        int result = operand2 * operand1;
+        stack.push(result);
       }
-      if (stack.getTop() == '/')
+      if (text[i] == '/')
       {
-        stack.deleteTop();
-        int operand1 = stack.pop() - '0';
-        int operand2 = stack.pop() - '0';
-        int value = operand2 / operand1;
-        stack.push(value + '0');
+        int operand1 = stack.pop();
+        int operand2 = stack.pop();
+        int result = operand2 / operand1;
+        stack.push(result);
       }
-      if (stack.getTop() == '-')
+      if (text[i] == '-')
       {
-        stack.deleteTop();
-        int operand1 = stack.pop() - '0';
-        int operand2 = stack.pop() - '0';
-        int value = operand2 - operand1;
-        stack.push(value + '0');
+        int operand1 = stack.pop();
+        int operand2 = stack.pop();
+        int result = operand2 - operand1;
+        stack.push(result);
       }
-      if (stack.getTop() == '+')
+      if (text[i] == '+')
       {
-        stack.deleteTop();
-        int operand1 = stack.pop() - '0';
-        int operand2 = stack.pop() - '0';
-        int value = operand2 + operand1;
-        stack.push(value + '0');
+        int operand1 = stack.pop();
+        int operand2 = stack.pop();
+        int result = operand2 + operand1;
+        stack.push(result);
       }
-      if (stack.getTop() == '^')
+      if (text[i] == '^')
       {
-        stack.deleteTop();
-        int operand1 = stack.pop() - '0';
-        int operand2 = stack.pop() - '0';
-        int value = pow(operand2, operand1);
-        stack.push(value + '0');
+        int operand1 = stack.pop();
+        int operand2 = stack.pop();
+        int result = pow(operand2, operand1);
+        stack.push(result);
       }
     }
+    else
+    {
+      stack.push(text[i] - '0');
+    }
   }
-  return stack.getTop() - '0';
+  return stack.pop();
 }

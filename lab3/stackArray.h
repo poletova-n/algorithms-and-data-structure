@@ -6,7 +6,7 @@
 
 template<class T>
 class StackArray :
-        public Stack<T>
+  public Stack<T>
 {
 public:
   StackArray(size_t size = 10);
@@ -16,6 +16,7 @@ public:
   bool isEmpty() override;
   T getTop() override;
   void deleteTop() override;
+  size_t getSize() override;
 private:
   T *array_;
   size_t top_;
@@ -93,6 +94,12 @@ void StackArray<T>::deleteTop()
   }
   array_[top_] = 0;
   top_ -= 1;
+}
+
+template<class T>
+size_t StackArray<T>::getSize()
+{
+  return size_;
 }
 
 #endif
