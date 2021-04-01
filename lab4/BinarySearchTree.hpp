@@ -146,16 +146,19 @@ void BinarySearchTree<T>::remove(T elem)
     if (node == root_)
     {
       delete root_;
+      root_ = nullptr;
     }
     else if (node == node->p_->left_)
     {
-      node->p_->left_ = nullptr;
+      Node* temp = node->p_;
       delete node;
+      temp->left_ = nullptr;
     }
     else
     {
-      node->p_->right_ = nullptr;
+      Node* temp = node->p_;
       delete node;
+      temp->right_ = nullptr;
     }
   }
   else if (node->left_ == nullptr || node->right_ == nullptr)
@@ -164,6 +167,7 @@ void BinarySearchTree<T>::remove(T elem)
     {
       node->key_ = node->left_->key_;
       delete node->left_;
+      node->left_ = nullptr;
     }
     else if (node->left_)
     {
@@ -176,10 +180,11 @@ void BinarySearchTree<T>::remove(T elem)
         node->p_->right_ = node->left_;
       }
     }
-    if (node->right_ && sizeSubtree(node->right_) == 1)
+    else if (node->right_ && sizeSubtree(node->right_) == 1)
     {
       node->key_ = node->right_->key_;
       delete node->right_;
+      node->right_ = nullptr;
     }
     else if (node->right_)
     {
