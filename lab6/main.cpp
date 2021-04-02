@@ -49,7 +49,7 @@ int main()
   std::cout << "Prefix breadth of the second tree:\n";
   secondTree.breadthPrefix();
 
-  std::cout << "\n\n" << (firstTree.same(secondTree) ? "Trees are the same.\n" : "Trees aren't the same.\n");
+  std::cout << "\n\n" << (firstTree.similar(secondTree) ? "Trees are the similar.\n" : "Trees aren't the similar.\n");
 
   return 0;
 }
