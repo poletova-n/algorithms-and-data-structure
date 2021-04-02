@@ -23,7 +23,7 @@ public:
 
   void breadthWidth();
   void breadthPrefix();
-  bool same(BinarySearchTree<T>& tree);
+  bool similar(BinarySearchTree<T>& tree);
 
 private:
   struct Node
@@ -152,16 +152,19 @@ void BinarySearchTree<T>::remove(T elem)
     if (node == root_)
     {
       delete root_;
+      root_ = nullptr;
     }
     else if (node == node->p_->left_)
     {
-      node->p_->left_ = nullptr;
+      Node* temp = node->p_;
       delete node;
+      temp->left_ = nullptr;
     }
     else
     {
-      node->p_->right_ = nullptr;
+      Node* temp = node->p_;
       delete node;
+      temp->right_ = nullptr;
     }
   }
   else if (node->left_ == nullptr || node->right_ == nullptr)
@@ -170,6 +173,7 @@ void BinarySearchTree<T>::remove(T elem)
     {
       node->key_ = node->left_->key_;
       delete node->left_;
+      node->left_ = nullptr;
     }
     else if (node->left_)
     {
@@ -182,10 +186,11 @@ void BinarySearchTree<T>::remove(T elem)
         node->p_->right_ = node->left_;
       }
     }
-    if (node->right_ && sizeSubtree(node->right_) == 1)
+    else if (node->right_ && sizeSubtree(node->right_) == 1)
     {
       node->key_ = node->right_->key_;
       delete node->right_;
+      node->right_ = nullptr;
     }
     else if (node->right_)
     {
@@ -261,44 +266,32 @@ void BinarySearchTree<T>::breadthPrefix()
 }
 
 template <class T>
-bool BinarySearchTree<T>::same(BinarySearchTree<T>& tree)
+bool BinarySearchTree<T>::similar(BinarySearchTree<T>& tree)
 {
-  QueueList<Node*> thisQueue;
-  QueueList<Node*> treeQueue;
-  thisQueue.enQueue(root_);
-  treeQueue.enQueue(tree.root_);
-  while (!(thisQueue.empty() && treeQueue.empty()))
+  if (tree.size() != size())
   {
-    Node* tempThis = thisQueue.head();
-    Node* tempTree = treeQueue.head();
-    thisQueue.deQueue();
-    treeQueue.deQueue();
-    if (tempThis->key_ != tempTree->key_)
+    return false;
+  }
+  QueueList<Node*> queue;
+  queue.enQueue(root_);
+  while (!queue.empty())
+  {
+    Node* temp = queue.head();
+    queue.deQueue();
+    if (!tree.find(temp->key_))
     {
       return false;
     }
-    if (tempThis->left_ != nullptr)
+    if (temp->left_ != nullptr)
     {
-      thisQueue.enQueue(tempThis->left_);
+      queue.enQueue(temp->left_);
     }
-    if (tempTree->left_ != nullptr)
+    if (temp->right_ != nullptr)
     {
-      treeQueue.enQueue(tempTree->left_);
-    }
-    if (tempThis->right_ != nullptr)
-    {
-      thisQueue.enQueue(tempThis->right_);
-    }
-    if (tempTree->right_ != nullptr)
-    {
-      treeQueue.enQueue(tempTree->right_);
+      queue.enQueue(temp->right_);
     }
   }
-  if (thisQueue.empty() && treeQueue.empty())
-  {
-    return true;
-  }
-  return false;
+  return true;
 }
 
 template <class T>
