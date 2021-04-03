@@ -201,8 +201,9 @@ void BinarySearchTree<T>::remove(T elem)
   else
   {
     Node* temp = findMax(node->left_);
-    remove(temp->key_);
-    node->key_ = temp->key_;
+    T tempKey = temp->key_;
+    remove(tempKey);
+    node->key_ = tempKey;
   }
 }
 
