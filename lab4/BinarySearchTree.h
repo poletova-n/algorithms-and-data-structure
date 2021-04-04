@@ -18,8 +18,7 @@ public:
   int get_height() const;
   void remove(const T& key);
   void print_element(std::ostream& out, T key);
-  ~BinarySearchTree();
-
+  void erase_tree();
 private:
   struct Node
   {
@@ -44,6 +43,11 @@ private:
   Node* find_node(Node* node, T key);
   StackList<T> add_tree_to_stack(Node* root);
 };
+template<class T>
+void BinarySearchTree<T>::erase_tree()
+{
+  delete_tree(root_);
+}
 
 template<class T>
 BinarySearchTree<T>::BinarySearchTree() :
@@ -241,16 +245,10 @@ void BinarySearchTree<T>::add_recursive(Node* node, T key) {
 }
 
 template<class T>
-BinarySearchTree<T>::~BinarySearchTree()
-{
-  delete_tree(root_);
-}
-
-template<class T>
 void BinarySearchTree<T>::clean_tree(Node* node) {
   if (node != nullptr) {
-    delete_tree(node->left_);
-    delete_tree(node->right_);
+    clean_tree(node->left_);
+    clean_tree(node->right_);
     if (node == root_) {
       node->key_ = NULL;
       node->left_ = nullptr;
@@ -273,24 +271,30 @@ void BinarySearchTree<T>::clean_tree(Node* node) {
 
 template<class T>
 void BinarySearchTree<T>::delete_tree(Node* node) {
-  if (node != nullptr) {
+  if (node != nullptr)
+  {
     delete_tree(node->left_);
     delete_tree(node->right_);
-    if (node == root_) {
-      delete node;
-      return;
-    }
+    if (node != root_)
+    {
       Node* parent = node->parent_;
-      if (parent->left_ == node) {
+      if (parent->left_ == node)
+      {
         parent->left_ = nullptr;
         delete node;
       }
-      else if (parent->right_ == node) {
+      else
+      {
         parent->right_ = nullptr;
         delete node;
-      } 
+      }
+
+    }
+    else
+      delete node;
   }
 }
+
 template <class T>
 typename BinarySearchTree<T>::Node* BinarySearchTree<T>::find_node(Node* node, T key) {
   if (node != nullptr) {
@@ -303,7 +307,7 @@ typename BinarySearchTree<T>::Node* BinarySearchTree<T>::find_node(Node* node, T
     }
   }
   else {
-    return nullptr;
+    return node;
   }
 }
 

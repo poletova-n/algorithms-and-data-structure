@@ -28,8 +28,10 @@ int main()
               << "height: " << tre.get_height() << "\n"
               << "------------------------------" << "\n";
 
+    std::cout << "element with key: " << 8 << " search status: " << tre.search(8) << "\n";
     tre.remove(8);
+    std::cout << "element with key: " << 8 << " search status: " << tre.search(8) << "\n";
     tre.print_element(std::cout, tre.search_next(6));
-    tre.~BinarySearchTree();
+    tre.erase_tree();
 
 }
