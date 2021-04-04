@@ -16,7 +16,10 @@ int main()
   intTree.recursiveInsert(45);
 
   intTree.print(std::cout);
-  int keyFound = intTree.iterativeSearch(15);
+
+  intTree.deleteKey(5);
+  intTree.print(std::cout);
+ /* int keyFound = intTree.iterativeSearch(15);
   std::cout << "Key 15" <<
        (keyFound ? " found successfully" : " not found") << " in the tree" << std::endl;
   keyFound = intTree.iterativeSearch(23);
@@ -28,12 +31,14 @@ int main()
             (keyFound ? " found successfully" : " not found") <<
             " in the tree" << std::endl;
 
- // std::cout << "height = " << intTree.getHeight() << std::endl;
+  std::cout << "height = " << intTree.getHeight() << std::endl;
   std::cout << "count = " << intTree.getCount () << std::endl;
 
   intTree.deleteKey(45);
+  intTree.print(std::cout);
   std::cout << "Tests after delete 45" << std::endl;
- // std::cout << "height = " << intTree.getHeight() << std::endl;
+
+  intTree.print(std::cout);
   std::cout << "count = " << intTree.getCount () << std::endl;
   keyFound = intTree.iterativeSearch(45);
   std::cout << "Key 45" <<
@@ -49,6 +54,6 @@ int main()
 
   std::cout << "Test after delete all elements" << std::endl;
   std::cout << "height = " << intTree.getHeight() << std::endl;
-  std::cout << "count = " << intTree.getCount () << std::endl;
+  std::cout << "count = " << intTree.getCount () << std::endl;*/
   return 0;
 }
