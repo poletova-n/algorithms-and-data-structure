@@ -10,7 +10,6 @@ public:
     reason("Queue overflow.")
   {}
   const char* what() { return reason; }
-
 private:
   const char* reason;
 };
@@ -22,7 +21,6 @@ public:
     reason("Queue underflow.")
   {}
   const char* what() { return reason; }
-
 private:
   const char* reason;
 };
@@ -34,7 +32,6 @@ public:
     reason("Wrong queue size.")
   {}
   const char* what() { return reason; }
-
 private:
   const char* reason;
 };

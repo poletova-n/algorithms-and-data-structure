@@ -3,4 +3,8 @@ project(lab5)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(lab5 main.cpp exception.hpp queue.hpp queueArray.hpp queueList.hpp)
+add_executable(lab5 main.cpp
+        exception.hpp
+        queue.hpp
+        queueArray.hpp
+        queueList.hpp)

@@ -4,6 +4,7 @@
 template <class T>
 class Queue
 {
+
 public:
   virtual ~Queue () {}
   virtual void enQueue(const T& e) = 0;

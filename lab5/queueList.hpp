@@ -16,6 +16,7 @@ public:
   const T& deQueue ();
   const T& print (std::ostream &out);
   bool isEmpty() { return head_ == nullptr; };
+
 private:
   struct Node
   {
