@@ -223,6 +223,7 @@ bool checkInvalidExpression(const std::string &text)
       }
     }
   }
+  return true;
 }
 
 void infixToPostfix(std::string &text, Stack<char> *stack)
