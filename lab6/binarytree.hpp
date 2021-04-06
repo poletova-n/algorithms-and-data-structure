@@ -289,7 +289,7 @@ public:
     }
   }
 
-  std::vector<T> getTree(std::ostream& out)
+  std::vector<T> getTree()
   {
     std::vector<T> array;
     StackList<Node*> stack;
@@ -316,9 +316,11 @@ public:
     {
       return false;
     }
-    std::vector<T> firstvec = getTree(std::cout);
-    std::vector<T> secondvec = right.getTree(std::cout);
+    std::vector<T> firstvec = getTree();
+    std::vector<T> secondvec = right.getTree();
 
+    std::sort(firstvec.begin(), firstvec.end());
+    std::sort(secondvec.begin(), secondvec.end());
     for (size_t i = 0; i < firstvec.size(); ++i)
     {
       if (firstvec[i] != secondvec[i])

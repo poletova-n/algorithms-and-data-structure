@@ -30,11 +30,11 @@ int main()
   copyTree.insert(3);
   copyTree.insert(20);
   copyTree.insert(15);
+  copyTree.insert(32);
+  copyTree.insert(22);
   copyTree.insert(30);
   copyTree.insert(2);
   copyTree.insert(5);
-  copyTree.insert(32);
-  copyTree.insert(22);
 
   std::cout << "width traversal: ";
   intTree.traversalWidth(std::cout);
