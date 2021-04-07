@@ -10,7 +10,7 @@ public:
   reason("Stack Underflow")
   {}
 
-  const char *what() const noexcept override
+  [[nodiscard]] const char *what() const noexcept override
   {
     return reason;
   }

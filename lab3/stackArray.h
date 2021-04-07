@@ -16,7 +16,8 @@ public:
 
   void push(const T& e) override;
   T pop() override;
-  bool isEmpty() const override;
+  T top();
+  [[nodiscard]] bool isEmpty() const override;
 
 private:
   T* array_;
@@ -70,6 +71,12 @@ template <class T>
 bool StackArray<T>::isEmpty() const
 {
   return top_ == 0;
+}
+template<class T>
+
+T StackArray<T>::top()
+{
+  return array_[top_];
 }
 
 #endif
