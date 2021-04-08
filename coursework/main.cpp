@@ -66,59 +66,59 @@ int main()
   {
     std::cout << "-";
   }
-  std::cout << "\n" << std::setw(38) << "Testing BFC\n";
+  std::cout << "\n" << std::setw(38) << "Testing DFC\n";
   for (int i = 0; i < 60; i++)
   {
     std::cout << "-";
   }
   std::cout << "\n";
-  testBFCDirectedGraph();
+  testDFCDirectedGraph();
   std::cout << "\n";
   for (int i = 0; i < 60; i++)
   {
     std::cout << "-";
   }
-  std::cout << "\n" << std::setw(46) << "Testing BFC (cyclic graph)\n";
+  std::cout << "\n" << std::setw(46) << "Testing DFC (cyclic graph)\n";
   for (int i = 0; i < 60; i++)
   {
     std::cout << "-";
   }
   std::cout << "\n";
-  testBFCCyclicDirectedGraph();
+  testDFCCyclicDirectedGraph();
   std::cout << "\n";
   for (int i = 0; i < 60; i++)
   {
     std::cout << "-";
   }
-  std::cout << "\n" << std::setw(44) << "Testing BFC (graph is empty)\n";
+  std::cout << "\n" << std::setw(44) << "Testing DFC (graph is empty)\n";
   for (int i = 0; i < 60; i++)
   {
     std::cout << "-";
   }
 
-  testBFCEmptyDirectedGraph();
+  testDFCEmptyDirectedGraph();
   for (int i = 0; i < 60; i++)
   {
     std::cout << "-";
   }
-  std::cout << "\n" << std::setw(50) << "Testing BFC (graph with free node)\n";
-  for (int i = 0; i < 60; i++)
-  {
-    std::cout << "-";
-  }
-  std::cout << "\n";
-  testBFCFreeNodeDirectedGraph();
-  for (int i = 0; i < 60; i++)
-  {
-    std::cout << "-";
-  }
-  std::cout << "\n" << std::setw(40) << "Testing BFC (error BFC)\n";
+  std::cout << "\n" << std::setw(50) << "Testing DFC (graph with free node)\n";
   for (int i = 0; i < 60; i++)
   {
     std::cout << "-";
   }
   std::cout << "\n";
-  testBFCErrorDirectedGraph();
+  testDFCFreeNodeDirectedGraph();
+  for (int i = 0; i < 60; i++)
+  {
+    std::cout << "-";
+  }
+  std::cout << "\n" << std::setw(40) << "Testing DFC (error DFC)\n";
+  for (int i = 0; i < 60; i++)
+  {
+    std::cout << "-";
+  }
+  std::cout << "\n";
+  testDFCErrorDirectedGraph();
   for (int i = 0; i < 60; i++)
   {
     std::cout << "-";
@@ -275,34 +275,34 @@ int main()
   {
     std::cout << "-";
   }
-  std::cout << "\n" << std::setw(38) << "Testing BFC\n";
+  std::cout << "\n" << std::setw(38) << "Testing DFC\n";
   for (int i = 0; i < 60; i++)
   {
     std::cout << "-";
   }
   std::cout << "\n";
-  testBFCUndirectedGraph();
+  testDFCUndirectedGraph();
   std::cout << "\n";
   for (int i = 0; i < 60; i++)
   {
     std::cout << "-";
   }
-  std::cout << "\n" << std::setw(48) << "Testing BFC (graph with free node)\n";
+  std::cout << "\n" << std::setw(48) << "Testing DFC (graph with free node)\n";
   for (int i = 0; i < 60; i++)
   {
     std::cout << "-";
   }
-  testBFCFreeNodeUndirectedGraph();
+  testDFCFreeNodeUndirectedGraph();
   for (int i = 0; i < 60; i++)
   {
     std::cout << "-";
   }
-  std::cout << "\n" << std::setw(44) << "Testing BFC (graph is empty)\n";
+  std::cout << "\n" << std::setw(44) << "Testing DFC (graph is empty)\n";
   for (int i = 0; i < 60; i++)
   {
     std::cout << "-";
   }
-  testBFCEmptyUndirectedGraph();
+  testDFCEmptyUndirectedGraph();
 
   return 0;
 }

@@ -175,7 +175,7 @@ void testIsIncludeNodeAndIsIncludeLineUndirectedGraph()
   }
 }
 
-void testBFCUndirectedGraph()
+void testDFCUndirectedGraph()
 {
   try
   {
@@ -192,7 +192,7 @@ void testBFCUndirectedGraph()
     graph1.addLine(2, 3);
     graph1.addLine(3, -1);
     graph1.print();
-    graph1.BFC();
+    graph1.DFC();
   }
   catch (const GraphWrongLine &e)
   {
@@ -206,17 +206,13 @@ void testBFCUndirectedGraph()
   {
     std::cout << "\n" << e.what() << "\n";
   }
-  catch (const GraphCycle &e)
-  {
-    std::cout << "\n" << e.what() << "\n";
-  }
   catch (const GraphEmpty &e)
   {
     std::cout << "\n" << e.what() << "\n";
   }
 }
 
-void testBFCFreeNodeUndirectedGraph()
+void testDFCFreeNodeUndirectedGraph()
 {
   try
   {
@@ -232,7 +228,7 @@ void testBFCFreeNodeUndirectedGraph()
     graph.addLine(14, 18);
     std::cout << "\n";
     graph.print();
-    graph.BFC();
+    graph.DFC();
   }
   catch (const GraphWrongLine &e)
   {
@@ -243,10 +239,6 @@ void testBFCFreeNodeUndirectedGraph()
     std::cout << "\n" << e.what() << "\n";
   }
   catch (const GraphFreeNode &e)
-  {
-    std::cout << "\n" << e.what() << "\n";
-  }
-  catch (const GraphCycle &e)
   {
     std::cout << "\n" << e.what() << "\n";
   }
@@ -256,26 +248,14 @@ void testBFCFreeNodeUndirectedGraph()
   }
 }
 
-void testBFCEmptyUndirectedGraph()
+void testDFCEmptyUndirectedGraph()
 {
   try
   {
     UndirectedGraph<int> graph;
-    graph.BFC();
-  }
-  catch (const GraphWrongLine &e)
-  {
-    std::cout << "\n" << e.what() << "\n";
-  }
-  catch (const GraphWrongNode &e)
-  {
-    std::cout << "\n" << e.what() << "\n";
+    graph.DFC();
   }
   catch (const GraphFreeNode &e)
-  {
-    std::cout << "\n" << e.what() << "\n";
-  }
-  catch (const GraphCycle &e)
   {
     std::cout << "\n" << e.what() << "\n";
   }

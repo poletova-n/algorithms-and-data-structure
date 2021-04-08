@@ -22,7 +22,7 @@ class Graph
 
   virtual bool isIncludeNode(const T &node) = 0;
 
-  virtual void BFC() = 0;
+  virtual void DFC() = 0;
 };
 
 #endif

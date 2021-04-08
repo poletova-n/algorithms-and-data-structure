@@ -2,8 +2,7 @@
 #define UNDIRECTEDGRAPH_HPP
 
 #include "graph.hpp"
-#include "singlyLinkedOrderedList.hpp"
-#include "queueArray.hpp"
+#include "list.hpp"
 #include "array.hpp"
 #include "exceptionGraph.hpp"
 
@@ -18,7 +17,7 @@ class UndirectedGraph
     Node *next_;
     T1 item_;
     size_t number_{};
-    SinglyLinkedOrderedList<int> ways_;
+    List<int> ways_;
 
     Node()
     {
@@ -31,9 +30,9 @@ class UndirectedGraph
   explicit UndirectedGraph();
 
   ~UndirectedGraph() = default;
-  UndirectedGraph(const UndirectedGraph &src) =delete;
+  UndirectedGraph(const UndirectedGraph &src) = delete;
 
-  UndirectedGraph &operator=(const UndirectedGraph<T> &src) =delete;
+  UndirectedGraph &operator=(const UndirectedGraph<T> &src) = delete;
 
   UndirectedGraph(UndirectedGraph &&src) = delete;
 
@@ -50,11 +49,11 @@ class UndirectedGraph
 
   bool isIncludeNode(const T &node) override;
   void print();
-  void BFC() override;
+  void DFC() override;
 
   private:
   Node<T> *first_;
-  Array<SinglyLinkedOrderedList<int>> lines_;
+  Array<List<int>> lines_;
   size_t size_;
 
   Node<T> *searchNode(const int &item);
@@ -85,7 +84,7 @@ void UndirectedGraph<T>::addNode(const T &newItem)
     node->number_ = 0;
     first_ = node;
     first_->next_ = nullptr;
-    SinglyLinkedOrderedList<T> newList;
+    List<T> newList;
     lines_.pushBack(newList);
     size_++;
   } else
@@ -98,7 +97,7 @@ void UndirectedGraph<T>::addNode(const T &newItem)
     node->number_ = size_;
     temp->next_ = node;
     node->next_ = nullptr;
-    SinglyLinkedOrderedList<T> newList;
+    List<T> newList;
     lines_.pushBack(newList);
     size_++;
   }
@@ -295,44 +294,6 @@ typename UndirectedGraph<T>::template Node<T> *UndirectedGraph<T>::searchNode(co
 }
 
 template<class T>
-void UndirectedGraph<T>::BFC()
-{
-  if (isEmpty())
-  {
-    throw GraphEmpty();
-  }
-  if (freeNode())
-  {
-    throw GraphFreeNode();
-  }
-  QueueArray<Node<T> *> tempQueue(size_);
-  Array<bool> isVisit;
-  for (int i = 0; i < size_; i++)
-  {
-    isVisit.pushBack(false);
-  }
-  tempQueue.enQueue(first_);
-  isVisit[first_->number_] = true;
-  std::cout << "\nBFC\n";
-  while (!tempQueue.isEmpty())
-  {
-    Node<T> *temp = tempQueue.deQueue();
-    std::cout << temp->item_ << " ";
-    for (int i = 0; i < lines_[temp->number_].getSize(); i++)
-    {
-      for (int j = 0; j < size_; j++)
-      {
-        if (lines_[temp->number_].searchItem(j) && !isVisit[j])
-        {
-          tempQueue.enQueue(searchNodeNumber(j));
-          isVisit[j] = true;
-        }
-      }
-    }
-  }
-}
-
-template<class T>
 typename UndirectedGraph<T>::template Node<T> *UndirectedGraph<T>::searchNodeNumber(const int &index)
 {
   Node<T> *temp = first_;
@@ -353,6 +314,45 @@ bool UndirectedGraph<T>::freeNode()
       return true;
   }
   return false;
+}
+template<class T>
+void UndirectedGraph<T>::DFC()
+{
+  bool isVisited[size_];
+  List<int> tempList;
+  if (isEmpty())
+  {
+    throw GraphEmpty();
+  }
+  if (freeNode())
+  {
+    throw GraphFreeNode();
+  }
+  StackArray<Node<T> *> stack(size_);
+  stack.push(first_);
+  while (!stack.isEmpty())
+  {
+    Node<T> *tempNode = stack.pop();
+    isVisited[tempNode->number_] = true;
+    tempList.insertItem(tempNode->item_);
+    List<int> tempWays = tempNode->ways_;
+    for (int j = 0; j < size_; j++)
+    {
+      if (tempWays.searchItem(j) && !isVisited[j])
+      {
+        stack.push(searchNodeNumber(j));
+      }
+
+    }
+  }
+  for (int i = 0; i < size_; i++)
+  {
+    if (!isVisited[i])
+    {
+      throw GraphDFCError();
+    }
+  }
+  tempList.print();
 }
 
 #endif

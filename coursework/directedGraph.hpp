@@ -2,8 +2,7 @@
 #define DIRECTEDGRAPH_HPP
 
 #include "graph.hpp"
-#include "singlyLinkedOrderedList.hpp"
-#include "queueArray.hpp"
+#include "list.hpp"
 #include "array.hpp"
 #include "stackArray.hpp"
 #include <cstdlib>
@@ -21,12 +20,13 @@ class DirectedGraph
     Node *next_;
     T1 item_;
     size_t number_{};
-    SinglyLinkedOrderedList<int> ways_;
+    List<int> ways_;
 
     Node()
     {
       item_ = 0;
       next_ = nullptr;
+      number_=0;
     };
   };
 
@@ -45,13 +45,11 @@ class DirectedGraph
   bool isIncludeLine(const int &node1, const int &node2) override;
   bool isIncludeNode(const T &node) override;
   void print();
-  void BFC() override;
-
   void topologicalSort();
-
+  void DFC() override;
   private:
   Node<T> *first_;
-  Array<SinglyLinkedOrderedList<int>> lines_;
+  Array<List<int>> lines_;
   size_t size_;
 
   Node<T> *searchNode(const int &item);
@@ -59,13 +57,14 @@ class DirectedGraph
 
   Node<T> *searchNodeNoIncomingEdges();
 
-  void topologicalSortUtil(int v, bool *visited, StackArray<Node<T> *> &stack);
+  void topologicalSortUtil(int v, bool *isVisited, StackArray<Node<T> *> &stack);
 
-  void DFC(Node<T> *node, Array<char> &color);
+  void searchDFC(Node<T> *node, Array<char> &color);
 
   bool isCycle();
 
   bool freeNode();
+
 };
 
 template<class T>
@@ -88,7 +87,7 @@ void DirectedGraph<T>::addNode(const T &newItem)
   {
     node->number_ = 0;
     first_ = node;
-    SinglyLinkedOrderedList<T> newList;
+    List<T> newList;
     lines_.pushBack(newList);
     size_++;
   } else
@@ -100,7 +99,7 @@ void DirectedGraph<T>::addNode(const T &newItem)
     }
     node->number_ = size_;
     temp->next_ = node;
-    SinglyLinkedOrderedList<T> newList;
+    List<T> newList;
     lines_.pushBack(newList);
     size_++;
   }
@@ -260,62 +259,6 @@ typename DirectedGraph<T>::template Node<T> *DirectedGraph<T>::searchNode(const 
 }
 
 template<class T>
-void DirectedGraph<T>::BFC()
-{
-  if (isEmpty())
-  {
-    throw GraphEmpty();
-  }
-  if (freeNode())
-  {
-    throw GraphFreeNode();
-  }
-  QueueArray<Node<T> *> tempQueue(size_);
-  if (isCycle() || searchNodeNoIncomingEdges() == nullptr)
-  {
-    tempQueue.enQueue(first_);
-  } else
-  {
-    tempQueue.enQueue(searchNodeNoIncomingEdges());
-  }
-  Array<bool> isVisit;
-  for (int i = 0; i < size_; i++)
-  {
-    isVisit.pushBack(false);
-  }
-  isVisit[first_->number_] = true;
-  Array<int> nodes;
-  while (!tempQueue.isEmpty())
-  {
-    Node<T> *temp = tempQueue.deQueue();
-    nodes.pushBack(temp->item_);
-    for (int i = 0; i < lines_[temp->number_].getSize(); i++)
-    {
-      for (int j = 0; j < size_; j++)
-      {
-        if (lines_[temp->number_].searchItem(j) && !isVisit[j])
-        {
-          tempQueue.enQueue(searchNodeNumber(j));
-          isVisit[j] = true;
-        }
-      }
-    }
-  }
-  for(int i=0;i<size_;i++)
-  {
-    if(!isVisit[i])
-    {
-      throw GraphBFCError();
-    }
-  }
-  std::cout << "\nBFC\n";
-  for(int i=0;i<size_;i++)
-  {
-    std::cout<<nodes[i]<<" ";
-  }
-}
-
-template<class T>
 typename DirectedGraph<T>::template Node<T> *DirectedGraph<T>::searchNodeNumber(const int &index)
 {
   Node<T> *temp = first_;
@@ -328,9 +271,11 @@ typename DirectedGraph<T>::template Node<T> *DirectedGraph<T>::searchNodeNumber(
 }
 
 template<class T>
-void DirectedGraph<T>::topologicalSortUtil(int v, bool *visited, StackArray<Node<T> *> &stack)
+void DirectedGraph<T>::
+
+topologicalSortUtil(int v, bool *isVisited, StackArray<Node<T> *> &stack)
 {
-  visited[v] = true;
+  isVisited[v] = true;
   Node<T> *addNode = searchNodeNumber(v);
   if (lines_[v].isEmpty())
   {
@@ -339,9 +284,9 @@ void DirectedGraph<T>::topologicalSortUtil(int v, bool *visited, StackArray<Node
   {
     for (int i = 0; i < size_; i++)
     {
-      if (!visited[i] && lines_[v].searchItem(i))
+      if (!isVisited[i] && lines_[v].searchItem(i))
       {
-        topologicalSortUtil(i, visited, stack);
+        topologicalSortUtil(i, isVisited, stack);
       }
     }
     stack.push(addNode);
@@ -362,13 +307,13 @@ void DirectedGraph<T>::topologicalSort()
   {
     throw GraphCycle();
   }
-  bool visited[size_];
+  bool isVisited[size_];
   for (int i = 0; i < size_; i++)
   {
-    visited[i] = false;
+    isVisited[i] = false;
   }
   Node<T> *firstTopologyNode = searchNodeNoIncomingEdges();
-  topologicalSortUtil(firstTopologyNode->number_, visited, stack);
+  topologicalSortUtil(firstTopologyNode->number_, isVisited, stack);
 
   size_t newNumber = 0;
   std::cout << "\nTopology sort\n";
@@ -435,10 +380,10 @@ void DirectedGraph<T>::addLine(const int &node1, const int &node2)
 template<class T>
 typename DirectedGraph<T>::template Node<T> *DirectedGraph<T>::searchNodeNoIncomingEdges()
 {
-  int visits[size_];
+  bool isVisited[size_];
   for (int i = 0; i < size_; i++)
   {
-    visits[i] = false;
+    isVisited[i] = false;
   }
   for (int i = 0; i < size_; i++)
   {
@@ -446,13 +391,13 @@ typename DirectedGraph<T>::template Node<T> *DirectedGraph<T>::searchNodeNoIncom
     {
       if (lines_[i].searchItem(j))
       {
-        visits[j] = true;
+        isVisited[j] = true;
       }
     }
   }
   for (int i = 0; i < size_; i++)
   {
-    if (!visits[i])
+    if (!isVisited[i])
     {
       return searchNodeNumber(i);
     }
@@ -464,11 +409,11 @@ template<class T>
 bool DirectedGraph<T>::freeNode()
 {
   StackArray<Node<T> *> stack(size_);
-  SinglyLinkedOrderedList<int> list;
+  List<int> list;
   Node<T> *nodeTemp = first_;
   while (nodeTemp != nullptr)
   {
-    SinglyLinkedOrderedList<int> tempWays = nodeTemp->ways_;
+    List<int> tempWays = nodeTemp->ways_;
     bool isLink = false;
     for (int i = 0; i < size_; i++)
     {
@@ -492,10 +437,10 @@ bool DirectedGraph<T>::freeNode()
 }
 
 template<class T>
-void DirectedGraph<T>::DFC(DirectedGraph::Node<T> *node, Array<char> &color)
+void DirectedGraph<T>::searchDFC(DirectedGraph::Node<T> *node, Array<char> &color)
 {
   color[node->number_] = 'g';
-  SinglyLinkedOrderedList<int> tempWays = node->ways_;
+  List<int> tempWays = node->ways_;
   for (int i = 0; i < size_; i++)
   {
     if (tempWays.searchItem(i))
@@ -505,7 +450,7 @@ void DirectedGraph<T>::DFC(DirectedGraph::Node<T> *node, Array<char> &color)
         return;
       } else
       {
-        DFC(searchNodeNumber(i), color);
+        searchDFC(searchNodeNumber(i), color);
       }
     }
   }
@@ -524,13 +469,57 @@ bool DirectedGraph<T>::isCycle()
   Node<T> *tempNode = searchNodeNoIncomingEdges();
   if (tempNode == nullptr)
     return true;
-  DFC(tempNode, colour);
+  searchDFC(tempNode, colour);
   for (int i = 0; i < size_; i++)
   {
     if (colour[i] != 'b')
       return true;
   }
   return false;
+}
+template<class T>
+void DirectedGraph<T>::DFC()
+{
+  bool isVisited[size_];
+  List<int> tempList;
+  if (isEmpty())
+  {
+    throw GraphEmpty();
+  }
+  if (freeNode())
+  {
+    throw GraphFreeNode();
+  }
+  StackArray<Node<T> *> stack(size_);
+  if (searchNodeNoIncomingEdges() != nullptr)
+  {
+    stack.push(searchNodeNoIncomingEdges());
+  } else
+    stack.push(first_);
+  while (!stack.isEmpty())
+  {
+    Node<T> *tempNode = stack.pop();
+    isVisited[tempNode->number_] = true;
+    tempList.insertItem(tempNode->item_);
+    List<int> tempWays = tempNode->ways_;
+    for (int j = 0; j < size_; j++)
+    {
+      if (tempWays.searchItem(j) && !isVisited[j])
+      {
+        stack.push(searchNodeNumber(j));
+      }
+
+    }
+  }
+  for (int i = 0; i < size_; i++)
+  {
+    if (!isVisited[i])
+    {
+      throw GraphDFCError();
+    }
+  }
+  std::cout << "DFC\n";
+  tempList.print();
 }
 
 #endif

@@ -2,7 +2,7 @@
 #define ARRAY_HPP
 
 #include <iostream>
-#include "singlyLinkedOrderedList.hpp"
+#include "list.hpp"
 #include "exceptionArray.hpp"
 
 template<class T>

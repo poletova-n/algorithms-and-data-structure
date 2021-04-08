@@ -1,11 +1,11 @@
-#ifndef SINGLYLINKEDORDEREDLIST_HPP
-#define SINGLYLINKEDORDEREDLIST_HPP
+#ifndef LIST_HPP
+#define LIST_HPP
 
 #include <iostream>
 #include "exceptionList.hpp"
 
 template<class T>
-class SinglyLinkedOrderedList
+class List
 {
   private:
   struct Node
@@ -24,18 +24,18 @@ class SinglyLinkedOrderedList
   void deleteNode(Node *x);
 
   public:
-  SinglyLinkedOrderedList() : head_(nullptr)
+  List() : head_(nullptr)
   {}
 
-  SinglyLinkedOrderedList(const SinglyLinkedOrderedList &src);
+  List(const List &src);
 
-  SinglyLinkedOrderedList &operator=(const SinglyLinkedOrderedList<T> &src);
+  List &operator=(const List<T> &src);
 
-  SinglyLinkedOrderedList(SinglyLinkedOrderedList &&src) = delete;
+  List(List &&src) = delete;
 
-  SinglyLinkedOrderedList &operator=(SinglyLinkedOrderedList<T> &&src) = delete;
+  List &operator=(List<T> &&src) = delete;
 
-  ~SinglyLinkedOrderedList();
+  ~List();
 
   void insertItem(T item);
 
@@ -53,7 +53,7 @@ class SinglyLinkedOrderedList
 };
 
 template<class T>
-void SinglyLinkedOrderedList<T>::insertNode(SinglyLinkedOrderedList::Node *x)
+void List<T>::insertNode(List::Node *x)
 {
   if (this->head_ == nullptr)
   {
@@ -64,9 +64,10 @@ void SinglyLinkedOrderedList<T>::insertNode(SinglyLinkedOrderedList::Node *x)
   } else
   {
     Node *temp = this->head_;
-    while (temp != nullptr)
+    while (temp->next_ != nullptr)
     {
-      if (this->head_->item_ > x->item_)
+      temp = temp->next_;
+/*      if (this->head_->item_ > x->item_)
       {
         x->next_ = head_;
         this->head_ = x;
@@ -85,7 +86,7 @@ void SinglyLinkedOrderedList<T>::insertNode(SinglyLinkedOrderedList::Node *x)
         x->next_ = temp->next_;
         temp->next_ = x;
         return;
-      }
+      }*/
     }
     temp->next_ = x;
     x->next_ = nullptr;
@@ -94,19 +95,19 @@ void SinglyLinkedOrderedList<T>::insertNode(SinglyLinkedOrderedList::Node *x)
 }
 
 template<class T>
-void SinglyLinkedOrderedList<T>::insertItem(T item)
+void List<T>::insertItem(T item)
 {
   insertNode(new Node(item));
 }
 
 template<class T>
-bool SinglyLinkedOrderedList<T>::searchItem(T item)
+bool List<T>::searchItem(T item)
 {
   return (searchNode(item) != nullptr);
 }
 
 template<class T>
-typename SinglyLinkedOrderedList<T>::Node *SinglyLinkedOrderedList<T>::searchNode(T item)
+typename List<T>::Node *List<T>::searchNode(T item)
 {
   Node *temp = head_;
   while (temp != nullptr && temp->item_ != item)
@@ -118,7 +119,7 @@ typename SinglyLinkedOrderedList<T>::Node *SinglyLinkedOrderedList<T>::searchNod
 }
 
 template<class T>
-void SinglyLinkedOrderedList<T>::deleteNode(SinglyLinkedOrderedList::Node *x)
+void List<T>::deleteNode(List::Node *x)
 {
   if (x == nullptr)
   {
@@ -142,7 +143,7 @@ void SinglyLinkedOrderedList<T>::deleteNode(SinglyLinkedOrderedList::Node *x)
 }
 
 template<class T>
-bool SinglyLinkedOrderedList<T>::deleteItem(T item)
+bool List<T>::deleteItem(T item)
 {
   if (isEmpty())
   {
@@ -159,7 +160,7 @@ bool SinglyLinkedOrderedList<T>::deleteItem(T item)
 }
 
 template<class T>
-SinglyLinkedOrderedList<T> &SinglyLinkedOrderedList<T>::operator=(const SinglyLinkedOrderedList<T> &src)
+List<T> &List<T>::operator=(const List<T> &src)
 {
   head_ = nullptr;
   Node *temp = src.head_;
@@ -172,7 +173,7 @@ SinglyLinkedOrderedList<T> &SinglyLinkedOrderedList<T>::operator=(const SinglyLi
 }
 
 template<class T>
-SinglyLinkedOrderedList<T>::SinglyLinkedOrderedList(const SinglyLinkedOrderedList &src)
+List<T>::List(const List &src)
 {
   head_ = nullptr;
   Node *temp = src.head_;
@@ -184,7 +185,7 @@ SinglyLinkedOrderedList<T>::SinglyLinkedOrderedList(const SinglyLinkedOrderedLis
 }
 
 template<class T>
-void SinglyLinkedOrderedList<T>::print()
+void List<T>::print()
 {
   Node *temp = head_;
   while (temp != nullptr)
@@ -195,7 +196,7 @@ void SinglyLinkedOrderedList<T>::print()
 }
 
 template<class T>
-int SinglyLinkedOrderedList<T>::getSize()
+int List<T>::getSize()
 {
   Node *temp = head_;
   int size = 0;
@@ -208,13 +209,13 @@ int SinglyLinkedOrderedList<T>::getSize()
 }
 
 template<class T>
-bool SinglyLinkedOrderedList<T>::isEmpty()
+bool List<T>::isEmpty()
 {
   return (getSize() == 0);
 }
 
 template<class T>
-SinglyLinkedOrderedList<T>::~SinglyLinkedOrderedList()
+List<T>::~List()
 {
   Node *next = head_;
   while (head_ != nullptr)

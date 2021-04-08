@@ -72,11 +72,11 @@ class GraphEmpty
   private:
   std::string reason_;
 };
-class GraphBFCError
+class GraphDFCError
   : public std::exception
 {
   public:
-  GraphBFCError() : reason_("Cannot pass all nodes")
+  GraphDFCError() : reason_("Cannot pass all nodes")
   {}
 
   const char *what() const noexcept override
@@ -85,4 +85,5 @@ class GraphBFCError
   private:
   std::string reason_;
 };
+
 #endif

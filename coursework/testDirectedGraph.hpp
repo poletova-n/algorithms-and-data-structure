@@ -132,25 +132,25 @@ void testIsIncludeNodeAndIsIncludeLineDirectedGraph()
   }
 }
 
-void testBFCDirectedGraph()
+void testDFCDirectedGraph()
 {
   try
   {
     DirectedGraph<int> graph1;
     graph1.addNode(1);
     graph1.addNode(4);
-    graph1.addNode(8);
-    graph1.addNode(2);
     graph1.addNode(3);
-    graph1.addNode(-1);
+    graph1.addNode(9);
+    graph1.addNode(2);
+    graph1.addNode(8);
     graph1.addLine(1, 4);
+    graph1.addLine(1, 3);
     graph1.addLine(4, 2);
-    graph1.addLine(4, 8);
-    graph1.addLine(2, 3);
-    graph1.addLine(8, 3);
-    graph1.addLine(8, -1);
+    graph1.addLine(2, 8);
+    graph1.addLine(3, 9);
+    graph1.addLine(2, 8);
     graph1.print();
-    graph1.BFC();
+    graph1.DFC();
   }
   catch (const GraphWrongLine &e)
   {
@@ -164,38 +164,52 @@ void testBFCDirectedGraph()
   {
     std::cout << "\n" << e.what() << "\n";
   }
-  catch (const GraphCycle &e)
+  catch (const GraphFreeNode &e)
   {
     std::cout << "\n" << e.what() << "\n";
   }
-  catch(const GraphEmpty &e)
+  catch (const GraphEmpty &e)
   {
-    std::cout<<"\n"<<e.what()<<"\n";
+    std::cout << "\n" << e.what() << "\n";
   }
-  catch(const GraphBFCError &e)
+  catch (const GraphDFCError &e)
   {
-    std::cout<<"\n"<<e.what()<<"\n";
+    std::cout << "\n" << e.what() << "\n";
   }
 }
 
-void testBFCCyclicDirectedGraph()
+void testDFCCyclicDirectedGraph()
 {
   try
   {
-    DirectedGraph<int> graph;
-    graph.addNode(10);
-    graph.addNode(12);
-    graph.addNode(1);
-    graph.addNode(13);
-    graph.addNode(6);
-    graph.addLine(10, 12);
-    graph.addLine(12, 1);
-    graph.addLine(12, 13);
-    graph.addLine(13, 10);
-    graph.addLine(1, 6);
-    graph.addLine(1, 10);
-    graph.print();
-    graph.BFC();
+    DirectedGraph<int> graph1;
+    graph1.addNode(10);
+    graph1.addNode(12);
+    graph1.addNode(1);
+    graph1.addNode(13);
+    graph1.addNode(6);
+    graph1.addLine(10, 12);
+    graph1.addLine(12, 1);
+    graph1.addLine(12, 13);
+    graph1.addLine(13, 10);
+    graph1.addLine(1, 6);
+    graph1.addLine(1, 10);
+    graph1.print();
+    graph1.DFC();
+    std::cout << "\n";
+    DirectedGraph<int> graph2;
+    graph2.addNode(10);
+    graph2.addNode(12);
+    graph2.addNode(1);
+    graph2.addNode(13);
+    graph2.addNode(6);
+    graph2.addLine(10, 12);
+    graph2.addLine(12, 1);
+    graph2.addLine(1, 13);
+    graph2.addLine(13, 6);
+    graph2.addLine(6, 10);
+    graph2.print();
+    graph2.DFC();
   }
   catch (const GraphWrongLine &e)
   {
@@ -209,21 +223,17 @@ void testBFCCyclicDirectedGraph()
   {
     std::cout << "\n" << e.what() << "\n";
   }
-  catch (const GraphCycle &e)
+  catch (const GraphEmpty &e)
   {
     std::cout << "\n" << e.what() << "\n";
   }
-  catch(const GraphEmpty &e)
+  catch (const GraphDFCError &e)
   {
-    std::cout<<"\n"<<e.what()<<"\n";
-  }
-  catch(const GraphBFCError &e)
-  {
-    std::cout<<"\n"<<e.what()<<"\n";
+    std::cout << "\n" << e.what() << "\n";
   }
 }
 
-void testBFCFreeNodeDirectedGraph()
+void testDFCFreeNodeDirectedGraph()
 {
   try
   {
@@ -238,9 +248,8 @@ void testBFCFreeNodeDirectedGraph()
     graph.addLine(12, 14);
     graph.addLine(14, 18);
     graph.print();
-    graph.BFC();
+    graph.DFC();
   }
-
 
   catch (const GraphWrongLine &e)
   {
@@ -254,53 +263,37 @@ void testBFCFreeNodeDirectedGraph()
   {
     std::cout << "\n" << e.what() << "\n";
   }
-  catch (const GraphCycle &e)
+  catch (const GraphEmpty &e)
   {
     std::cout << "\n" << e.what() << "\n";
   }
-  catch(const GraphEmpty &e)
+  catch (const GraphDFCError &e)
   {
-    std::cout<<"\n"<<e.what()<<"\n";
-  }
-  catch(const GraphBFCError &e)
-  {
-    std::cout<<"\n"<<e.what()<<"\n";
+    std::cout << "\n" << e.what() << "\n";
   }
 }
 
-void testBFCEmptyDirectedGraph()
+void testDFCEmptyDirectedGraph()
 {
   try
   {
     DirectedGraph<int> graph;
-    graph.BFC();
-  }
-  catch (const GraphWrongLine &e)
-  {
-    std::cout << "\n" << e.what() << "\n";
-  }
-  catch (const GraphWrongNode &e)
-  {
-    std::cout << "\n" << e.what() << "\n";
+    graph.DFC();
   }
   catch (const GraphFreeNode &e)
   {
     std::cout << "\n" << e.what() << "\n";
   }
-  catch (const GraphCycle &e)
+  catch (const GraphEmpty &e)
   {
     std::cout << "\n" << e.what() << "\n";
   }
-  catch(const GraphEmpty &e)
+  catch (const GraphDFCError &e)
   {
-    std::cout<<"\n"<<e.what()<<"\n";
-  }
-  catch(const GraphBFCError &e)
-  {
-    std::cout<<"\n"<<e.what()<<"\n";
+    std::cout << "\n" << e.what() << "\n";
   }
 }
-void testBFCErrorDirectedGraph()
+void testDFCErrorDirectedGraph()
 {
   try
   {
@@ -318,7 +311,7 @@ void testBFCErrorDirectedGraph()
     graph.addLine(3, 5);
     graph.addLine(4, 5);
     graph.print();
-    graph.BFC();
+    graph.DFC();
   }
   catch (const GraphWrongNode &e)
   {
@@ -328,17 +321,13 @@ void testBFCErrorDirectedGraph()
   {
     std::cout << "\n" << e.what() << "\n";
   }
-  catch (const GraphCycle &e)
+  catch (const GraphEmpty &e)
   {
     std::cout << "\n" << e.what() << "\n";
   }
-  catch(const GraphEmpty &e)
+  catch (const GraphDFCError &e)
   {
-    std::cout<<"\n"<<e.what()<<"\n";
-  }
-  catch(const GraphBFCError &e)
-  {
-    std::cout<<"\n"<<e.what()<<"\n";
+    std::cout << "\n" << e.what() << "\n";
   }
 }
 void testTopologicalSort()
@@ -383,9 +372,9 @@ void testTopologicalSort()
   {
     std::cout << "\n" << e.what() << "\n";
   }
-  catch(const GraphEmpty &e)
+  catch (const GraphEmpty &e)
   {
-    std::cout<<"\n"<<e.what()<<"\n";
+    std::cout << "\n" << e.what() << "\n";
   }
 }
 
@@ -426,9 +415,9 @@ void testTopologicalSortCyclic()
   {
     std::cout << "\n" << e.what() << "\n";
   }
-  catch(const GraphEmpty &e)
+  catch (const GraphEmpty &e)
   {
-    std::cout<<"\n"<<e.what()<<"\n";
+    std::cout << "\n" << e.what() << "\n";
   }
 }
 
@@ -451,7 +440,6 @@ void testTopologicalSortFreeNode()
     graph.print();
   }
 
-
   catch (const GraphWrongLine &e)
   {
     std::cout << "\n" << e.what() << "\n";
@@ -468,9 +456,9 @@ void testTopologicalSortFreeNode()
   {
     std::cout << "\n" << e.what() << "\n";
   }
-  catch(const GraphEmpty &e)
+  catch (const GraphEmpty &e)
   {
-    std::cout<<"\n"<<e.what()<<"\n";
+    std::cout << "\n" << e.what() << "\n";
   }
 }
 
@@ -489,9 +477,9 @@ void testTopologicalSortEmptyGraph()
   {
     std::cout << "\n" << e.what() << "\n";
   }
-  catch(const GraphEmpty &e)
+  catch (const GraphEmpty &e)
   {
-    std::cout<<"\n"<<e.what()<<"\n";
+    std::cout << "\n" << e.what() << "\n";
   }
 }
 
@@ -543,9 +531,9 @@ void testDeleteNodeEmptyDirectedGraph()
   {
     std::cout << "\n" << e.what() << "\n";
   }
-  catch(const GraphEmpty &e)
+  catch (const GraphEmpty &e)
   {
-    std::cout<<"\n"<<e.what()<<"\n";
+    std::cout << "\n" << e.what() << "\n";
   }
 }
 
@@ -560,9 +548,9 @@ void testDeleteLineEmptyDirectedGraph()
   {
     std::cout << "\n" << e.what() << "\n";
   }
-  catch(const GraphEmpty &e)
+  catch (const GraphEmpty &e)
   {
-    std::cout<<"\n"<<e.what()<<"\n";
+    std::cout << "\n" << e.what() << "\n";
   }
 }
 
