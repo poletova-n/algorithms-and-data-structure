@@ -43,18 +43,6 @@ int main()
     std::cout << "-";
   }
 
-  std::cout << "\n" << std::setw(55) << "Testing adding line in the opposite direction\n";
-
-  for (int i = 0; i < 60; i++)
-  {
-    std::cout << "-";
-  }
-  testAddingLineInTheOppositeDirectionDirectedGraph();
-
-  for (int i = 0; i < 60; i++)
-  {
-    std::cout << "-";
-  }
   std::cout << "\n" << std::setw(46) << "Testing is Include node and line\n";
   for (int i = 0; i < 60; i++)
   {

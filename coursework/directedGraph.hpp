@@ -348,10 +348,10 @@ bool DirectedGraph<T>::isIncludeLine(const int &node1, const int &node2)
 {
   if (isEmpty())
   {
-    return false;
+    throw GraphEmpty();
   }
 
-  if (searchNode(node1) == nullptr || searchNode(node2) == nullptr)
+  if (searchNode(node1) == nullptr)
   {
     throw GraphWrongLine();
   }

@@ -228,7 +228,7 @@ bool UndirectedGraph<T>::isIncludeLine(const int &node1, const int &node2)
 {
   if (isEmpty())
   {
-    return false;
+    return GraphEmpty();
   }
   if (searchNode(node1) == nullptr || searchNode(node2) == nullptr)
   {

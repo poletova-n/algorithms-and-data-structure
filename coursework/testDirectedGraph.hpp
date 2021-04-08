@@ -72,32 +72,6 @@ void testAddingAnExistingLineDirectedGraph()
   }
 }
 
-void testAddingLineInTheOppositeDirectionDirectedGraph()
-{
-  try
-  {
-    DirectedGraph<int> graph;
-    graph.addNode(1);
-    graph.addNode(2);
-    graph.addNode(7);
-    graph.addNode(6);
-    graph.addNode(-8);
-    graph.addLine(1, 7);
-    graph.addLine(2, 7);
-    graph.addLine(-8, 1);
-    graph.addLine(2, 6);
-    graph.addLine(7, 1);
-    graph.print();
-  }
-  catch (const GraphWrongNode &e)
-  {
-    std::cout << "\n" << e.what() << "\n";
-  }
-  catch (const GraphWrongLine &e)
-  {
-    std::cout << "\n" << e.what() << "\n";
-  }
-}
 
 void testIsIncludeNodeAndIsIncludeLineDirectedGraph()
 {
@@ -130,6 +104,10 @@ void testIsIncludeNodeAndIsIncludeLineDirectedGraph()
   {
     std::cout << "\n" << e.what() << "\n";
   }
+  catch (const GraphEmpty &e)
+  {
+    std::cout << "\n" << e.what() << "\n";
+  }
 }
 
 void testDFCDirectedGraph()
@@ -157,10 +135,6 @@ void testDFCDirectedGraph()
     std::cout << "\n" << e.what() << "\n";
   }
   catch (const GraphWrongNode &e)
-  {
-    std::cout << "\n" << e.what() << "\n";
-  }
-  catch (const GraphFreeNode &e)
   {
     std::cout << "\n" << e.what() << "\n";
   }
