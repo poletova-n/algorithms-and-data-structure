@@ -19,7 +19,13 @@ int main()
   tree.insert(17);
   tree.print(std::cout);
   std::cout << "\n";
-  tree.deleteKey(10);
+  tree.deleteKey(7);
+  tree.print(std::cout);
+  std::cout << "\n";
+  tree.insert(3);
+  tree.insert(1);
+  tree.insert(6);
+  tree.insert(11);
   tree.print(std::cout);
   std::cout << "\n";
   std::cout << "The number of Nodes is: ";
@@ -27,6 +33,7 @@ int main()
   std::cout << "\n";
   std::cout << "The height is: ";
   std::cout << tree.getHeight();
+  std::cout << "\n";
   std::cout << "\n";
   return 0;
 }

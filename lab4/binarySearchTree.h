@@ -13,7 +13,7 @@ public:
   BinarySearchTree(const BinarySearchTree<T> & scr) = delete;
   BinarySearchTree(BinarySearchTree<T>&& scr) noexcept;
   virtual ~BinarySearchTree();
-  bool iterativeSearch(const T& key) const;
+  void searchNext(const T& key) const;
   bool insert(const T& key);
   bool deleteKey(const T& key);
   void print(std::ostream& out) const;
@@ -75,11 +75,6 @@ void BinarySearchTree<T>::deleteSubtree(Node* node) {
 }
 
 template <class T>
-bool BinarySearchTree<T>::iterativeSearch(const T& key) const {
-  return (SearchNode(key) != nullptr);
-}
-
-template <class T>
 bool BinarySearchTree<T>::insert(const T& key) {
   if (root_ == nullptr) {
     size_++;
@@ -127,7 +122,7 @@ bool BinarySearchTree<T>::deleteKey(const T& key) {
     delete temp;
     return true;
   }
-  if ((temp->right_ != nullptr) || (temp->left_ != nullptr))
+  if (((temp->right_ != nullptr) || (temp->left_ != nullptr)) && !((temp->right_ != nullptr)&&(temp->left_ != nullptr)))
   {
     if(temp->right_ == nullptr) {
       if (tempprev->key_ < tempprev->key_) {
@@ -140,16 +135,38 @@ bool BinarySearchTree<T>::deleteKey(const T& key) {
       }
     }
     if (temp->left_ == nullptr) {
-      if (tempprev->key_ < tempprev->key_) {
-        tempprev->left_ = temp->left_;
+      if (tempprev->key_ < temp->key_) {
+        tempprev->right_ = temp->right_;
         delete temp;
       }
-      else if (tempprev->key_ > tempprev->key_) {
-        tempprev->right_ = temp->right_;
+      else if (tempprev->key_ > temp->key_) {
+        tempprev->left_ = temp->right_;
         delete temp;
         return true;
       }
     }
+  }
+  if ((temp->right_ != nullptr)&&(temp->left_ != nullptr)) {
+    tempprev = temp;
+    temp = temp->right_;
+    while ((temp->right_ != nullptr)&&(temp->left_ != nullptr)) {
+      temp = temp->left_;
+    }
+    if (tempprev->right_ != temp) {
+      tempprev->key_ = temp->key_;
+      Node *prev = temp->p_;
+      if (temp->key_ = prev->left_->key_) {
+        prev->left_ = nullptr;
+      }
+      if (temp->key_ = prev->right_->key_) {
+        prev->left_ = nullptr;
+      }
+    }
+    else {
+      tempprev->key_ = temp->key_;
+      tempprev->right_ = nullptr;
+    }
+    delete temp;
   }
 }
 
@@ -212,6 +229,11 @@ int BinarySearchTree<T>::getHeightSubTree(const BinarySearchTree::Node *root) co
   else {
     return 0;
   }
+}
+
+template<class T>
+void BinarySearchTree<T>::searchNext(const T &key) const {
+  std::cout << "After the element with key " << key << " goes left: " << this->SearchNode(key)->left_->key_ << " right: " << this->SearchNode(key)->right_->key_;
 }
 
 #endif //FOREST_BINARYSEARCHTREE_H
