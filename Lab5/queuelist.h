@@ -39,15 +39,16 @@ QueueList<T>::QueueList():
 
 template <class T>
 QueueList<T>::QueueList(const QueueList<T>& copy) :
-		size_(copy.size_)
+  size_(copy.size_),
+  head_(nullptr)
 {
-		Node* current = copy.head_;
-		while (current->next_ != nullptr)
-		{
-				enQueue(current->elem_);
-				current = current->next_;
-		}
-		enQueue(current->elem_);
+  Node* temp = copy.head_;
+  while (temp->next_ != nullptr)
+  {
+    enQueue(temp->elem_);
+    temp = temp->next_;
+  }
+  enQueue(temp->elem_);
 }
 
 template <class T>
