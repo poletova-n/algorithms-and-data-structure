@@ -64,12 +64,13 @@ void radixSort (int* array, int size)
 
 void bucketSort (int* array, int size)
 {
+  const int SIZE = 1000000000;
   int bucket[10][size+1];
   for(int i = 0; i < 10; ++i)
   {
     bucket[i][size] = 0;
   }
-  for(int value = 1; value <= 1000000000; value *= 10)
+  for(int value = 1; value <= SIZE; value *= 10)
   {
     for(int i = 0; i < size; i++)
     {
