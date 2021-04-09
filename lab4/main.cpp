@@ -1,20 +1,30 @@
-#include "BinarySearchTree.h"
+#include <iostream>
+#include "Tree.h"
+
 using namespace std;
 
 int main()
 {
-  Tree t;
+  Tree<int> tree;
 
-  t.print(cout);
-  cout << endl << "Number of vertexes: " << t.getCount();
-  cout << endl << "Height: " << t.getHeight();
-  cout << endl;
-  t.deleteKey(3); cout << "Deleting vertex 3...\n";
-  t.deleteKey(25); cout << "Deleting a vertex 25...\n";
-  t.deleteKey(1); cout << "Deleting vertex 1...\n";
-  t.print(cout);
-  cout << endl;
-  Tree<int> s = t; cout << "Copying the tree...\n";
-  s.print(cout);
+  tree.insert(10);
+  tree.insert(5);
+  tree.insert(11);
+  tree.insert(12);
+  tree.insert(2);
+  tree.insert(25);
 
+  std::cout << "-----------------------------Binary Tree-----------------------------\n";
+  std::cout << "Tree: \n";
+  tree.print(std::cout);
+  std::cout << "Tree count of nodes: " << tree.getCount() << '\n';
+  std::cout << "Tree height: " << tree.getHeight() << '\n';
+  std::cout << "-----------------------------Search methods-----------------------------\n";
+  std::cout << (tree.iterativeSearch(10) ? "True\n" : "False\n");
+  std::cout << (tree.iterativeSearch(4) ? "True\n" : "False\n");
+  std::cout << tree.nextNode(11) << '\n';
+  std::cout << "------------------------------------------------------------------------\n";
+  tree.deleteKey(5);
+  std::cout << (tree.iterativeSearch(5) ? "True\n" : "False\n");
+  return 0;
 }
