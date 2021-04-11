@@ -122,7 +122,7 @@ bool BinarySearchTree<T>::deleteKey(const T& key) {
     delete temp;
     return true;
   }
-  if (((temp->right_ != nullptr) || (temp->left_ != nullptr)) && !((temp->right_ != nullptr)&&(temp->left_ != nullptr)))
+  else if (((temp->right_ != nullptr) || (temp->left_ != nullptr)) && !((temp->right_ != nullptr)&&(temp->left_ != nullptr)))
   {
     if(temp->right_ == nullptr) {
       if (tempprev->key_ < tempprev->key_) {
@@ -146,7 +146,7 @@ bool BinarySearchTree<T>::deleteKey(const T& key) {
       }
     }
   }
-  if ((temp->right_ != nullptr)&&(temp->left_ != nullptr)) {
+  else if ((temp->right_ != nullptr)&&(temp->left_ != nullptr)) {
     tempprev = temp;
     temp = temp->right_;
     while ((temp->right_ != nullptr)&&(temp->left_ != nullptr)) {
