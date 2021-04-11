@@ -80,7 +80,7 @@ std::string transformInfixExpressionToPostfix(const std::string& text)
         while ((temp != '(' || Operator(temp).getPriority() > Operator(stack.top()).getPriority()) && !(stack.isEmpty()))
         {
           temp = stack.top();
-          stack.push(stack.pop());
+          newExpression += stack.pop();
         }
         stack.push(text[i]);
       }
