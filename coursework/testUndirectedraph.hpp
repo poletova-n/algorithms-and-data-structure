@@ -147,8 +147,6 @@ void testIsIncludeNodeAndIsIncludeLineUndirectedGraph()
   try
   {
     UndirectedGraph<int> graph;
-    std::cout << ((graph.isIncludeLine(5, 8)) ? "There is a line from 5 to 8" : "No line from 5 to 8") << "\n";
-    std::cout << ((graph.isIncludeNode(1)) ? "There is a node with the value 1" : "No node with value 1") << "\n";
     graph.addNode(5);
     graph.addNode(10);
     graph.addNode(15);

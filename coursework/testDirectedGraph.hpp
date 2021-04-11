@@ -78,8 +78,6 @@ void testIsIncludeNodeAndIsIncludeLineDirectedGraph()
   try
   {
     DirectedGraph<int> graph;
-    std::cout << ((graph.isIncludeLine(12, 1)) ? "There is a line from 10 to 12" : "No line from 10 to 12") << "\n";
-    std::cout << ((graph.isIncludeNode(1)) ? "There is a node with the value 1" : "No node with value 1") << "\n";
     graph.addNode(10);
     graph.addNode(12);
     graph.addNode(1);
