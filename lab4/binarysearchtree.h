@@ -3,7 +3,7 @@
 
 #include <ostream>
 
-template<class T>
+template<typename T>
 class BinarySearchTree {
 public:
   BinarySearchTree();
@@ -41,6 +41,8 @@ private:
 
   Node* iterativeSearchNode(const T& key) const;
 
+  void destroyRecursive(Node* node);
+
   void deleteSubtree(Node* node);
 
   size_t getCountSubTree(Node* node) const;
@@ -52,31 +54,42 @@ private:
   Node* root_;
 };
 
-template<class T>
+template<typename T>
 BinarySearchTree<T>::BinarySearchTree():
   root_(nullptr)
 {}
 
-template<class T>
+template<typename T>
 BinarySearchTree<T>::~BinarySearchTree()
 {
-  deleteSubtree(root_);
+  destroyRecursive(root_);
 }
 
-template<class T>
+template<typename T>
+void BinarySearchTree<T>::destroyRecursive(Node* node)
+{
+  if (node)
+  {
+    destroyRecursive(node->left_);
+    destroyRecursive(node->right_);
+    delete node;
+  }
+}
+
+template<typename T>
 void BinarySearchTree<T>::print(std::ostream& out) const
 {
   printNode(out, root_);
   out << '\n';
 }
 
-template<class T>
+template<typename T>
 bool BinarySearchTree<T>::iterativeSearch(const T& key) const
 {
   return (iterativeSearchNode(key) != nullptr);
 }
 
-template<class T>
+template<typename T>
 void BinarySearchTree<T>::insert(const T& key)
 {
   if (root_ == nullptr) {
@@ -103,13 +116,13 @@ void BinarySearchTree<T>::insert(const T& key)
   }
 }
 
-template<class T>
+template<typename T>
 void BinarySearchTree<T>::insertRecursively(const T& key)
 {
   addRecursively(root_, key);
 }
 
-template<class T>
+template<typename T>
 void BinarySearchTree<T>::addRecursively(BinarySearchTree<T>::Node* &node, const T& key)
 {
   if (root_ == nullptr) {
@@ -126,7 +139,7 @@ void BinarySearchTree<T>::addRecursively(BinarySearchTree<T>::Node* &node, const
   }
 }
 
-template<class T>
+template<typename T>
 void BinarySearchTree<T>::deleteKey(const T& key)
 {
   if (root_ == nullptr) {
@@ -135,19 +148,19 @@ void BinarySearchTree<T>::deleteKey(const T& key)
   delete iterativeSearchNode(key);
 }
 
-template<class T>
+template<typename T>
 size_t BinarySearchTree<T>::getCount() const
 {
   return getCountSubTree(this->root_);
 }
 
-template<class T>
+template<typename T>
 size_t BinarySearchTree<T>::getHeight() const
 {
   return getHeightSubTree(this->root_);
 }
 
-template<class T>
+template<typename T>
 typename BinarySearchTree<T>::Node* BinarySearchTree<T>::iterativeSearchNode(const T& key) const
 {
   if (root_ == nullptr) {
@@ -164,13 +177,13 @@ typename BinarySearchTree<T>::Node* BinarySearchTree<T>::iterativeSearchNode(con
   return current;
 }
 
-template<class T>
+template<typename T>
 void BinarySearchTree<T>::deleteSubtree(BinarySearchTree::Node* node)
 {
   delete iterativeSearchNode(node->key_);
 }
 
-template<class T>
+template<typename T>
 size_t BinarySearchTree<T>::getCountSubTree(BinarySearchTree::Node* node) const
 {
   if (node == nullptr)
@@ -179,7 +192,7 @@ size_t BinarySearchTree<T>::getCountSubTree(BinarySearchTree::Node* node) const
           getCountSubTree(node->right_));
 }
 
-template<class T>
+template<typename T>
 size_t BinarySearchTree<T>::getHeightSubTree(BinarySearchTree::Node* node) const
 {
   if (node == nullptr) {
@@ -188,7 +201,7 @@ size_t BinarySearchTree<T>::getHeightSubTree(BinarySearchTree::Node* node) const
   return 1 + std::max(getHeightSubTree(node->left_), getHeightSubTree(node->right_));
 }
 
-template<class T>
+template<typename T>
 void BinarySearchTree<T>::printNode(std::ostream& out, BinarySearchTree::Node* root) const
 {
   out << '(';
