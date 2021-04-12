@@ -87,6 +87,7 @@ int main()
   catch (...)
   {
     std::cout << " Oops! Something went wrong. Try once again!";
+    return -1;
   }
   return 0;
 }
