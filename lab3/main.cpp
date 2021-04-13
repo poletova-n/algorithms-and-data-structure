@@ -52,6 +52,13 @@ int main()
     std::cout << "infix form: " << expression3 << std::endl << "postfix form: " <<
               expression4 << std::endl;
     std::cout << "Result: " << evaluatePostfix(expression4) << std::endl;
+
+    std::string expression5 = "(1+2)/0";
+    std::string expression6;
+    getPostfix(expression5, expression6);
+    std::cout << "infix form: " << expression5 << std::endl << "postfix form: " <<
+              expression6 << std::endl;
+    std::cout << "Result: " << evaluatePostfix(expression6) << std::endl;
   } catch (const StackUnderflow& e) {
     std::cerr << e.what();
     return 1;
@@ -133,9 +140,9 @@ int evaluatePostfix(const std::string& infix, size_t stackSize)
             int num = 0;
             while (i < infix.length() && isDigit(infix[i]))
             {
-                num = (int)infix[i] - '0';
-                stack.push(num);
-                i++;
+              num = (int) infix[i] - '0';
+              stack.push(num);
+              i++;
             }
         }
         if (isOperator(infix[i]))
@@ -156,6 +163,10 @@ int evaluatePostfix(const std::string& infix, size_t stackSize)
                     stack.push(op_a * op_b);
                     break;
                 case '/':
+                  if(op_b == 0)
+                  {
+                    std::cerr<<"Zero deleting is forbidden\n";
+                  }
                     stack.push(op_a / op_b);
                     break;
             }

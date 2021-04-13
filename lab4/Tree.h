@@ -144,12 +144,13 @@ typename Tree<T>::Node* Tree<T>::iterativeSearchNode(const T& key) const
 template<class T>
 void Tree<T>::printNode(std::ostream& out, Node* root) const
 {
-  if (root != nullptr)
-  {
-    out << root->key_ << " /";
+  out << '(';
+  if (root != nullptr) {
+    out << root->key_;
     printNode(out, root->left_);
     printNode(out, root->right_);
   }
+  out << ')';
 }
 
 template<class T>
