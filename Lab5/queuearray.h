@@ -43,10 +43,6 @@ QueueArray<T>::QueueArray(const QueueArray<T>& copy) :
   tail_(copy.tail_),
   size_(copy.size_)
 {
-  if (size_ > 0)
-  {
-    delete[] array_;
-  }
   try
   {
     array_ = new T[size_];
