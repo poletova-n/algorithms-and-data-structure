@@ -38,9 +38,14 @@ int main()
   std::cout << queue.deQueue() << ' '
             << queue.deQueue() << '\n';
 
-  BinarySearchTree<int> emptyTree;
-  emptyTree.breadthFirstWalk();
-  emptyTree.iterativeInorderWalk();
+  BinarySearchTree<int> emptyTree1;
+  emptyTree1.breadthFirstWalk();
+  emptyTree1.iterativeInorderWalk();
+  BinarySearchTree<int> emptyTree2;
+  std::cout << "Empty trees are equal: "
+            << (emptyTree1 == emptyTree2) << '\n'
+            << "Empty trees are similar: "
+            << emptyTree1.isSimilar(emptyTree2) << '\n';
 
   BinarySearchTree<int> pathologicalTree;
   pathologicalTree.insert(1);

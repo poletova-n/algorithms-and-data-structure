@@ -405,7 +405,11 @@ bool BinarySearchTree<T>::operator== (const BinarySearchTree <T>& src)
 template <class T>
 bool BinarySearchTree<T>::isSimilar(const BinarySearchTree<T> &src) const
 {
-  if ((!root_ && !src.root_) || (getCount() != src.getCount()))
+  if (!root_ && !src.root_)
+  {
+    return true;
+  }
+  if (getCount() != src.getCount())
   {
     return false;
   }
