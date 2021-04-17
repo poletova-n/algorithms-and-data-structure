@@ -36,7 +36,7 @@ bool RedBlackTree::remove(std::string key)
   return true;
 }
 
-bool RedBlackTree::find(std::string key)
+bool RedBlackTree::find(std::string key) const
 {
   Node* temp(root_);
   while (temp != nullptr) {
@@ -51,7 +51,7 @@ bool RedBlackTree::find(std::string key)
   return false;
 }
 
-void RedBlackTree::print(std::ostream& out)
+void RedBlackTree::print(std::ostream& out) const
 {
   print(root_, out);
 }

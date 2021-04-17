@@ -17,8 +17,8 @@ public:
 
   void add(std::string, std::string);
   bool remove(std::string);
-  bool find(std::string);
-  void print(std::ostream&);
+  bool find(std::string) const;
+  void print(std::ostream&) const;
 private:
   struct Node
   {
@@ -48,11 +48,11 @@ private:
   void fixAfterRemoval(Node*, Node*);
   void rotateLeft(Node*);
   void rotateRight(Node*);
-  void print(Node*, std::ostream&);
+  static void print(Node*, std::ostream&);
   static Node* findReplacement(Node*);
   static Node* getSibling(Node*, Node*);
   static DoubleLinkedList parseRussianStringByComma(std::string);
-  void deleteSubtree(Node*);
+  static void deleteSubtree(Node*);
 };
 
 #endif
