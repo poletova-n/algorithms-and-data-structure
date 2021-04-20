@@ -23,13 +23,11 @@ private:
   {
     T key_;
     std::vector<std::list<T>> array_;
-    Node* parent_;
     Node* left_;
     Node* right_;
 
-    Node(const T& key, Node* parent = nullptr, Node* left = nullptr, Node* right = nullptr):
+    Node(const T& key, Node* left = nullptr, Node* right = nullptr):
       key_(key),
-      parent_(nullptr),
       left_(left),
       right_(right)
     {}
@@ -63,27 +61,31 @@ void BinarySearchTree<T>::insert(T value)
   std::string prefix;
   for (int i = 0; i < value.length(); ++i)
   {
-    if (value[i] < 'A' || value[i] > 'Z')
+    if (std::isupper(value[i]))
     {
-      if (value[i] < 'a' || value[i] > 'z')
+      value[i] = std::tolower(value[i]);
+    }
+  }
+  for (int i = 0; i < value.length(); ++i)
+  {
+    if (value[i] < 'a' || value[i] > 'z')
+    {
+      if (value[i] == '-')
       {
-        if (value[i] == '-')
+        continue;
+      }
+      else if (value[i] == '\'')
+      {
+        return;
+      }
+      else
+      {
+        if (value[value.length()-1] == '!', '.', ',', ':', ';')
         {
-          continue;
+          value = value.substr(0, value.length()-1);
+          break;
         }
-        else if (value[i] == '\'')
-        {
-          return;
-        }
-        else
-        {
-          if (value[value.length()-1] == '!', '.', ',', ':', ';')
-          {
-            value = value.substr(0, value.length()-1);
-            break;
-          }
-          return;
-        }
+        return;
       }
     }
   }
@@ -200,7 +202,7 @@ void BinarySearchTree<T>::printTree(std::ostream& out) const
 template<class T>
 void BinarySearchTree<T>::printNode(std::ostream& out, BinarySearchTree<T>::Node* root) const
 {
-  // Prefix tree traversal
+  // Infix tree traversal
   if (root != nullptr)
   {
     printNode(out, root->left_);
