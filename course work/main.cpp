@@ -10,6 +10,8 @@ int main()
   std::string textOne;
   std::string textTwo;
   std::string textThree;
+  std::string textFour;
+
   std::cout << "Write any text, if you are finished, "
                "put a space with a point at the end of the text, for example: \"...end .\" \n";
   while (std::cin >> textOne)
@@ -50,5 +52,22 @@ int main()
       std::cout << (tree.searchNode(textThree) ? "This prefix is in the dictionary\n" : "There is no such prefix in the dictionary\n");
     }
   }
+
+  std::cout << "If you want delete prefix from the dictionary just enter it "
+               "(Write the keyword \"Stop\" if you want to stop): ";
+  while (std::cin >> textFour)
+  {
+    if (textFour == "Stop")
+    {
+      break;
+    }
+    else
+    {
+      std::cout << (tree.removeElement(textFour) ? "\n The prefix was successfully deleted \n" : "There is no such prefix\n");
+      tree.printTree(std::cout);
+      break;
+    }
+  }
+
   return 0;
 }
