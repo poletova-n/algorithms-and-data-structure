@@ -63,7 +63,7 @@ int main()
     }
     else
     {
-      std::cout << (tree.removeElement(textFour) ? "\n The prefix was successfully deleted \n" : "There is no such prefix\n");
+      tree.removeElement(textFour);
       tree.printTree(std::cout);
       break;
     }

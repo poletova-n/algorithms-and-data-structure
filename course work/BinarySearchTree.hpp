@@ -15,7 +15,7 @@ public:
   bool searchNode(const T& key) const;
   void print(std::ostream& out) const;
   void printTree(std::ostream& out) const;
-  bool removeElement(const T& key);
+  void removeElement(const T& key);
   size_t getCount() const;
   size_t getHeight() const;
 
@@ -28,9 +28,9 @@ private:
     Node* left_;
     Node* right_;
 
-    Node(const T& key, Node* left = nullptr, Node* right = nullptr):
+    Node(const T& key, Node* parent = nullptr, Node* left = nullptr, Node* right = nullptr):
       key_(key),
-      parent_(nullptr),
+      parent_(parent),
       left_(left),
       right_(right)
     {}
@@ -42,6 +42,8 @@ private:
   size_t getCountSubTree(Node* node) const;
   size_t getHeightSubTree(Node* node) const;
   void freeUpMemory(Node* node);
+  bool isRightChild(Node* node);
+  Node* treeMaximum(Node* node);
 
   Node* root_;
 };
@@ -133,12 +135,14 @@ void BinarySearchTree<T>::insert(T value)
       if (temp->key_ < prefix)
       {
         temp->right_ = new Node(prefix);
+        temp->right_->parent_ = temp;
         temp->right_->array_.resize(100);
         temp->right_->array_[0].push_back(value);
       }
       else
       {
         temp->left_ = new Node(prefix);
+        temp->left_->parent_ = temp;
         temp->left_->array_.resize(100);
         temp->left_->array_[0].push_back(value);
       }
@@ -281,119 +285,112 @@ size_t BinarySearchTree<T>::getHeightSubTree(BinarySearchTree::Node *node) const
 }
 
 template<class T>
-bool BinarySearchTree<T>::removeElement(const T& key)
+void BinarySearchTree<T>::removeElement(const T& key)
 {
   Node* node = iterativeSearchNode(key);
-  if (node == nullptr)
+  if (node == root_ && !(root_->left_ == nullptr && root_->right_ == nullptr))
+  {
+    if (node->left_ == nullptr && node->right_ == nullptr)
+    {
+      delete root_;
+    }
+    else if (node->left_ != nullptr && node->right_ == nullptr)
+    {
+      node = node->left_;
+      delete node->parent_;
+      node->parent_ = nullptr;
+    }
+    else if (node->left_ == nullptr && node->right_ == nullptr)
+    {
+      node = node->right_;
+      delete node->parent_;
+      node->parent_ = nullptr;
+    }
+  }
+  else
+  {
+    if (node->left_ != nullptr && node->right_ != nullptr)
+    {
+      Node* leftMax = treeMaximum(node);
+      if (leftMax->right_ != nullptr)
+      {
+        leftMax->parent_->left_ = leftMax->right_;
+        leftMax->right_->parent_ = leftMax->parent_;
+        node->key_ = leftMax->key_;
+        delete leftMax;
+      }
+      else
+      {
+        node->key_ = leftMax->key_;
+        leftMax->parent_->left_ = nullptr;
+        delete leftMax;
+      }
+    }
+    else if (node->left_ != nullptr && node->right_ == nullptr)
+    {
+      if (isRightChild(node))
+      {
+        node->parent_->right_ = node->left_;
+        node->left_->parent_ = node->parent_;
+      }
+      else
+      {
+        node->parent_->left_ = node->left_;
+        node->left_->parent_ = node->parent_;
+      }
+      delete node;
+    }
+    else if (node->left_ == nullptr && node->right_ != nullptr)
+    {
+      if (isRightChild(node))
+      {
+        node->parent_->right_ = node->right_;
+        node->right_->parent_ = node->parent_;
+      }
+      else
+      {
+        node->parent_->left_ = node->right_;
+        node->right_->parent_ = node->parent_;
+      }
+      delete node;
+    }
+    else if (node->left_ == nullptr && node->right_ == nullptr)
+    {
+      if (isRightChild(node))
+      {
+        node->parent_->right_ = nullptr;
+      }
+      else
+      {
+        node->parent_->left_ = nullptr;
+      }
+      delete node;
+    }
+  }
+}
+
+template<class T>
+bool BinarySearchTree<T>::isRightChild(Node* node)
+{
+  if (node->parent_->right_ != nullptr && node->parent_->right_->key_ == node->key_)
+  {
+    return true;
+  }
+  else
   {
     return false;
   }
-  if ((node->left_ == nullptr) && (node->right_ == nullptr))
+}
+
+template<class T>
+typename BinarySearchTree<T>::Node* BinarySearchTree<T>::treeMaximum(Node* node)
+{
+  Node* nowRoot = node;
+  while (nowRoot->left_ != nullptr)
   {
-    if (node->parent_ == nullptr)
-    {
-      root_ = nullptr;
-      delete node;
-      return true;
-    }
-    else
-    {
-      if ((node->parent_->left_ != nullptr) && (node->parent_->left_->key_ == node->key_))
-      {
-        node->parent_->left_ = nullptr;
-        delete node;
-        return true;
-      }
-      if ((node->parent_->right_ != nullptr) && (node->parent_->right_->key_ == node->key_))
-      {
-        node->parent_->right_ = nullptr;
-        delete node;
-        return true;
-      }
-    }
+    nowRoot = nowRoot->left_;
   }
-  else if (((node->left_ != nullptr) && (node->right_ == nullptr)))
-  {
-    if (node->parent_ == nullptr)
-    {
-      node->left_->parent_ = nullptr;
-      root_ = node->left_;
-      delete node;
-      return true;
-    }
-    else
-    {
-      if ((node->parent_->left_ != nullptr) && (node->parent_->left_->key_ == node->key_))
-      {
-        node->left_->parent_ = node->parent_;
-        node->parent_->left_ = node->left_;
-        delete node;
-        return true;
-      }
-      if ((node->parent_->right_ != nullptr) && (node->parent_->right_->key_ == node->key_))
-      {
-        node->left_->parent_ = node->parent_;
-        node->parent_->right_ = node->left_;
-        delete node;
-        return true;
-      }
-    }
-  }
-  else if (((node->left_ == nullptr) && (node->right_ != nullptr)))
-  {
-    if (node->parent_ == nullptr)
-    {
-      node->right_->parent_ = nullptr;
-      root_ = node->right_;
-      delete node;
-      return true;
-    }
-    else
-    {
-      if ((node->parent_->left_ != nullptr) && (node->parent_->left_->key_ == node->key_))
-      {
-        node->right_->parent_ = node->parent_;
-        node->parent_->left_ = node->right_;
-        delete node;
-        return true;
-      }
-      if ((node->parent_->right_ != nullptr) && (node->parent_->right_->key_ == node->key_))
-      {
-        node->right_->parent_ = node->parent_;
-        node->parent_->right_ = node->right_;
-        delete node;
-        return true;
-      }
-    }
-  }
-  else if (((node->left_ != nullptr) && (node->right_ != nullptr)))
-  {
-    Node* currentNode = node->right_;
-    while (currentNode->left_ != nullptr)
-    {
-      currentNode = currentNode->left_;
-    }
-    if ((currentNode->parent_->left_ != nullptr) && (currentNode->parent_->left_->key_ == currentNode->key_))
-    {
-      currentNode->parent_->left_ = currentNode->right_;
-      if (currentNode->right_ != nullptr)
-      {
-        currentNode->right_->parent_ = currentNode->parent_;
-      }
-    }
-    if ((currentNode->parent_->right_ != nullptr) && (currentNode->parent_->right_->key_ == currentNode->key_))
-    {
-      currentNode->parent_->right_ = currentNode->right_;
-      if (currentNode->right_ != nullptr)
-      {
-        currentNode->right_->parent_ = currentNode->parent_;
-      }
-    }
-    node->key_ = currentNode->key_;
-    delete currentNode;
-    return true;
-  }
-  return false;
+  return nowRoot;
 }
 
 #endif
