@@ -84,6 +84,11 @@ void BinarySearchTree<T>::insert(T value)
         std::cout << "The words with the apostrophe were omitted, try not to shorten them. \n";
         return;
       }
+      else if (value[i] >= '1' && value[i] <= '9')
+      {
+        std::cout << "All numeric values in the text were not added to the dictionary. You must write only words. \n";
+        return;
+      }
       else
       {
         if (value[value.length()-1] == '!', '.', ',', ':', ';')
