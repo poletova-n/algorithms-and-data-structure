@@ -1,0 +1,5 @@
+This is the paragraph to test the AVL tree based prefix dictionary building program.
+The program will read data from the file and arrange them into an AVL tree based on 
+the keywords. A word is a set of letters that contain no punctuation marks and are 
+separated from other words by a space) and a prefix (the first 2 characters of the 
+word).
