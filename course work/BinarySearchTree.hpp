@@ -81,7 +81,7 @@ void BinarySearchTree<T>::insert(T value)
       }
       else if (value[i] == '\'')
       {
-        std::cout << "The words with the apostrophe were omitted, try not to shorten them. \n";
+        std::cout << "The words with the apostrophe were omitted, try not to shorten them and use apostrophe. \n" << value << '\n';
         return;
       }
       else if (value[i] >= '1' && value[i] <= '9')
