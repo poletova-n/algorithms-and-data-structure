@@ -16,8 +16,11 @@ int main()
                "put a space with a point at the end of the text, for example: \"...end .\" \n";
   while (std::cin >> textOne)
   {
-    tree.insert(textOne);
-    if (textOne == ".")
+    if (textOne != ".")
+    {
+      tree.insert(textOne);
+    }
+    else
     {
       break;
     }

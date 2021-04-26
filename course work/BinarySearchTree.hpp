@@ -91,12 +91,30 @@ void BinarySearchTree<T>::insert(T value)
       }
       else
       {
-        if (value[value.length()-1] == '!', '.', ',', ':', ';')
+        if (value[i] < 'a' || value[i] > 'z')
         {
-          value = value.substr(0, value.length()-1);
-          break;
+          if (value[value.length()-1] == '!' || value[value.length()-1] == '.' ||
+              value[value.length()-1] == ',' || value[value.length()-1] == ':' ||
+              value[value.length()-1] == ';' || value[value.length()-1] == ';' ||
+              value[value.length()-1] == '/')
+          {
+            value = value.substr(0, value.length()-1);
+            for (int j = 0; j < value.length(); ++j)
+            {
+              if (value[j] < 'a' || value[j] > 'z')
+              {
+                if (value[j] == '-')
+                {
+                  continue;
+                }
+                std::cout << "\nCheck that you entered the word correctly. \n" << value << '\n';
+                return;
+              }
+            }
+            break;
+          }
+          return;
         }
-        return;
       }
     }
   }
