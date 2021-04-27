@@ -13,8 +13,8 @@ int main()
     //dictionary.remove("incorrect");
 
     dictionary.insert("beautiful", "pretty, elegant");
-    dictionary.insert("help", "promote, assist");
-    dictionary.insert("run", "sprint, jog");
+    dictionary.insert("help", "Promote, assist");
+    dictionary.insert("Run", "sprint, jog");
     dictionary.insert("big", "giant, huge");
     dictionary.print(std::cout);
 

@@ -16,6 +16,10 @@ void Tree::insert(std::string key, std::string value)
     {
       throw std::invalid_argument("Invalid symbol");
     }
+    if (key[i] >= 'A' && key[i] <= 'Z')
+    {
+      key[i] += 32;
+    }
   }
   Node* node = new Node(key, parse(value));
   if (root_ == nullptr)
@@ -379,9 +383,13 @@ List Tree::parse(std::string synonymString)
     std::string word = synonymString.substr(0, separator);
     for (int i = 0; i < word.size(); i++)
     {
-      if (word[i] < 'A' || word[i] > 'z')
+      if ((word[i] < 'A' || word[i] > 'z') && word[i] != '-')
       {
         throw std::invalid_argument("Invalid symbol in synonym string");
+      }
+      if (word[i] >= 'A' && word[i] <= 'Z')
+      {
+        word[i] += 32;
       }
     }
     firstLatter.push_back(word[0]);
@@ -396,9 +404,13 @@ List Tree::parse(std::string synonymString)
   }
   for (int i = 0; i < synonymString.size(); i++)
   {
-    if (synonymString[i] < 'A' || synonymString[i] > 'z')
+    if ((synonymString[i] < 'A' || synonymString[i] > 'z') && synonymString[i] != '-')
     {
       throw std::invalid_argument("Invalid string with synonyms");
+    }
+    if (synonymString[i] >= 'A' && synonymString[i] <= 'Z')
+    {
+      synonymString[i] += 32;
     }
   }
   firstLatter.push_back(synonymString[0]);
