@@ -28,6 +28,10 @@ int binarySearch(int* array, int left, int right, int value)
 
 void doInsertSort(int* array, int size)
 {
+  if (size <= 0)
+  {
+    return;
+  }
   int loc, j, selected;
 
   for (int i = 0; i < size; i++)
@@ -46,6 +50,10 @@ void doInsertSort(int* array, int size)
 
 void doCountSort(int* array, int size)
 {
+  if (size <= 0)
+  {
+    return;
+  }
   int max = INT_MIN, min = INT_MAX;
   for (int i = 0; i < size; i++)
   {
@@ -103,6 +111,10 @@ void siftHeap(int* array, int size, int root)
 
 void doPyramidSort(int* array, int size)
 {
+  if (size <= 0)
+  {
+    return;
+  }
   for (int i = size / 2 - 1; i >= 0; i--)
   {
     siftHeap(array, size, i);
