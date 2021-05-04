@@ -60,7 +60,6 @@ int main()
   fin.close();
 
   std::cout << "\tText 1" << std::endl;
-  std::cout << "Is tree balanced?  " << (dictionary.isBalanced() ? "YES\n" : "NO\n") << std::endl;
   dictionary.inorderWalk(std::cout);
   std::cout << std::endl;
   std::cout << "Total number of words: " << total << "\n";
@@ -74,7 +73,8 @@ int main()
   {
     std::cerr << e.what();
   }
-
+  dictionary.print(std::cout);
+  std::cout << "\n";
 
   AvlTree dictionary2;
   std::ifstream fin2;
@@ -113,7 +113,6 @@ int main()
   fin2.close();
 
   std::cout << "\tText 2" << std::endl;
-  std::cout << "Is tree balanced?  " << (dictionary2.isBalanced() ? "YES\n" : "NO\n") << std::endl;
   dictionary2.inorderWalk(std::cout);
   std::cout << std::endl;
   std::cout << "Total number of words: " << total2 << "\n";
@@ -127,5 +126,7 @@ int main()
   {
     std::cerr << e.what();
   }
+  dictionary.print(std::cout);
+  std::cout << "\n";
   return 0;
 }

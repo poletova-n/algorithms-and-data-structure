@@ -71,11 +71,14 @@ int AvlTree::getHeight() const
 
 int AvlTree::getHeightSubTree(Node* node) const
 {
-  if (node)
+  if (node == nullptr)
   {
-    return std::max(node->left_->height_ + 1, node->right_->height_ + 1);
+    return 0;
   }
-  return 0;
+  else
+  {
+    return (1 + std::max(getHeightSubTree(node->left_), getHeightSubTree(node->right_)));
+  }
 }
 
 AvlTree::Node* AvlTree::makeRightSmallRotate(Node* tree)
@@ -166,13 +169,16 @@ void AvlTree::print(std::ostream& out) const
 
 void AvlTree::printNode(std::ostream& out, Node* root) const
 {
+  out << '(';
   if (root != nullptr)
   {
-    out << "(" << root->key_ << ", " << root->frequency_ << ") ";
+    out << root->key_;
     printNode(out, root->left_);
     printNode(out, root->right_);
   }
-}
+  out << ')';
+  }
+
 
 void AvlTree::inorderWalk(std::ostream& out) const
 {
@@ -359,13 +365,4 @@ int AvlTree::getCountSubTree(Node* node) const
   if (node == nullptr)
     return 0;
   return (1 + getCountSubTree(node->left_) + getCountSubTree(node->right_));
-}
-
-bool AvlTree::isBalanced() const
-{
-  if (!root_)
-  {
-    throw std::invalid_argument("Tree is empty!");
-  }
-  return (getBalanceFactor(root_) > -2) && (getBalanceFactor(root_) < 2);
 }
