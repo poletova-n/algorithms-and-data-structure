@@ -128,5 +128,9 @@ int main()
   }
   dictionary.print(std::cout);
   std::cout << "\n";
+  std::cout << "Count of nodes first tree: " << dictionary.getCount() << '\n';
+  std::cout << "Height first tree: " << dictionary.getHeight() << '\n';
+  std::cout << "Count of nodes second tree: " << dictionary2.getCount() << '\n';
+  std::cout << "Height second tree: " << dictionary2.getHeight() << '\n';
   return 0;
 }
