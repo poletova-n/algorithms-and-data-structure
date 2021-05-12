@@ -45,5 +45,6 @@ bool isKey(std::string key);
 bool isWord(std::string word);
 void strlwrWord(std::string&);
 int compareKey(std::string, std::string);
+void checkFile(std::string name);
 
 #endif

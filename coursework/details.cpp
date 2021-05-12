@@ -1,6 +1,9 @@
 #include "details.h"
 
+#include <iostream>
 #include <string>
+#include <fstream>
+#include <stdio.h>
 
 const char* myExceptions::ErrorSyntax::what() const
 {
@@ -89,4 +92,24 @@ int compareKey(std::string key1, std::string key2)
       return -1;
     }
   }
+}
+
+void checkFile(std::string nameFile)
+{
+  std::ifstream file;
+  file.open(nameFile);
+  if (file.fail())
+  {
+    char warningSound = 7;
+    std::cout << warningSound;
+    throw std::logic_error("The file cannot be opened.\n");
+  }
+  file.seekg(0, 2);
+  if (file.tellg() == 0)
+  {
+    char c = 7;
+    std::cout << c;
+    throw std::logic_error("The file is empty.\n");
+  }
+  file.close();
 }

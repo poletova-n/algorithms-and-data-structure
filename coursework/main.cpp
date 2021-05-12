@@ -2,35 +2,37 @@
 #include <string>
 #include <cstdlib>
 #include <fstream>
+#include <stdexcept>
 
 #include "AVLTree.h"
 #include "list.h"
 #include "tests.h"
+#include "details.h"
 
 int main()
 {
   double selection{};
-  while (true)
-  {
-    system("cls");
-    std::cout << "================== Program ========================\n";
-    std::cout << "1 - AVL tree test correct or not?\n";
-    std::cout << "2 - Experiment with the insert function.\n";
-    std::cout << "3 - Test the program with the search function.\n";
-    std::cout << "4 - Test with deleteKey function.\n";
-    std::cout << "0 - End of test program and See the results of the built-in dictionary of prefixes from available text.\n";
-    std::cout << "******************* END ************************\n";
-    std::cout << "Please select options in the test program: ";
-    std::cin >> selection;
+	while (true)
+	{
+		system("cls");
+		std::cout << "================== Program ========================\n";
+		std::cout << "1 - AVL tree test correct or not?\n";
+		std::cout << "2 - Experiment with the insert function.\n";
+		std::cout << "3 - Test the program with the search function.\n";
+		std::cout << "4 - Test with deleteKey function.\n";
+		std::cout << "0 - End of test program and build a dictionary of prefixes from available text.\n";
+		std::cout << "******************* END ************************\n";
+		std::cout << "Please select options in the test program: ";
+		std::cin >> selection;
     if (std::cin.fail())
-    {
-      char warningSound = 7;
-      std::cout << warningSound;
-      std::cout << "Please re-enter.\n";
-      std::cin.clear();
-      std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-      system("pause");
-    }
+		{
+			char warningSound = 7;
+			std::cout << warningSound;
+			std::cout << "Please re-enter.\n";
+			std::cin.clear();
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			system("pause");
+		}
     else
     {
       if (selection == 0)
@@ -81,14 +83,20 @@ int main()
   system("cls");
   std::cout << "The program takes the words from the text and builds into an AVL tree: \n\n";
   std::ifstream file;
-  file.open("input.txt");
-  if (file.fail())
+  std::string nameFile;
+  std::cout << "Enter the file name: ";
+  std::cin >> nameFile;
+  nameFile = nameFile + ".txt";
+  try
   {
-    char warningSound = 7;
-    std::cout << warningSound;
-    std::cout << "The file cannot be opened.\n";
+    checkFile(nameFile);
+  }
+  catch (const std::logic_error& exp)
+  {
+    std::cout << exp.what();
     return 0;
   }
+  file.open(nameFile);
   AVLTree dictionary;
   while (!file.eof())
   {
