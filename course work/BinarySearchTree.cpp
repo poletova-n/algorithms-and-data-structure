@@ -51,6 +51,10 @@ bool BinarySearchTree::insert(std::string &word, List &translation)
     {
       throw std::invalid_argument("The translation was entered incorrectly, the entered word is not English");
     }
+    if (word[i] >= 65 && word[i] <= 90)
+    {
+      word[i]+= 32;
+    }
   }
   if (search(word))
   {
@@ -132,7 +136,7 @@ bool BinarySearchTree::remove(std::string &word)
   }
   if (!search(word))
   {
-    throw std::invalid_argument("Element with not found in tree. Unable to delete");
+    throw std::invalid_argument("Element with this key not found in tree. Unable to delete");
   }
   node *toDelete;
   node *temp = root_;

@@ -56,7 +56,7 @@ void executeCorrectly()
 {
   std::cout << "Create an empty tree and correctly add words and translations to it\n";
   BinarySearchTree testTree;
-  std::string firstWord = "make";
+  std::string firstWord = "Make";
   std::string secondWord = "dog";
   std::string thirdWord = "box";
   std::string fourthWord = "table";

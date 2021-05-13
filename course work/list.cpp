@@ -81,7 +81,6 @@ void List::addElem(std::string& str)
         if (Time->item_ == str)
         {
           break;
-
         }
         if (Time->next_ == nullptr)
         {
