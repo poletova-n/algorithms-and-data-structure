@@ -1,5 +1,6 @@
 ﻿#include <iostream>
 #include <string>
+#include <stdexcept>
 #include "StackArray.h"
 bool isDigit(const char& c);
 bool isOperation(const char& c);
@@ -10,11 +11,20 @@ bool getPostfixFromInfix(const std::string& infix, std::string& postfix, size_t 
 
 int main()
 {
-    std::string a = "(7*(20/6-4)+6)*3";
+    std::string a = "(7*((8)/6-4)+6)*3";
     std::string b;
     getPostfixFromInfix(a, b);
     std::cout << "infix: " << a << "\n";
     std::cout << "postfix: " << b << "\n" << "\n";
+    std::cout << "result: " << evaluatePostfix(b) << "\n\n";
+    try
+    {
+      evaluatePostfix("20/");
+    }
+    catch (const std::logic_error& e)
+    {
+      std::cout << e.what() << "\n\n";
+    }
     a = "5*6+2";
     getPostfixFromInfix(a, b);
     std::cout << "infix: " << a << "\n";
@@ -116,6 +126,10 @@ int evaluatePostfix(const std::string& infix, size_t stackSize)
                 stack.push(op_a * op_b);
                 break;
             case '/':
+                if (op_b == 0)
+                {
+                  throw std::logic_error("Attempt to divide by zero");
+                }
                 stack.push(op_a / op_b);
                 break;
             }
@@ -189,6 +203,7 @@ bool getPostfixFromInfix(const std::string& infix, std::string& postfix, size_t 
         }
     }
 
+    postfix.clear();
     StackArray<char> stack;
     for (int i = 0; i < infix.length(); i++)
     {
