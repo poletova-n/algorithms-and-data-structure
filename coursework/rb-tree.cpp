@@ -161,15 +161,16 @@ bool RBtree::BalanceDeleteL(node **root)
   if(p22 && p22->color) mask|=2;
   switch(mask)
   {
-    case 0:		//if((!p21 || !p21->red) && (!p22 || !p22->red))
+    case 0:
       p2->color=true;
       return true;
-    case 1:		// if(p21 && p21->red)
+    case 3:
+    case 1:
       p2->color=true;
       p21->color=false;
       p2=node->r=RotateR(p2);
       p22=p2->r;
-    case 2:		// if(p22 && p22->red)
+    case 2:
       p2->color=node->color;
       p22->color=node->color=false;
       *root=RotateL(node);
@@ -200,15 +201,16 @@ bool RBtree::BalanceDeleteR(node **root)
   if(p11 && p11->color) mask|=1;
   if(p12 && p12->color) mask|=2;
   switch(mask) {
-    case 0:		//  if((!p12 || !p12->color) && (!p11 || !p11->color))
+      case 0:
       p1->color=true;
       return true;
-    case 2:		//  if(p12 && p12->red)
+      case 3:
+      case 2:
       p1->color=true;
       p12->color=false;
       p1=node->l=RotateL(p1);
       p11=p1->l;
-    case 1:		//if(p11 && p11->red)
+      case 1:
       p1->color=node->color;
       p11->color=node->color=false;
       *root=RotateR(node);
