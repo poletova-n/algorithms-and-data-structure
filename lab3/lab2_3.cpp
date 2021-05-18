@@ -1,5 +1,6 @@
 ﻿#include <iostream>
 #include <string>
+#include <cmath>
 #include <stdexcept>
 #include "StackArray.h"
 bool isDigit(const char& c);
@@ -29,7 +30,12 @@ int main()
     getPostfixFromInfix(a, b);
     std::cout << "infix: " << a << "\n";
     std::cout << "postfix: " << b << "\n" << "\n";
-    a = "2*9+(1/5+4)";
+    std::cout << "result: " << evaluatePostfix(b) << "\n\n";
+    a = "2*9+(2^5+4)";
+    getPostfixFromInfix(a, b);
+    std::cout << "infix: " << a << "\n";
+    std::cout << "postfix: " << b << "\n" << "\n";
+    std::cout << "result: " << evaluatePostfix(b) << "\n\n";
     StackArray <int> test;
     test.push(1);
     test.push(2);
@@ -62,7 +68,7 @@ bool isDigit(const char& c)
 
 bool isOperation(const char& c)
 {
-    if (c == '+' || c == '-' || c == '*' || c == '/') {
+    if (c == '+' || c == '-' || c == '*' || c == '/' || c == '^') {
         return true;
     }
     return false;
@@ -121,6 +127,9 @@ int evaluatePostfix(const std::string& infix, size_t stackSize)
                 break;
             case '-':
                 stack.push(op_a - op_b);
+                break;
+            case '^':
+                stack.push((int)std::pow(op_a, op_b));
                 break;
             case '*':
                 stack.push(op_a * op_b);
@@ -196,7 +205,7 @@ bool getPostfixFromInfix(const std::string& infix, std::string& postfix, size_t 
     {
         temp = infix[i];
         if (temp != '(' && temp != ')' && temp != '+' && temp != '/'
-            && temp != '-' && temp != '*' && (temp < '0' || temp > '9'))
+            && temp != '-' && temp != '*' && temp != '^' && (temp < '0' || temp > '9'))
         {
             std::cout << "Error! Invalid parameters!\n";
             return false;
