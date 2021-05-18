@@ -9,17 +9,17 @@
 using std::string;
 //true = red, false = black
 class RBtree {
-	struct node { node* l, * r; string value; string ss; bool color; };
-	node* tree_root;
-	int nodes_count;
+  struct node { node* l, * r; string value; string ss; bool color; };
+  node* tree_root;
+  int nodes_count;
 public:
   RBtree();
   ~RBtree();
   void Insert(string, string);
-	void Delete(string);
+  void Delete(string);
   int GetNodesCount() const;
-	void Show();
-	void ShowTree();
+  void Show();
+  void ShowTree();
   void Clean();
   bool Search(const string &);
 private:
