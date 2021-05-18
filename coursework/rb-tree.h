@@ -32,8 +32,8 @@ private:
   bool BalanceDeleteL(node**);
   bool BalanceDeleteR(node**);
   bool Insert(string, string, node**);
-	void Show(node*);
-	void ShowTree(node*, int, char);
+  void Show(node*);
+  void ShowTree(node*, int, char);
   bool Delete(node**,string &);
   bool GetMin(node**, node**); //find and remove the maximum node of the subtree
 };
