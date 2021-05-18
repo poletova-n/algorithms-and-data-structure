@@ -253,6 +253,10 @@ void RBtree::ShowTree()
 
 void RBtree::Insert(string ss, string value)
 {
+	if (value == "" && ss =="")
+  {
+    std::cout<<"You can't add an empty element!";
+  }
 	Insert(ss, value, &tree_root);
 	if(tree_root)
 	  tree_root->color = false;
