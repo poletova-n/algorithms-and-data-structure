@@ -322,6 +322,10 @@ bool RBtree::Delete(node **root, string & ss)
 }
 bool RBtree::Search(const  string &ss)
 {
+ if (tree_root == nullptr)
+  {
+    std::cout<<"Can’t search in empty tree";
+  }
   node *node=tree_root;
   while(node) {
     if ((node->ss == ss))
