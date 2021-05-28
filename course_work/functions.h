@@ -60,10 +60,19 @@ void add(Tree<T> &dictionary)
 template<class T>
 void translate(Tree<T> &dictionary)
 {
-  std::string temp;
-  std::cin >> temp;
-  checkEnglish(temp);
-  dictionary.search(temp);
+  try
+  {
+    std::string temp;
+    std::cin >> temp;
+    checkEnglish(temp);
+    dictionary.search(temp);
+  }
+  catch (std::logic_error &error)
+  {
+    std::cin.ignore(1000, '\n');
+    std::cerr << error.what() << "\n";
+    return;
+  }
 }
 
 template<class T>
