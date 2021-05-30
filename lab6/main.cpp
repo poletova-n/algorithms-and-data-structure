@@ -24,8 +24,8 @@ int main()
   std::cout << "Your first tree is:\n";
   firstTree.print();
 
-  std::cout << "Breadth in width of the first tree:\n";
-  firstTree.breadthWidth();
+  std::cout << "Width traversal of the first tree:\n";
+  firstTree.widthTraversal();
 
   std::cout << '\n' << "Please, write your numbers into the second tree.\n"
             << "If you want to stop, just print something else into the stream.\n";
@@ -46,8 +46,8 @@ int main()
   std::cout << "Your second tree is:\n";
   secondTree.print();
 
-  std::cout << "Prefix breadth of the second tree:\n";
-  secondTree.breadthPrefix();
+  std::cout << "Prefix traversal of the second tree:\n";
+  secondTree.prefixTraversal();
 
   std::cout << "\n\n" << (firstTree.similar(secondTree) ? "Trees are the similar.\n" : "Trees aren't the similar.\n");
 

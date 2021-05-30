@@ -21,8 +21,8 @@ public:
   bool find(T elem);
   void print(std::ostream& os = std::cout);
 
-  void breadthWidth();
-  void breadthPrefix();
+  void widthTraversal();
+  void prefixTraversal();
   bool similar(BinarySearchTree<T>& tree);
 
 private:
@@ -226,7 +226,7 @@ void BinarySearchTree<T>::print(std::ostream& os)
 }
 
 template <class T>
-void BinarySearchTree<T>::breadthWidth()
+void BinarySearchTree<T>::widthTraversal()
 {
   QueueList<Node*> queue;
   queue.enQueue(root_);
@@ -247,7 +247,7 @@ void BinarySearchTree<T>::breadthWidth()
 }
 
 template <class T>
-void BinarySearchTree<T>::breadthPrefix()
+void BinarySearchTree<T>::prefixTraversal()
 {
   StackList<Node*> stack;
   stack.push(root_);
