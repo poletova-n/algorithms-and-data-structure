@@ -2,6 +2,7 @@
 #include <stack>
 #include <string>
 #include <iostream>
+#include <cctype>
 
 bool isRight(std::string& expression);
 
@@ -35,7 +36,7 @@ bool isRight(std::string& expression)
   int parentheses = 0;
   for (char symbol : expression)
   {
-    if (!(symbol <= '9' && symbol >= '0' || symbol == '+' || symbol == '-' || symbol == '('
+    if (!(std::isdigit(symbol) || symbol == '+' || symbol == '-' || symbol == '('
       || symbol == ')' || symbol == '*' || symbol == '/' || symbol == '^' || symbol == ' '))
     {
       return false;
@@ -74,12 +75,13 @@ void toPostfix(std::string& expression)
   size_t insertPlace = 0;
   for (size_t i = 0; i < translation.length(); ++i)
   {
-    if (translation[i] == '(' && translation[i + 1] >= '0' && translation[i + 1] <= '9' && translation[i + 2] == ')')
+    char dsfsd = translation[i];
+    if (translation[i] == '(' && isdigit(translation[i + 1]) && translation[i + 2] == ')')
     {
       translation.erase(i, 1);
       translation.erase(i + 1, 1);
     }
-    if (translation[i] == '(' && countBefore == 0)
+    if (translation[i] == '(' && !flagAfter)
     {
       ++countBefore;
       insertPlace = i;
@@ -97,12 +99,7 @@ void toPostfix(std::string& expression)
       countBefore = 0;
       insertPlace = 0;
     }
-    else if (isPrioritySign(translation[i + 1]) && countBefore == 0)
-    {
-      translation.insert(i, "(");
-      ++i;
-      continue;
-    }
+
     else if (isPrioritySign(translation[i]) && (translation[i + 1] == '('))
     {
       ++countAfter;
@@ -111,9 +108,8 @@ void toPostfix(std::string& expression)
     else if (isPrioritySign(translation[i]) && countBefore == 0)
     {
       translation.insert(i + 2, ")");
-      translation.insert(i - 1, "(");
+      translation.insert(i + 1, "(");
       i += 3;
-      continue;
     }
     else if ((translation[i] == '(') && flagAfter)
     {
