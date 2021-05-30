@@ -126,7 +126,7 @@ void sort::bucket(int* array, size_t size)
     {
       if (array[i] < massive[iNumber][j])
       {
-        for (size_t k = j; k < *counter; ++k)
+        for (size_t k = 0; k <= *counter - j; ++k)
         {
           massive[iNumber][*counter - k] = massive[iNumber][*counter - k - 1];
         }
