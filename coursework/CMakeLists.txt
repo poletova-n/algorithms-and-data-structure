@@ -4,4 +4,4 @@ project(coursework)
 set(CMAKE_CXX_STANDARD 14)
 
 add_executable(coursework
-        main.cpp BinarySearchTree.hpp queuelist.hpp)
+        main.cpp BinarySearchTree.hpp)

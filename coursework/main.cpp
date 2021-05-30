@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-#include <fstream>
+#include <cctype>
 
 #include "BinarySearchTree.hpp"
 
@@ -40,8 +40,7 @@ void makeClearWord(std::string& string)
 {
   for (size_t i = 0; i < string.length(); ++i)
   {
-    if (!(string[i] >= -128 && string[i] <= -80 || string[i] >= -32 && string[i] <= -8
-      || string[i] >= 'A' && string[i] <= 'Z' || string[i] >= 'a' && string[i] <= 'z'))
+    if (!(string[i] >= -128 && string[i] <= -80 || string[i] >= -32 && string[i] <= -8 || std::isalpha(string[i])))
     {
       string.erase(i--, 1);
     }
