@@ -11,7 +11,7 @@ int main()
   BinarySearchTree<std::string> tree;
 
   std::cout << "If you want to break the input just write the code word '/end/'.\n";
-  while (true)
+  while (!std::cin.eof())
   {
     std::string input;
     std::cin >> input;

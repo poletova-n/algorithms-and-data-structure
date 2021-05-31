@@ -1,7 +1,7 @@
 #ifndef LAB4_BINARYSEARCHTREE_HPP
 #define LAB4_BINARYSEARCHTREE_HPP
 
-#include <ostream>
+#include <iostream>
 #include <queue>
 
 template <class T>
@@ -11,9 +11,11 @@ public:
   BinarySearchTree();
   ~BinarySearchTree();
 
-  void mostUsed();
+  void mostUsed(std::ostream& os = std::cout);
 
   void add(T elem);
+  void remove(T elem);
+  bool find(T elem) const;
 
 private:
   struct Node
@@ -35,11 +37,9 @@ private:
 
   Node* root_;
 
-  void printNode(Node* start, std::ostream& os);
   void removeSubtree(Node* start);
-  void remove(T elem);
-  Node* findMax(Node* start);
-  Node* findNode(T elem);
+  Node* findMax(Node* start) const;
+  Node* findNode(T elem) const;
 };
 
 template <class T>
@@ -54,7 +54,7 @@ BinarySearchTree<T>::~BinarySearchTree()
 }
 
 template <class T>
-void BinarySearchTree<T>::mostUsed()
+void BinarySearchTree<T>::mostUsed(std::ostream& os)
 {
   if (root_ == nullptr)
   {
@@ -158,47 +158,6 @@ void BinarySearchTree<T>::add(T elem)
 }
 
 template <class T>
-typename BinarySearchTree<T>::Node* BinarySearchTree<T>::findNode(T elem)
-{
-  Node* current = root_;
-  if (current == nullptr || current->key_ == elem)
-  {
-    return current;
-  }
-  while (current != nullptr)
-  {
-    if (elem == current->key_)
-    {
-      return current;
-    }
-    else if (elem > current->key_)
-    {
-      current = current->right_;
-    }
-    else if (elem < current->key_)
-    {
-      current = current->left_;
-    }
-  }
-  return nullptr;
-}
-
-template <class T>
-typename BinarySearchTree<T>::Node* BinarySearchTree<T>::findMax(Node* start)
-{
-  Node* current = start;
-  while (true)
-  {
-    if (current->right_ == nullptr)
-    {
-      break;
-    }
-    current = current->right_;
-  }
-  return current;
-}
-
-template <class T>
 void BinarySearchTree<T>::remove(T elem)
 {
   Node* node = findNode(elem);
@@ -273,6 +232,53 @@ void BinarySearchTree<T>::remove(T elem)
 }
 
 template <class T>
+bool BinarySearchTree<T>::find(T elem) const
+{
+  return findNode(elem);
+}
+
+template <class T>
+typename BinarySearchTree<T>::Node* BinarySearchTree<T>::findNode(T elem) const
+{
+  Node* current = root_;
+  if (current == nullptr || current->key_ == elem)
+  {
+    return current;
+  }
+  while (current != nullptr)
+  {
+    if (elem == current->key_)
+    {
+      return current;
+    }
+    else if (elem > current->key_)
+    {
+      current = current->right_;
+    }
+    else if (elem < current->key_)
+    {
+      current = current->left_;
+    }
+  }
+  return nullptr;
+}
+
+template <class T>
+typename BinarySearchTree<T>::Node* BinarySearchTree<T>::findMax(Node* start) const
+{
+  Node* current = start;
+  while (true)
+  {
+    if (current->right_ == nullptr)
+    {
+      break;
+    }
+    current = current->right_;
+  }
+  return current;
+}
+
+template <class T>
 void BinarySearchTree<T>::removeSubtree(BinarySearchTree<T>::Node* start)
 {
   if (start == nullptr)
@@ -295,32 +301,6 @@ void BinarySearchTree<T>::removeSubtree(BinarySearchTree<T>::Node* start)
   else
   {
     delete start;
-  }
-}
-
-template <class T>
-void BinarySearchTree<T>::printNode(BinarySearchTree<T>::Node* start, std::ostream& os)
-{
-  if (start == root_)
-  {
-    os << "Root is { " << start->key_ << " }. It's used " << start->count_ << " times.\n";
-  }
-  else
-  {
-    os << "{ " << start->key_ << " }. It's used " << start->count_ << " times.\n";
-  }
-  if (start->left_ != start->right_)
-  {
-    if (start->left_)
-    {
-      os << "Left kid of { " << start->key_ << " } is ";
-      printNode(start->left_, os);
-    }
-    if (start->right_)
-    {
-      os << "Right kid of { " << start->key_ << " } is ";
-      printNode(start->right_, os);
-    }
   }
 }
 
