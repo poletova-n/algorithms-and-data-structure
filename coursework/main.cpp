@@ -40,9 +40,26 @@ void makeClearWord(std::string& string)
 {
   for (size_t i = 0; i < string.length(); ++i)
   {
-    if (!(string[i] >= -128 && string[i] <= -80 || string[i] >= -32 && string[i] <= -8 || std::isalpha(string[i])))
+    if (!((string[i] >= -128) && (string[i] <= -80) || (string[i] >= -32) && (string[i] <= -8)
+      || std::isalpha(string[i])))
     {
       string.erase(i--, 1);
+    }
+    if (std::isupper(string[i]))
+    {
+      string[i] = std::tolower(string[i]);
+    }
+    else if ((string[i] >= -128) && (string[i] <= -113))
+    {
+      string[i] += 32;
+    }
+    else if ((string[i] >= -112) && (string[i] < -96))
+    {
+      string[i] += 80;
+    }
+    else if (string[i] == -16)
+    {
+      string[i] = -15;
     }
   }
 }
